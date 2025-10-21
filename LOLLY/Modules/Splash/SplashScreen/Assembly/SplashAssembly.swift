@@ -5,7 +5,6 @@
 //  Created by Kirill Prokofyev on 20.10.2025.
 //
 
-
 import Foundation
 
 final class SplashAssembly: Assembly {

@@ -84,4 +84,3 @@ open class BaseCoordinator<RootType: Presenter>: NSObject, Coordinator, Coordina
         remove(child: coordinator)
     }
 }
-

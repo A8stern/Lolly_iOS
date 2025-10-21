@@ -5,7 +5,6 @@
 //  Created by Kirill Prokofyev on 20.10.2025.
 //
 
-
 internal import UIKit
 
 protocol MainView: AnyObject {
@@ -54,7 +53,9 @@ private extension MainViewController {
 
     func setupConstraints() { }
 
-    func setupViews() { }
+    func setupViews() {
+        view.backgroundColor = UIColor.systemPink
+    }
 }
 
 // MARK: - MainView

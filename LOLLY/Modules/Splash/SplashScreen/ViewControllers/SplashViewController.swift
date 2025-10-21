@@ -63,7 +63,6 @@ private extension SplashViewController {
         navigationController?.isNavigationBarHidden = true
         view.backgroundColor = .white
 
-
         spinnerImageView.transform = .identity
 
         UIView.animate(
