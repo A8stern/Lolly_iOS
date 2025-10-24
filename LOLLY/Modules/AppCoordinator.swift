@@ -45,8 +45,8 @@ public final class AppCoordinator: BaseCoordinator<UIWindow> {
         super.coordinatorDidClose(coordinator)
 
         switch coordinator {
-//            case is OnboardingCoordinator:
-//                goToGeneralFlow()
+            case is AuthCoordinator:
+                goToGeneralFlow()
 
             case is GeneralCoordinator:
                 goToAuthFlow()
@@ -70,12 +70,17 @@ public final class AppCoordinator: BaseCoordinator<UIWindow> {
 
     public func setupFlow() {
         // TODO: Вынести в UseCase / Manager
-        let isAuthorized = true
+        let isAuthorized = false
 
         isAuthorized ? goToGeneralFlow() : goToAuthFlow()
     }
 
-    public func goToAuthFlow() { }
+    public func goToAuthFlow() {
+        let navigationController = UINavigationController()
+        let coordinator = AuthCoordinator(navigationController: navigationController)
+        add(child: coordinator)
+        coordinator.start()
+    }
 
     public func goToGeneralFlow() {
         let navigationController = UINavigationController()

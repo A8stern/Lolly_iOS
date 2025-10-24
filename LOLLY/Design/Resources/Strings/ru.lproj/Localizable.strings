@@ -6,4 +6,8 @@
   
 */
 
-"startAiChat" = "Начнём?";
+/* AuthMethods */
+"AuthMethods.Buttons.SignInWithPhone" = "Войти по номеру телефона";
+"AuthMethods.Buttons.SignInWithApple" = "Войти через Apple";
+"AuthMethods.Conditions" = "Продолжая, ты соглашаешься с Условиями использования сервиса,
+Политикой конфиденциальности";

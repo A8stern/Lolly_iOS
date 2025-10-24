@@ -1,15 +1,3 @@
-## Note: all of the config entries below are just examples with placeholders. Be sure to edit and adjust to your needs when uncommenting.
-
-## In case your config entries all use a common input/output parent directory, you can specify those here.
-##   Every input/output paths in the rest of the config will then be expressed relative to these.
-##   Those two top-level keys are optional and default to "." (the directory of the config file).
-# input_dir: MyLib/Sources/
-# output_dir: MyLib/Generated/
-
-
-## Generate constants for your localized strings.
-##   Be sure that SwiftGen only parses ONE locale (typically Base.lproj, or en.lproj, or whichever your development region is); otherwise it will generate the same keys multiple times.
-##   SwiftGen will parse all `.strings` files found in that folder.
 strings:
    inputs:
      - Lolly/Design/Resources/Strings/ru.lproj
@@ -17,14 +5,7 @@ strings:
      - templateName: structured-swift5
        output: Lolly/Design/Resources/Strings/Strings+Generated.swift
        params:
-         enumName: Strings
-
-
-## Generate constants for your Assets Catalogs, including constants for images, colors, ARKit resources, etc.
-##   This example also shows how to provide additional parameters to your template to customize the output.
-##   - Especially the `forceProvidesNamespaces: true` param forces to create sub-namespace for each folder/group used in your Asset Catalogs, even the ones without "Provides Namespace". Without this param, SwiftGen only generates sub-namespaces for folders/groups which have the "Provides Namespace" box checked in the Inspector pane.
-##   - To know which params are supported for a template, use `swiftgen template doc xcassets swift5` to open the template documentation on GitHub.
-
+         enumName: L10n
 
 xcassets:
   - inputs:
@@ -34,6 +15,7 @@ xcassets:
         output: Lolly/Design/Resources/Assets/XCAssets+Generated.swift
         params:
           enumName: Assets
+          publicAccess: 1
           forceProvidesNamespaces: true
 
   - inputs:
@@ -43,6 +25,7 @@ xcassets:
         output: Lolly/Design/Resources/Colors/Colors+Generated.swift
         params:
           enumName: Colors
+          publicAccess: 1
           forceProvidesNamespaces: true
           
 fonts:

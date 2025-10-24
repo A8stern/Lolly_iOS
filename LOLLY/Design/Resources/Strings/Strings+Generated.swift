@@ -9,19 +9,25 @@ import Foundation
 
 // swiftlint:disable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:disable nesting type_body_length type_name vertical_whitespace_opening_braces
-internal enum Strings {
-  /// Localizable.strings
-  ///   LOLLY
-  /// 
-  ///   Created by Kovalev Gleb on 24.10.2025.
-  internal static let startAiChat = Strings.tr("Localizable", "startAiChat", fallback: "Начнём?")
+internal enum L10n {
+  internal enum AuthMethods {
+    /// Продолжая, ты соглашаешься с Условиями использования сервиса,
+    /// Политикой конфиденциальности
+    internal static let conditions = L10n.tr("Localizable", "AuthMethods.Conditions", fallback: "Продолжая, ты соглашаешься с Условиями использования сервиса,\nПолитикой конфиденциальности")
+    internal enum Buttons {
+      /// Войти через Apple
+      internal static let signInWithApple = L10n.tr("Localizable", "AuthMethods.Buttons.SignInWithApple", fallback: "Войти через Apple")
+      /// AuthMethods
+      internal static let signInWithPhone = L10n.tr("Localizable", "AuthMethods.Buttons.SignInWithPhone", fallback: "Войти по номеру телефона")
+    }
+  }
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:enable nesting type_body_length type_name vertical_whitespace_opening_braces
 
 // MARK: - Implementation Details
 
-extension Strings {
+extension L10n {
   private static func tr(_ table: String, _ key: String, _ args: CVarArg..., fallback value: String) -> String {
     let format = BundleToken.bundle.localizedString(forKey: key, value: value, table: table)
     return String(format: format, locale: Locale.current, arguments: args)

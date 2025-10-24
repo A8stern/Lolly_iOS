@@ -9,6 +9,11 @@ configs:
   Debug: debug
   Release: release
 
+packages:
+  SnapKit:
+    url: https://github.com/SnapKit/SnapKit.git
+    from: 5.7.1
+
 settings:
   base:
     VERSIONING_SYSTEM: apple-generic
@@ -43,6 +48,8 @@ targets:
     platform: iOS
     deploymentTarget: "16.0"
     sources: ["LOLLY"]
+    dependencies:
+      - package: SnapKit
     bundleId: com.kprokofyev.loyalty.LOLLY
     prebuildScripts:
       - name: SwiftLint

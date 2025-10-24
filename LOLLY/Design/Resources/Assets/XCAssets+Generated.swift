@@ -14,31 +14,40 @@
 
 // Deprecated typealiases
 @available(*, deprecated, renamed: "ImageAsset.Image", message: "This typealias will be removed in SwiftGen 7.0")
-internal typealias AssetImageTypeAlias = ImageAsset.Image
+public typealias AssetImageTypeAlias = ImageAsset.Image
 
 // swiftlint:disable superfluous_disable_command file_length implicit_return
 
 // MARK: - Asset Catalogs
 
 // swiftlint:disable identifier_name line_length nesting type_body_length type_name
-internal enum Assets {
-  internal static let spinner = ImageAsset(name: "spinner")
+public enum Assets {
+  public enum Authorization {
+    public static let bottomShadow = ImageAsset(name: "authorization/bottomShadow")
+    public static let promoBackground = ImageAsset(name: "authorization/promoBackground")
+  }
+  public enum Icons24 {
+    public enum Social {
+      public static let apple = ImageAsset(name: "icons24/social/apple")
+    }
+  }
+  public static let spinner = ImageAsset(name: "spinner")
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
 
 // MARK: - Implementation Details
 
-internal struct ImageAsset {
-  internal fileprivate(set) var name: String
+public struct ImageAsset {
+  public fileprivate(set) var name: String
 
   #if os(macOS)
-  internal typealias Image = NSImage
+  public typealias Image = NSImage
   #elseif os(iOS) || os(tvOS) || os(watchOS)
-  internal typealias Image = UIImage
+  public typealias Image = UIImage
   #endif
 
   @available(iOS 8.0, tvOS 9.0, watchOS 2.0, macOS 10.7, *)
-  internal var image: Image {
+  public var image: Image {
     let bundle = BundleToken.bundle
     #if os(iOS) || os(tvOS)
     let image = Image(named: name, in: bundle, compatibleWith: nil)
@@ -56,7 +65,7 @@ internal struct ImageAsset {
 
   #if os(iOS) || os(tvOS)
   @available(iOS 8.0, tvOS 9.0, *)
-  internal func image(compatibleWith traitCollection: UITraitCollection) -> Image {
+  public func image(compatibleWith traitCollection: UITraitCollection) -> Image {
     let bundle = BundleToken.bundle
     guard let result = Image(named: name, in: bundle, compatibleWith: traitCollection) else {
       fatalError("Unable to load image asset named \(name).")
@@ -67,13 +76,13 @@ internal struct ImageAsset {
 
   #if canImport(SwiftUI)
   @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
-  internal var swiftUIImage: SwiftUI.Image {
+  public var swiftUIImage: SwiftUI.Image {
     SwiftUI.Image(asset: self)
   }
   #endif
 }
 
-internal extension ImageAsset.Image {
+public extension ImageAsset.Image {
   @available(iOS 8.0, tvOS 9.0, watchOS 2.0, *)
   @available(macOS, deprecated,
     message: "This initializer is unsafe on macOS, please use the ImageAsset.image property")
@@ -91,7 +100,7 @@ internal extension ImageAsset.Image {
 
 #if canImport(SwiftUI)
 @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
-internal extension SwiftUI.Image {
+public extension SwiftUI.Image {
   init(asset: ImageAsset) {
     let bundle = BundleToken.bundle
     self.init(asset.name, bundle: bundle)
