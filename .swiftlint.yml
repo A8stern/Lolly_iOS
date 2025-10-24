@@ -112,7 +112,6 @@ opt_in_rules:
   - sorted_imports
   - statement_position
   - static_operator
-  - switch_case_on_newline
   - syntactic_sugar
   - toggle_bool
   - trailing_comma
@@ -150,6 +149,7 @@ disabled_rules:
   - void_function_in_ternary
   - control_statement
   - private_over_fileprivate
+  - switch_case_on_newline
 
 warning_threshold: 10
 
