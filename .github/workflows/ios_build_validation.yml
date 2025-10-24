@@ -12,8 +12,8 @@ jobs:
     steps:
         - uses: actions/checkout@v4
 
-        - name: Select Xcode 26
-          run: sudo xcode-select -switch /Applications/Xcode_26.app
+        - name: Select Xcode 18
+          run: sudo xcode-select -switch /Applications/Xcode_18.app
 
         - name: Install SwiftLint
           run: brew install swiftlint
@@ -25,7 +25,7 @@ jobs:
             version: '2.17.0'
 
         - name: Build
-          run: xcodebuild clean build -project LOLLY.xcodeproj -scheme LOLLY 'platform=iOS Simulator,name=iPhone 17,OS=26.0'
+          run: xcodebuild clean build -project LOLLY.xcodeproj -scheme LOLLY 'platform=iOS Simulator,name=iPhone 16,OS=18.0'
             CODE_SIGNING_ALLOWED=NO
 
   swiftlint:
