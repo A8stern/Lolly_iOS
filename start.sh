@@ -53,6 +53,16 @@ installXcodeGen() {
   brew install xcodegen
 }
 
+# Установка SwiftGen через brew
+installSwiftGen() {
+  brew install swiftgen
+}
+
+# Установка SwiftLint через brew
+installSwiftLint() {
+  brew install swiftlint
+}
+
 # Парсер аргументов командной строки
 if [[ "$1" == "" ]]; then
     # Если не передан ни один аргумент — выводим ошибку
@@ -62,6 +72,9 @@ else
    # Перебираем все переданные аргументы
    for i in "$@"; do
     case "$i" in
+        -s)
+            swiftgen config run
+            ;;
         # Если пользователь запросил помощь
         -h|-help|--help)
             showHelp
@@ -73,6 +86,8 @@ else
             kill $(ps aux | grep 'Xcode')   # Закрываем Xcode, чтобы не мешал генерации
             installBrew                    # Проверяем и устанавливаем Homebrew
             installXcodeGen               # Устанавливаем XcodeGen
+            installSwiftGen               # Устанавливаем SwiftGen
+            installSwiftLint              # Устанавливаем SwiftLint
             runXcodeGen                   # Генерация проекта
             open "$PROJECT_FILE"          # Открываем проект в Xcode
             ;;
