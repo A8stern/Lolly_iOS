@@ -43,6 +43,7 @@ public enum Colors {
   }
   public enum Custom {
     public static let appleSignIn = ColorAsset(name: "Custom/appleSignIn")
+    public static let inverted = ColorAsset(name: "Custom/inverted")
   }
   public enum Text {
     public static let primary = ColorAsset(name: "Text/Primary")

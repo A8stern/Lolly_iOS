@@ -26,6 +26,11 @@ public enum Assets {
     public static let bottomShadow = ImageAsset(name: "authorization/bottomShadow")
     public static let promoBackground = ImageAsset(name: "authorization/promoBackground")
   }
+  public enum Controls {
+    public static let backArrow = ImageAsset(name: "controls/backArrow")
+    public static let close = ImageAsset(name: "controls/close")
+    public static let nextArrow = ImageAsset(name: "controls/nextArrow")
+  }
   public enum Icons24 {
     public enum Social {
       public static let apple = ImageAsset(name: "icons24/social/apple")
