@@ -9,9 +9,7 @@ private import SnapKit
 internal import UIKit
 
 protocol MainView: AnyObject {
-//    func displaySomething()
-//    func displayBanners()
-//    func showSnackbarError(_ error: String?)
+    func displayInitialData(viewModel: MainModels.InitialData.ViewModel)
 }
 
 final class MainViewController: UIViewController {
@@ -53,6 +51,11 @@ final class MainViewController: UIViewController {
         return stackView
     }()
 
+    private lazy var stickerSection: StickerSectionView = {
+        let section = StickerSectionView()
+        return section
+    }()
+
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
@@ -74,6 +77,11 @@ final class MainViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         presenter?.onViewWillAppear()
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        adjustScrollViewInsetIfNeeded()
     }
 }
 
@@ -118,6 +126,8 @@ private extension MainViewController {
             make.top.equalTo(contentView.layoutMarginsGuide.snp.top)
             make.bottom.equalTo(contentView.layoutMarginsGuide.snp.bottom)
         }
+
+        sectionsStackView.addArrangedSubviews(stickerSection)
     }
 
     func setupViews() {
@@ -125,11 +135,30 @@ private extension MainViewController {
         navigationController?.isNavigationBarHidden = true
         navBar.delegate = self
     }
+
+    func adjustScrollViewInsetIfNeeded() {
+        let topInset: CGFloat = navBar.bounds.height - navBar.safeAreaInsets.top
+        let bottomInset: CGFloat = .zero
+
+        let currentTopInset = scrollView.contentInset.top
+        let currentBottomInset = scrollView.contentInset.bottom
+
+        if currentTopInset != topInset {
+            scrollView.contentInset.top = topInset
+        }
+        if currentBottomInset != bottomInset {
+            scrollView.contentInset.bottom = bottomInset
+        }
+    }
 }
 
 // MARK: - MainView
 
-extension MainViewController: MainView { }
+extension MainViewController: MainView {
+    func displayInitialData(viewModel: MainModels.InitialData.ViewModel) {
+        stickerSection.viewModel = viewModel.stickerSectionViewModel
+    }
+}
 
 // MARK: - NavigationBarDelegate
 

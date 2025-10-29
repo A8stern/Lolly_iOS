@@ -48,6 +48,9 @@ public struct ButtonViewModel: Changeable {
     public enum Size {
         /// Высота 52
         case large
+
+        /// Высота 34
+        case medium
     }
 
     public enum Icon {

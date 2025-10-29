@@ -26,7 +26,9 @@ public enum Colors {
   public enum Constants {
     public static let black = ColorAsset(name: "Constants/Black")
     public static let grey = ColorAsset(name: "Constants/Grey")
+    public static let ocher = ColorAsset(name: "Constants/Ocher")
     public static let white = ColorAsset(name: "Constants/White")
+    public static let yellow = ColorAsset(name: "Constants/Yellow")
     public static let clear = ColorAsset(name: "Constants/clear")
   }
   public enum Controls {
@@ -45,6 +47,7 @@ public enum Colors {
     public static let appleSignIn = ColorAsset(name: "Custom/appleSignIn")
     public static let inverted = ColorAsset(name: "Custom/inverted")
   }
+  public static let secondaryColor = ColorAsset(name: "SecondaryColor")
   public enum Text {
     public static let primary = ColorAsset(name: "Text/Primary")
     public static let secondary = ColorAsset(name: "Text/Secondary")

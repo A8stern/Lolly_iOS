@@ -124,6 +124,9 @@ public final class Button: UIButton, ViewModellable {
                     switch viewModel.size {
                         case .large:
                             return Constants.imagePadding
+
+                        case .medium:
+                            return Constants.imagePadding
                     }
                 }()
                 setImage(image, for: .normal)
@@ -220,6 +223,9 @@ extension ButtonViewModel.Size {
         switch self {
             case .large:
                 return 52
+
+            case .medium:
+                return 34
         }
     }
 
@@ -227,6 +233,9 @@ extension ButtonViewModel.Size {
         switch self {
             case .large:
                 return 24
+
+            case .medium:
+                return 14
         }
     }
 }
@@ -237,7 +246,10 @@ extension ButtonViewModel {
     fileprivate var font: UIFont {
         switch size {
             case .large:
-                return  Fonts.TTTravels.demiBold.font(size: 16)
+                return Fonts.TTTravels.demiBold.font(size: 16)
+
+            case .medium:
+                return Fonts.TTTravels.medium.font(size: 12)
         }
     }
 
