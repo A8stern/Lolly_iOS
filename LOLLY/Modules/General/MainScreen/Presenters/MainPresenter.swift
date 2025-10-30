@@ -53,7 +53,8 @@ extension MainViewPresenter: MainPresenter {
 private extension MainViewPresenter {
     func responseInitialData(response: MainModels.InitialData.Response) {
         let viewModel = MainModels.InitialData.ViewModel(
-            stickerSectionViewModel: makeStickerSectionViewModel()
+            stickerSectionViewModel: makeStickerSectionViewModel(),
+            calendarSectionViewModel: makeCalendarSectionViewModel()
         )
 
         view.displayInitialData(viewModel: viewModel)
@@ -70,6 +71,26 @@ private extension MainViewPresenter {
                 type: .custom(.yellow),
                 size: .medium,
                 tapHandler: nil
+            )
+        )
+    }
+
+    func makeCalendarSectionViewModel() -> CalendarSectionViewModel? {
+        CalendarSectionViewModel(
+            month: "Май",
+            days: [
+                CalendarCellViewModel(date: 24, type: .past),
+                CalendarCellViewModel(date: 25, type: .past),
+                CalendarCellViewModel(date: 26, type: .current),
+                CalendarCellViewModel(date: 27, type: .future),
+                CalendarCellViewModel(date: 28, type: .future),
+                CalendarCellViewModel(date: 29, type: .future),
+                CalendarCellViewModel(date: 30, type: .future),
+                CalendarCellViewModel(date: 31, type: .future)
+            ],
+            event: EventViewModel(
+                title: "Воскресенье, 13:00",
+                subtitle: "Harucha BDay Party"
             )
         )
     }

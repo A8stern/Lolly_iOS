@@ -11,6 +11,7 @@ enum MainModels {
 
         struct ViewModel {
             let stickerSectionViewModel: StickerSectionViewModel?
+            let calendarSectionViewModel: CalendarSectionViewModel?
         }
     }
 }

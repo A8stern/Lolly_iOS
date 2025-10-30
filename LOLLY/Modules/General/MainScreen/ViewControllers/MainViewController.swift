@@ -56,6 +56,11 @@ final class MainViewController: UIViewController {
         return section
     }()
 
+    private lazy var calendarSection: CalendarSectionView = {
+        let section = CalendarSectionView()
+        return section
+    }()
+
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
@@ -127,7 +132,10 @@ private extension MainViewController {
             make.bottom.equalTo(contentView.layoutMarginsGuide.snp.bottom)
         }
 
-        sectionsStackView.addArrangedSubviews(stickerSection)
+        sectionsStackView.addArrangedSubviews(
+            stickerSection,
+            calendarSection
+        )
     }
 
     func setupViews() {
@@ -157,6 +165,7 @@ private extension MainViewController {
 extension MainViewController: MainView {
     func displayInitialData(viewModel: MainModels.InitialData.ViewModel) {
         stickerSection.viewModel = viewModel.stickerSectionViewModel
+        calendarSection.viewModel = viewModel.calendarSectionViewModel
     }
 }
 
