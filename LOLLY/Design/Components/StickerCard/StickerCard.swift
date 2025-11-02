@@ -17,15 +17,8 @@ public final class StickerCard: UIView, ViewModellable {
         }
     }
 
-    private lazy var blurView: UIVisualEffectView = {
-        let effect: UIVisualEffect = {
-            if #available(iOS 26.0, *) {
-                return UIGlassEffect(style: .regular)
-            } else {
-                return UIBlurEffect(style: .systemMaterial)
-            }
-        }()
-        let view = UIVisualEffectView(effect: effect)
+    private lazy var blurView: BlurView = {
+        let view = BlurView()
         return view
     }()
 

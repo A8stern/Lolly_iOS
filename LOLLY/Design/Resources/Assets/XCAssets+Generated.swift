@@ -27,6 +27,9 @@ public enum Assets {
     public static let promoBackground = ImageAsset(name: "authorization/promoBackground")
   }
   public enum Brand {
+    public enum Photos {
+      public static let contactsBackground = ImageAsset(name: "brand/photos/contactsBackground")
+    }
     public enum Stickers {
       public static let stickerLarge = ImageAsset(name: "brand/stickers/stickerLarge")
     }

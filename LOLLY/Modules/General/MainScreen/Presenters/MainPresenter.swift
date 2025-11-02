@@ -54,7 +54,8 @@ private extension MainViewPresenter {
     func responseInitialData(response: MainModels.InitialData.Response) {
         let viewModel = MainModels.InitialData.ViewModel(
             stickerSectionViewModel: makeStickerSectionViewModel(),
-            calendarSectionViewModel: makeCalendarSectionViewModel()
+            calendarSectionViewModel: makeCalendarSectionViewModel(),
+            contactsSectionViewModel: makeContactsSectionViewModel()
         )
 
         view.displayInitialData(viewModel: viewModel)
@@ -92,6 +93,19 @@ private extension MainViewPresenter {
                 title: "Воскресенье, 13:00",
                 subtitle: "Harucha BDay Party"
             )
+        )
+    }
+
+    func makeContactsSectionViewModel() -> ContactsSectionViewModel? {
+        ContactsSectionViewModel(
+            title: "Ждём вас",
+            backgroundImage: Assets.Brand.Photos.contactsBackground.image,
+            addresses: [
+                AddressViewModel(address: "Ленина, 10", description: "11:00 - 22:00"),
+                AddressViewModel(address: "Пр. Карла Маркса, 47", description: "11:00 - 22:00"),
+                AddressViewModel(address: "Мичурина, 12", description: "11:00 - 22:00"),
+                AddressViewModel(address: "Ленина, 3", description: "12:00 - 22:00")
+            ]
         )
     }
 }

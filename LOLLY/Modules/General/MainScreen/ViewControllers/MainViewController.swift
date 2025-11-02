@@ -30,6 +30,11 @@ final class MainViewController: UIViewController {
         return navigationBar
     }()
 
+    private lazy var blurView: BlurView = {
+        let view = BlurView()
+        return view
+    }()
+
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView(frame: .zero)
         scrollView.showsHorizontalScrollIndicator = false
@@ -58,6 +63,11 @@ final class MainViewController: UIViewController {
 
     private lazy var calendarSection: CalendarSectionView = {
         let section = CalendarSectionView()
+        return section
+    }()
+
+    private lazy var contactsSection: ContactsSectionView = {
+        let section = ContactsSectionView()
         return section
     }()
 
@@ -94,7 +104,7 @@ final class MainViewController: UIViewController {
 
 private extension MainViewController {
     func addSubviews() {
-        [scrollView, navBar].forEach {
+        [blurView, scrollView, navBar].forEach {
             view.addSubview($0)
         }
         scrollView.addSubview(contentView)
@@ -111,10 +121,14 @@ private extension MainViewController {
             make.top.equalToSuperview()
         }
 
+        blurView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+
         scrollView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
             make.top.equalToSuperview()
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+            make.bottom.equalToSuperview()
         }
 
         contentView.snp.makeConstraints { make in
@@ -134,7 +148,8 @@ private extension MainViewController {
 
         sectionsStackView.addArrangedSubviews(
             stickerSection,
-            calendarSection
+            calendarSection,
+            contactsSection
         )
     }
 
@@ -166,6 +181,7 @@ extension MainViewController: MainView {
     func displayInitialData(viewModel: MainModels.InitialData.ViewModel) {
         stickerSection.viewModel = viewModel.stickerSectionViewModel
         calendarSection.viewModel = viewModel.calendarSectionViewModel
+        contactsSection.viewModel = viewModel.contactsSectionViewModel
     }
 }
 
