@@ -8,7 +8,6 @@
 import UIKit
 
 public final class BlurView: UIVisualEffectView {
-
     init() {
         let effect: UIVisualEffect
         if #available(iOS 26.0, *) {
@@ -18,7 +17,7 @@ public final class BlurView: UIVisualEffectView {
         }
         super.init(effect: effect)
 
-        setupUI ()
+        setupUI()
     }
 
     required init?(coder: NSCoder) {

@@ -94,7 +94,14 @@ public extension EventView {
         updateUI()
     }
 
-    func setupBehaviour() { }
+    func setupBehaviour() {
+        addTapActionHandler { [weak self] in
+            guard let self else { return }
+            guard let viewModel else { return }
+
+            viewModel.onTap?()
+        }
+    }
 
     func updateUI() {
         isHidden = viewModel == nil

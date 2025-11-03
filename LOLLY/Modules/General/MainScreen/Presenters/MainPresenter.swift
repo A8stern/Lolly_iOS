@@ -91,7 +91,8 @@ private extension MainViewPresenter {
             ],
             event: EventViewModel(
                 title: "Воскресенье, 13:00",
-                subtitle: "Harucha BDay Party"
+                subtitle: "Harucha BDay Party",
+                onTap: nil
             )
         )
     }

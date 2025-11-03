@@ -3,6 +3,8 @@
 <plist version="1.0">
 <dict>
 	<!-- Основные параметры приложения -->
+	<key>NSCalendarsUsageDescription</key>
+	<string>Приложению нужен доступ к календарю для добавления событий</string>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleName</key>
