@@ -11,3 +11,4 @@
 "AuthMethods.Buttons.SignInWithApple" = "Войти через Apple";
 "AuthMethods.Conditions" = "Продолжая, ты соглашаешься с Условиями использования сервиса,
 Политикой конфиденциальности";
+"Main.GameSection.Title" = "Нейросеть выберет\nнапиток за тебя";

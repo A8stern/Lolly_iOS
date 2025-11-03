@@ -70,7 +70,7 @@ public final class AppCoordinator: BaseCoordinator<UIWindow> {
 
     public func setupFlow() {
         // TODO: Вынести в UseCase / Manager
-        let isAuthorized = false
+        let isAuthorized = true
 
         isAuthorized ? goToGeneralFlow() : goToAuthFlow()
     }

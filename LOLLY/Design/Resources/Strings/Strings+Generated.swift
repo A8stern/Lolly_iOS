@@ -21,6 +21,13 @@ internal enum L10n {
       internal static let signInWithPhone = L10n.tr("Localizable", "AuthMethods.Buttons.SignInWithPhone", fallback: "Войти по номеру телефона")
     }
   }
+  internal enum Main {
+    internal enum GameSection {
+      /// Нейросеть выберет
+      /// напиток за тебя
+      internal static let title = L10n.tr("Localizable", "Main.GameSection.Title", fallback: "Нейросеть выберет\nнапиток за тебя")
+    }
+  }
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:enable nesting type_body_length type_name vertical_whitespace_opening_braces

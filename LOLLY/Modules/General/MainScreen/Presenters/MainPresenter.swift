@@ -16,6 +16,9 @@ protocol MainPresenter: AnyObject {
 
     /// Триггер загрузки данных
     func onViewDidAppear()
+
+    /// Нажатие на блок геймификации
+    func onGameSectionTap()
 }
 
 final class MainViewPresenter {
@@ -46,6 +49,10 @@ extension MainViewPresenter: MainPresenter {
     func onViewWillAppear() { }
 
     func onViewDidAppear() { }
+
+    func onGameSectionTap() {
+        coordinator.showGameSurvey()
+    }
 }
 
 // MARK: - Private Methods
@@ -54,6 +61,7 @@ private extension MainViewPresenter {
     func responseInitialData(response: MainModels.InitialData.Response) {
         let viewModel = MainModels.InitialData.ViewModel(
             stickerSectionViewModel: makeStickerSectionViewModel(),
+            gameSectionViewModel: makeGameSectionViewModel(),
             calendarSectionViewModel: makeCalendarSectionViewModel(),
             contactsSectionViewModel: makeContactsSectionViewModel()
         )
@@ -94,6 +102,13 @@ private extension MainViewPresenter {
                 subtitle: "Harucha BDay Party",
                 onTap: nil
             )
+        )
+    }
+
+    func makeGameSectionViewModel() -> GameSectionViewModel? {
+        return GameSectionViewModel(
+            title: L10n.Main.GameSection.title,
+            waveformImage: Assets.Brand.Gamification.waveform.image
         )
     }
 

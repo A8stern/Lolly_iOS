@@ -24,4 +24,14 @@ final class GeneralCoordinator: BaseNavigationCoordinator {
         let viewController = MainAssembly.instance().assembleModule(coordinator: self)
         navigationController.pushViewController(viewController, animated: true)
     }
+
+    func showGameSurvey() {
+        let viewController = GameSurveyAssembly.instance().assembleModule(coordinator: self)
+        viewController.modalPresentationStyle = .fullScreen
+        navigationController.present(viewController, animated: true)
+    }
+
+    func closeGameSurvey() {
+        navigationController.dismiss(animated: true)
+    }
 }

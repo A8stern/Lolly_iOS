@@ -66,9 +66,19 @@ final class MainViewController: UIViewController {
         return section
     }()
 
+    private lazy var gameSection: GameSectionView = {
+        let section = GameSectionView()
+        return section
+    }()
+
     private lazy var contactsSection: ContactsSectionView = {
         let section = ContactsSectionView()
         return section
+    }()
+
+    private lazy var gameSectionTapGesture: UITapGestureRecognizer = {
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(onGameSectionTap))
+        return gesture
     }()
 
     // MARK: - Lifecycle
@@ -148,6 +158,7 @@ private extension MainViewController {
 
         sectionsStackView.addArrangedSubviews(
             stickerSection,
+            gameSection,
             calendarSection,
             contactsSection
         )
@@ -157,6 +168,7 @@ private extension MainViewController {
         view.backgroundColor = Colors.Custom.inverted.color
         navigationController?.isNavigationBarHidden = true
         navBar.delegate = self
+        gameSection.addGestureRecognizer(gameSectionTapGesture)
     }
 
     func adjustScrollViewInsetIfNeeded() {
@@ -173,6 +185,11 @@ private extension MainViewController {
             scrollView.contentInset.bottom = bottomInset
         }
     }
+
+    @objc
+    func onGameSectionTap() {
+        presenter?.onGameSectionTap()
+    }
 }
 
 // MARK: - MainView
@@ -181,6 +198,7 @@ extension MainViewController: MainView {
     func displayInitialData(viewModel: MainModels.InitialData.ViewModel) {
         stickerSection.viewModel = viewModel.stickerSectionViewModel
         calendarSection.viewModel = viewModel.calendarSectionViewModel
+        gameSection.viewModel = viewModel.gameSectionViewModel
         contactsSection.viewModel = viewModel.contactsSectionViewModel
     }
 }
