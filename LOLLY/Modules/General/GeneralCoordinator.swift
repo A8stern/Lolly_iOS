@@ -8,6 +8,8 @@
 internal import UIKit
 
 final class GeneralCoordinator: BaseNavigationCoordinator {
+    // MARK: - Private Properties
+
     // MARK: - Lifecycle
 
     override func start() {
@@ -32,6 +34,16 @@ final class GeneralCoordinator: BaseNavigationCoordinator {
     }
 
     func closeGameSurvey() {
+        navigationController.dismiss(animated: true)
+    }
+
+    func showScanner() {
+        let viewController = ScannerAssembly.instance().assembleModule(coordinator: self)
+        viewController.modalPresentationStyle = .fullScreen
+        navigationController.present(viewController, animated: true)
+    }
+
+    func closeScanner() {
         navigationController.dismiss(animated: true)
     }
 }

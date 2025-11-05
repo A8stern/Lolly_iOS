@@ -242,8 +242,8 @@ extension ButtonViewModel.Size {
 
 // MARK: - ButtonViewModel extensions
 
-extension ButtonViewModel {
-    fileprivate var font: UIFont {
+fileprivate extension ButtonViewModel {
+    var font: UIFont {
         switch size {
             case .large:
                 return Fonts.TTTravels.demiBold.font(size: 16)
@@ -253,7 +253,7 @@ extension ButtonViewModel {
         }
     }
 
-    fileprivate var icon: ButtonViewModel.Icon? {
+    var icon: ButtonViewModel.Icon? {
         switch type {
             case .primary(let option),
                  .secondary(let option):
@@ -264,7 +264,7 @@ extension ButtonViewModel {
         }
     }
 
-    fileprivate var imageTintColor: ColorAsset {
+    var imageTintColor: ColorAsset {
         switch type {
             case .primary:
                 return Colors.Constants.white
@@ -277,7 +277,7 @@ extension ButtonViewModel {
         }
     }
 
-    fileprivate var contentColor: ColorAsset {
+    var contentColor: ColorAsset {
         switch type {
             case .primary:
                 return Colors.Constants.white
@@ -290,7 +290,7 @@ extension ButtonViewModel {
         }
     }
 
-    fileprivate var enabledBackgroundColorAsset: ColorAsset {
+    var enabledBackgroundColorAsset: ColorAsset {
         switch type {
             case .primary:
                 return Colors.Controls.primary
@@ -303,7 +303,7 @@ extension ButtonViewModel {
         }
     }
 
-    fileprivate var pressedBackgroundColorAsset: ColorAsset {
+    var pressedBackgroundColorAsset: ColorAsset {
         switch type {
             case .primary:
                 return Colors.Controls.primaryPressed
@@ -316,7 +316,7 @@ extension ButtonViewModel {
         }
     }
 
-    fileprivate var disabledColor: ColorAsset {
+    var disabledColor: ColorAsset {
         switch type {
             case .primary:
                 return Colors.Controls.disabled
@@ -329,7 +329,7 @@ extension ButtonViewModel {
         }
     }
 
-    fileprivate var needImageTint: Bool {
+    var needImageTint: Bool {
         switch type {
             case .primary, .secondary:
                 return true

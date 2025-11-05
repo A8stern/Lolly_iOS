@@ -23,10 +23,13 @@ internal enum L10n {
   }
   internal enum Main {
     internal enum GameSection {
-      /// Нейросеть выберет
-      /// напиток за тебя
+      /// Main
       internal static let title = L10n.tr("Localizable", "Main.GameSection.Title", fallback: "Нейросеть выберет\nнапиток за тебя")
     }
+  }
+  internal enum Scanner {
+    /// Scanner
+    internal static let title = L10n.tr("Localizable", "Scanner.Title", fallback: "Поднесите телефон к считывателю")
   }
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length

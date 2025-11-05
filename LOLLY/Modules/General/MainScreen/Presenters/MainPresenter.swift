@@ -80,7 +80,10 @@ private extension MainViewPresenter {
                 title: "Получить напиток",
                 type: .custom(.yellow),
                 size: .medium,
-                tapHandler: nil
+                tapHandler: { [weak self] in
+                    guard let self else { return }
+                    coordinator.showScanner()
+                }
             )
         )
     }
