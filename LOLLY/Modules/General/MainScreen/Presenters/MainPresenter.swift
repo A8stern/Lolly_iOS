@@ -61,6 +61,7 @@ private extension MainViewPresenter {
     func responseInitialData(response: MainModels.InitialData.Response) {
         let viewModel = MainModels.InitialData.ViewModel(
             stickerSectionViewModel: makeStickerSectionViewModel(),
+            promoSectionViewModel: makePromoSectionViewModel(),
             gameSectionViewModel: makeGameSectionViewModel(),
             calendarSectionViewModel: makeCalendarSectionViewModel(),
             contactsSectionViewModel: makeContactsSectionViewModel()
@@ -109,6 +110,12 @@ private extension MainViewPresenter {
         return GameSectionViewModel(
             title: L10n.Main.GameSection.title,
             waveformImage: Assets.Brand.Gamification.waveform.image
+        )
+    }
+
+    func makePromoSectionViewModel() -> PromoSectionViewModel? {
+        return PromoSectionViewModel(
+            text: "Скидка -20% в день рождения"
         )
     }
 

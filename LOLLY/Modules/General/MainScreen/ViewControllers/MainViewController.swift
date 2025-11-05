@@ -61,6 +61,11 @@ final class MainViewController: UIViewController {
         return section
     }()
 
+    private lazy var promoSection: PromoSectionView = {
+        let section = PromoSectionView()
+        return section
+    }()
+
     private lazy var calendarSection: CalendarSectionView = {
         let section = CalendarSectionView()
         return section
@@ -158,6 +163,7 @@ private extension MainViewController {
 
         sectionsStackView.addArrangedSubviews(
             stickerSection,
+            promoSection,
             gameSection,
             calendarSection,
             contactsSection
@@ -200,6 +206,7 @@ extension MainViewController: MainView {
         calendarSection.viewModel = viewModel.calendarSectionViewModel
         gameSection.viewModel = viewModel.gameSectionViewModel
         contactsSection.viewModel = viewModel.contactsSectionViewModel
+        promoSection.viewModel = viewModel.promoSectionViewModel
     }
 }
 
