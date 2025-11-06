@@ -12,8 +12,22 @@
 "AuthMethods.Conditions" = "Продолжая, ты соглашаешься с Условиями использования сервиса,
 Политикой конфиденциальности";
 
+/* PhoneLogIn */
+
+"PhoneLogIn.Phone.Title" = "Номер телефона";
+"PhoneLogIn.Phone.Placeholder" = "+7 913 000-00-00";
+"PhoneLogIn.Name.Title" = "Имя";
+"PhoneLogIn.Name.Placeholder" = "Иван";
+"PhoneLogIn.Name.ValidationError" = "Имя должно быть длиннее 1 символа";
+"PhoneLogIn.Buttons.Continue" = "Продолжить";
+"PhoneLogIn.Buttons.Register" = "Зарегистрироваться";
+"PhoneLogIn.Terms.Text" = "Я принимаю условия договора оферты и политики конфиденциальности";
+"PhoneLogIn.Terms.Oferta" = "договора оферты";
+"PhoneLogIn.Terms.PrivacyPolicy" = "политики конфиденциальности";
+
 /* Main */
 "Main.GameSection.Title" = "Нейросеть выберет\nнапиток за тебя";
 
 /* Scanner */
 "Scanner.Title" = "Поднесите телефон к считывателю";
+

@@ -25,5 +25,13 @@ final class AuthCoordinator: BaseNavigationCoordinator {
         navigationController.pushViewController(viewController, animated: true)
     }
 
-    func openPhoneAuth() { }
+    func openPhoneLogIn() {
+        let viewController = PhoneLogInAssembly.instance().assembleModule(coordinator: self)
+        navigationController.pushViewController(viewController, animated: true)
+    }
+
+    func openCode(phone: String) {
+        let viewController = OtpCodeAssembly.instance().assembleModule(coordinator: self, phone: phone)
+        navigationController.pushViewController(viewController, animated: true)
+    }
 }

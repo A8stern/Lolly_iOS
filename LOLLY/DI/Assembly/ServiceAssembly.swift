@@ -5,13 +5,27 @@
 //  Created by Kirill Prokofyev on 24.10.2025.
 //
 
+import Foundation
+
 public final class ServiceAssembly: Assembly {
     // MARK: Public Properties
+
+    public var networkService: NetworkService {
+        define(
+            scope: .lazySingleton,
+            init: NetworkService(
+                session: .shared
+            )
+        )
+    }
 
     public var authorizationService: AuthorizationServiceInterface {
         define(
             scope: .lazySingleton,
-            init: AuthorizationService()
+            init: AuthorizationService(
+                networkService: self.networkService,
+                isMock: true
+            )
         )
     }
 }

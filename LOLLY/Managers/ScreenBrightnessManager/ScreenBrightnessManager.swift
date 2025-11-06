@@ -24,6 +24,7 @@ public final class ScreenBrightnessManager: ScreenBrightnessManagerInterface {
         switch mode {
             case .full:
                 UIScreen.main.brightness = 1.0
+
             case .custom(let value):
                 UIScreen.main.brightness = min(max(value, 0.0), 1.0)
         }

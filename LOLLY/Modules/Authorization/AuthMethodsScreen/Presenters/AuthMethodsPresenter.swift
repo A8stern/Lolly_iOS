@@ -42,7 +42,7 @@ extension AuthMethodsViewPresenter: AuthMethodsPresenter {
         // TODO: Добавить бизнес логику доступны ли нам авторизации
         let response = AuthMethodsModels.InitialData.Response(
             isPhoneAuthAvailable: true,
-            isAppleAuthAvailable: true
+            isAppleAuthAvailable: false
         )
         responseInitialData(response: response)
     }
@@ -81,7 +81,7 @@ private extension AuthMethodsViewPresenter {
             size: .large,
             tapHandler: { [weak self] in
                 guard let self else { return }
-                coordinator.openPhoneAuth()
+                coordinator.openPhoneLogIn()
             }
         )
     }
@@ -99,7 +99,7 @@ private extension AuthMethodsViewPresenter {
     }
 
     private func requestSignInWithApple() {
-         // TODO: Логика авторизации
+//      TODO: Логика авторизации
     }
 }
 

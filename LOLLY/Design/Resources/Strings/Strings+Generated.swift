@@ -27,6 +27,36 @@ internal enum L10n {
       internal static let title = L10n.tr("Localizable", "Main.GameSection.Title", fallback: "Нейросеть выберет\nнапиток за тебя")
     }
   }
+  internal enum PhoneLogIn {
+    internal enum Buttons {
+      /// Продолжить
+      internal static let `continue` = L10n.tr("Localizable", "PhoneLogIn.Buttons.Continue", fallback: "Продолжить")
+      /// Зарегистрироваться
+      internal static let register = L10n.tr("Localizable", "PhoneLogIn.Buttons.Register", fallback: "Зарегистрироваться")
+    }
+    internal enum Name {
+      /// Иван
+      internal static let placeholder = L10n.tr("Localizable", "PhoneLogIn.Name.Placeholder", fallback: "Иван")
+      /// Имя
+      internal static let title = L10n.tr("Localizable", "PhoneLogIn.Name.Title", fallback: "Имя")
+      /// Имя должно быть длиннее 1 символа
+      internal static let validationError = L10n.tr("Localizable", "PhoneLogIn.Name.ValidationError", fallback: "Имя должно быть длиннее 1 символа")
+    }
+    internal enum Phone {
+      /// +7 913 000-00-00
+      internal static let placeholder = L10n.tr("Localizable", "PhoneLogIn.Phone.Placeholder", fallback: "+7 913 000-00-00")
+      /// PhoneLogIn
+      internal static let title = L10n.tr("Localizable", "PhoneLogIn.Phone.Title", fallback: "Номер телефона")
+    }
+    internal enum Terms {
+      /// договора оферты
+      internal static let oferta = L10n.tr("Localizable", "PhoneLogIn.Terms.Oferta", fallback: "договора оферты")
+      /// политики конфиденциальности
+      internal static let privacyPolicy = L10n.tr("Localizable", "PhoneLogIn.Terms.PrivacyPolicy", fallback: "политики конфиденциальности")
+      /// Я принимаю условия договора оферты и политики конфиденциальности
+      internal static let text = L10n.tr("Localizable", "PhoneLogIn.Terms.Text", fallback: "Я принимаю условия договора оферты и политики конфиденциальности")
+    }
+  }
   internal enum Scanner {
     /// Scanner
     internal static let title = L10n.tr("Localizable", "Scanner.Title", fallback: "Поднесите телефон к считывателю")

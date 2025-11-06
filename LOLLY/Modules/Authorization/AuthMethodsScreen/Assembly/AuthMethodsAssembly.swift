@@ -8,8 +8,6 @@
 internal import UIKit
 
 final class AuthMethodsAssembly: Assembly {
-    // MARK: - Private Properties
-
     // MARK: - Internal Methods
 
     func assembleModule(

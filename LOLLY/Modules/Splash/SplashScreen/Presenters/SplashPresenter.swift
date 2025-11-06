@@ -56,8 +56,8 @@ extension SplashViewPresenter: SplashPresenter {
 //            }
 //        }
 
-        // Пока тут заглушка на 5 секунд
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) { [weak self] in
+//      Пока тут заглушка на 5 секунд
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
             guard let self else { return }
             configureFlow()
         }

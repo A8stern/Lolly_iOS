@@ -256,7 +256,7 @@ fileprivate extension ButtonViewModel {
     var icon: ButtonViewModel.Icon? {
         switch type {
             case .primary(let option),
-                 .secondary(let option):
+                .secondary(let option):
                 return option
 
             case .custom(let config):

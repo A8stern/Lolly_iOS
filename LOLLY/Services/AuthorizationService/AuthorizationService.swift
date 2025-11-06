@@ -5,18 +5,124 @@
 //  Created by Kirill Prokofyev on 24.10.2025.
 //
 
-public final class AuthorizationService: AuthorizationServiceInterface {
-    // MARK: Private Properties
+import Foundation
+private import PhoneNumberKit
 
-    // private let networkService: NetworkService
+public final class AuthorizationService: AuthorizationServiceInterface {
+    private let networkService: NetworkService
+    private let phoneNumberKit = PhoneNumberUtility()
+    private let isMock: Bool
 
     // MARK: Lifecycle
 
-//    public init(networkService: NetworkServiceInterface) {
-//        self.networkService = networkService
-//    }
+    public init(networkService: NetworkService, isMock: Bool) {
+        self.networkService = networkService
+        self.isMock = isMock
+    }
 
     // MARK: Public Methods
 
     public func signIn() { }
+
+    public func fetchUserStatus(phone: String) async throws -> UserRoleStatus {
+        if isMock {
+            return .admin
+        }
+
+        let formattedPhone = try validateAndFormatPhone(phone)
+        let requestBody = PhoneCheckRequest(phone: formattedPhone)
+
+        let endpoint = AuthEndpoint.checkPhone
+        let answer: PhoneCheckResponse = try await networkService.request(
+            endpoint: endpoint.endpoint,
+            method: endpoint.method,
+            body: requestBody,
+            headers: endpoint.headers
+        )
+
+        return UserRoleStatus(from: answer.status)
+    }
+
+    public func registerNewAccount(phone: String, name: String) async throws -> Bool {
+        if isMock {
+            return true
+        }
+
+        let formattedPhone = try validateAndFormatPhone(phone)
+
+        let body = RegisterRequest(phone: formattedPhone, name: name)
+        let endpoint = AuthEndpoint.register
+
+        let _: EmptyDecodable = try await networkService.request(
+            endpoint: endpoint.endpoint,
+            method: endpoint.method,
+            body: body,
+            headers: endpoint.headers
+        )
+        return true
+    }
+
+    public func otpRequest(phone: String) async throws -> Bool {
+        if isMock {
+            return true
+        }
+
+        let formattedPhone = try validateAndFormatPhone(phone)
+
+        let body = OTPRequest(phone: formattedPhone)
+        let endpoint = AuthEndpoint.sendOTP
+
+        let _: EmptyDecodable = try await networkService.request(
+            endpoint: endpoint.endpoint,
+            method: endpoint.method,
+            body: body,
+            headers: endpoint.headers
+        )
+        return true
+    }
+
+    public func otpVerify(phone: String, otp: String) async throws -> Bool {
+        if isMock {
+            if otp == "0000" {
+                return true
+            } else {
+                return false
+            }
+        }
+
+        let formattedPhone = try validateAndFormatPhone(phone)
+
+        let endpoint = AuthEndpoint.verifyOTP
+        let body = VerifyOTPRequest(phone: formattedPhone, otp: otp)
+
+        // Decode tokens. If needed, persist them here.
+        let response: VerifyOTPResponse = try await networkService.request(
+            endpoint: endpoint.endpoint,
+            method: endpoint.method,
+            body: body,
+            headers: endpoint.headers
+        )
+
+        // TODO: Persist tokens if required (e.g., Keychain)
+        _ = response.accessToken
+        _ = response.refreshToken
+
+        return true
+    }
+}
+
+// MARK: - Private helpers
+private extension AuthorizationService {
+    func validateAndFormatPhone(_ rawPhone: String) throws -> String {
+        do {
+            let parsed = try phoneNumberKit.parse(rawPhone)
+            return phoneNumberKit.format(parsed, toType: .e164)
+        } catch {
+            throw NSError(
+                domain: "AuthorizationService",
+                code: 1001,
+                userInfo: [NSLocalizedDescriptionKey: "Invalid phone number"]
+            )
+        }
+    }
 }

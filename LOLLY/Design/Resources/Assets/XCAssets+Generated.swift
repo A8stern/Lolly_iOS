@@ -39,6 +39,10 @@ public enum Assets {
   }
   public enum Controls {
     public static let backArrow = ImageAsset(name: "controls/backArrow")
+    public enum Checkbox {
+      public static let checkboxSelected = ImageAsset(name: "controls/checkboxSelected")
+      public static let checkboxUnselected = ImageAsset(name: "controls/checkboxUnselected")
+    }
     public static let close = ImageAsset(name: "controls/close")
     public static let nextArrow = ImageAsset(name: "controls/nextArrow")
   }
