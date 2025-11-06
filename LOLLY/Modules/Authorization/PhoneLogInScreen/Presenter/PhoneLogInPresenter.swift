@@ -12,6 +12,10 @@ protocol PhoneLogInPresenter: AnyObject {
     /// Обработка входа на экран.
     func onViewDidLoad()
 
+    func onViewWillAppear()
+
+    func onViewDidDisappear()
+
     func phoneFieldChanged(_ value: String)
 
     func phoneFieldEndEditing()
@@ -57,6 +61,14 @@ extension PhoneLogInViewPresenter: PhoneLogInPresenter {
     func onViewDidLoad() {
         let response = PhoneLogInModels.InitialData.Response()
         responseInitialData(response: response)
+    }
+
+    func onViewWillAppear() {
+        updateContinueButton()
+    }
+
+    func onViewDidDisappear() {
+        userRoleStatus = nil
     }
 
     func phoneFieldChanged(_ value: String) {

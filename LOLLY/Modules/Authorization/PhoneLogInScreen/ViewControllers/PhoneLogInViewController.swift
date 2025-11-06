@@ -70,6 +70,18 @@ final class PhoneLogInViewController: UIViewController {
         presenter?.onViewDidLoad()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        presenter?.onViewWillAppear()
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+
+        presenter?.onViewDidDisappear()
+    }
+
     // MARK: - Private setup
 
     private func addSubviews() {
