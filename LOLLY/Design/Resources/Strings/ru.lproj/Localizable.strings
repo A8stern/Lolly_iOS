@@ -25,6 +25,12 @@
 "PhoneLogIn.Terms.Oferta" = "договора оферты";
 "PhoneLogIn.Terms.PrivacyPolicy" = "политики конфиденциальности";
 
+/* OTP */
+
+"OTP.Verification.ResendCode" = "Отправить код повторно";
+"OTP.Verification.Caption" = "Введите код из смс";
+"OTP.Verification.Telegram" = "Перейти в Telegram-бот для авторизации";
+
 /* Main */
 "Main.GameSection.Title" = "Нейросеть выберет\nнапиток за тебя";
 

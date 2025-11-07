@@ -10,6 +10,7 @@ final class OtpCodeAssembly: Assembly {
     // MARK: - Private Properties
 
     private lazy var serviceAssembly: ServiceAssembly = self.context.assembly()
+    private lazy var useCaseAssembly: UseCaseAssembly = self.context.assembly()
 
     // MARK: - Internal Methods
 
@@ -33,6 +34,7 @@ private extension OtpCodeAssembly {
             init: OtpCodeViewPresenter(
                 view: view,
                 coordinator: coordinator,
+                verificationUseCase: self.useCaseAssembly.verificationUseCase,
                 phone: phone,
                 authorizationService: self.serviceAssembly.authorizationService
             )

@@ -19,6 +19,9 @@ protocol OtpCodePresenter: AnyObject {
 
     // Проверка ОТП кода введенного
     func checkOTP(code: String)
+
+    /// Обработка закрытия
+    func onViewDidDisappear()
 }
 
 final class OtpCodeViewPresenter {
@@ -26,8 +29,21 @@ final class OtpCodeViewPresenter {
 
     private unowned let view: OtpCodeView
     private let coordinator: AuthCoordinator
+    private let verificationUseCase: VerificationUseCaseInterface
     private let authorizationService: AuthorizationServiceInterface
     private let phone: String
+
+    /// Текущий таймер
+    private var runningTimer: Timer?
+
+    /// Время завершения текущего таймера
+    private var runningTimerFinishDate: Date?
+
+    /// Оставшееся время текущего таймера
+    private var runningTimerRemainingSeconds: Int? {
+        guard let runningTimerFinishDate else { return nil }
+        return Int(ceil((runningTimerFinishDate.timeIntervalSince(Date()))))
+    }
 
     // Настройки повторных попыток
     private enum RetryConfig {
@@ -41,13 +57,21 @@ final class OtpCodeViewPresenter {
     init(
         view: OtpCodeView,
         coordinator: AuthCoordinator,
+        verificationUseCase: VerificationUseCaseInterface,
         phone: String,
         authorizationService: AuthorizationServiceInterface
     ) {
         self.view = view
         self.coordinator = coordinator
         self.phone = phone
+        self.verificationUseCase = verificationUseCase
         self.authorizationService = authorizationService
+
+        verificationUseCase.delegate = self
+    }
+
+    deinit {
+        verificationUseCase.delegate = nil
     }
 }
 
@@ -55,6 +79,14 @@ final class OtpCodeViewPresenter {
 
 extension OtpCodeViewPresenter: OtpCodePresenter {
     func onViewDidLoad() {
+        verificationUseCase.startOtpTimer()
+
+        let viewModel = OtpCodeModels.ResendButton.ViewModel(
+            resendButtonTitle: L10n.Otp.Verification.resendCode,
+            isResendButtonEnabled: false
+        )
+        view.displayResendButton(viewModel: viewModel)
+
         Task { [weak self] in
             await self?.requestOTPWithRetries()
         }
@@ -63,6 +95,11 @@ extension OtpCodeViewPresenter: OtpCodePresenter {
     func onViewWillAppear() { }
 
     func onViewDidAppear() { }
+
+    func onViewDidDisappear() {
+        verificationUseCase.stopOtpTimer()
+        coordinator.close(animated: true)
+    }
 
     func checkOTP(code: String) {
         Task {
@@ -114,5 +151,58 @@ private extension OtpCodeViewPresenter {
                 }
             }
         }
+    }
+
+    func startTimer() {
+        let finishDate = Date().appending(DateComponents(second: Constants.resendButtonAppearDelayInSeconds))
+        let timer = Timer(fire: finishDate, interval: .zero, repeats: false) { [weak self] _ in
+            guard let self else { return }
+
+            let viewModel = OtpCodeModels.ResendButton.ViewModel(
+                resendButtonTitle: L10n.Otp.Verification.resendCode,
+                isResendButtonEnabled: true
+            )
+            view.displayResendButton(viewModel: viewModel)
+            runningTimer?.invalidate()
+            runningTimer = nil
+        }
+        runningTimer = timer
+        runningTimerFinishDate = finishDate
+        RunLoop.main.add(timer, forMode: .common)
+    }
+}
+
+extension OtpCodeViewPresenter: VerificationUseCaseDelegate {
+    func verificationUseCaseDidStartTimer(nextAttemptIn secondsLeft: Int) {
+        let viewModel = OtpCodeModels.ResendButton.ViewModel(
+            resendButtonTitle: L10n.Otp.Verification.resendCode + " \(secondsLeft.timeFormatted)",
+            isResendButtonEnabled: false
+        )
+        view.displayResendButton(viewModel: viewModel)
+    }
+
+    func verificationUseCaseDidTick(nextAttemptIn secondsLeft: Int) {
+        let viewModel = OtpCodeModels.ResendButton.ViewModel(
+            resendButtonTitle: L10n.Otp.Verification.resendCode + " \(secondsLeft.timeFormatted)",
+            isResendButtonEnabled: false
+        )
+        view.displayResendButton(viewModel: viewModel)
+    }
+
+    func verificationUseCaseDidStopTimer() {
+        let viewModel = OtpCodeModels.ResendButton.ViewModel(
+            resendButtonTitle: L10n.Otp.Verification.resendCode,
+            isResendButtonEnabled: true
+        )
+        view.displayResendButton(viewModel: viewModel)
+    }
+}
+
+// MARK: - Constants
+
+private extension OtpCodeViewPresenter {
+    enum Constants {
+        static let otpLength = 4
+        static let resendButtonAppearDelayInSeconds = 60
     }
 }

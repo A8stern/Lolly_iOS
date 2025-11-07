@@ -9,7 +9,9 @@ private import PhoneNumberKit
 private import SnapKit
 import UIKit
 
-protocol OtpCodeView: AnyObject { }
+protocol OtpCodeView: AnyObject {
+    func displayResendButton(viewModel: OtpCodeModels.ResendButton.ViewModel)
+}
 
 final class OtpCodeViewController: UIViewController {
     var presenter: OtpCodePresenter?
@@ -39,15 +41,14 @@ final class OtpCodeViewController: UIViewController {
         let label = UILabel()
         label.font = Fonts.TTTravels.medium.font(size: Constants.labelFontSize)
         label.textColor = UIColor(asset: Colors.Text.primary)
-        label.text = Constants.enterCodeText
+        label.text = L10n.Otp.Verification.caption
         return label
     }()
 
     private lazy var resendCodeButton: UIButton = {
         let button = UIButton(type: .system)
-
-        button.setTitle(Constants.resendCodeButtonTitle, for: .normal)
-        button.setTitleColor(UIColor(asset: Colors.accentColor), for: .normal)
+        button.setTitleColor(Colors.accentColor.color, for: .normal)
+        button.setTitleColor(Colors.Text.secondary.color, for: .disabled)
         button.titleLabel?.font = Fonts.TTTravels.regular.font(size: Constants.buttonFontSize)
 
         button.addTarget(self, action: #selector(didTapResend), for: .touchUpInside)
@@ -58,8 +59,9 @@ final class OtpCodeViewController: UIViewController {
     private lazy var openTelegramBotButton: UIButton = {
         let button = UIButton(type: .system)
 
-        button.setTitle(Constants.openTelegramButtonTitle, for: .normal)
-        button.setTitleColor(UIColor(asset: Colors.accentColor), for: .normal)
+        button.setTitle(L10n.Otp.Verification.telegram, for: .normal)
+        button.setTitleColor(Colors.accentColor.color, for: .normal)
+        button.setTitleColor(Colors.Text.secondary.color, for: .disabled)
         button.titleLabel?.font = Fonts.TTTravels.regular.font(size: Constants.buttonFontSize)
 
         button.addTarget(self, action: #selector(didTapTelegramBotButton), for: .touchUpInside)
@@ -86,6 +88,12 @@ final class OtpCodeViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         presenter?.onViewDidAppear()
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+
+        presenter?.onViewDidDisappear()
     }
 
     // MARK: - Private setup
@@ -149,7 +157,16 @@ final class OtpCodeViewController: UIViewController {
 
 // MARK: - Conformance to AuthEnterPhoneView
 
-extension OtpCodeViewController: OtpCodeView { }
+extension OtpCodeViewController: OtpCodeView {
+    func displayResendButton(viewModel: OtpCodeModels.ResendButton.ViewModel) {
+        resendCodeButton.isEnabled = viewModel.isResendButtonEnabled
+
+        UIView.performWithoutAnimation { [self] in
+            resendCodeButton.setTitle(viewModel.resendButtonTitle, for: [])
+            resendCodeButton.layoutIfNeeded()
+        }
+    }
+}
 
 // MARK: - Constants
 
@@ -164,11 +181,8 @@ private enum Constants {
     static let labelFontSize: CGFloat = 13
     static let labelTopOffset: CGFloat = 16
     static let labelHeight: CGFloat = 18
-    static let enterCodeText = "Введите код из смс"
 
     static let buttonFontSize: CGFloat = 13
-    static let resendCodeButtonTitle = "Отправить повторно"
-    static let openTelegramButtonTitle = "Перейти в Telegram для авторизации"
     static let resendButtonTopOffset: CGFloat = 32
     static let telegramButtonTopOffset: CGFloat = 12
     static let buttonHeight: CGFloat = 18

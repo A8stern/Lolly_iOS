@@ -27,6 +27,16 @@ internal enum L10n {
       internal static let title = L10n.tr("Localizable", "Main.GameSection.Title", fallback: "Нейросеть выберет\nнапиток за тебя")
     }
   }
+  internal enum Otp {
+    internal enum Verification {
+      /// Введите код из смс
+      internal static let caption = L10n.tr("Localizable", "OTP.Verification.Caption", fallback: "Введите код из смс")
+      /// OTP
+      internal static let resendCode = L10n.tr("Localizable", "OTP.Verification.ResendCode", fallback: "Отправить код повторно")
+      /// Перейти в Telegram-бот для авторизации
+      internal static let telegram = L10n.tr("Localizable", "OTP.Verification.Telegram", fallback: "Перейти в Telegram-бот для авторизации")
+    }
+  }
   internal enum PhoneLogIn {
     internal enum Buttons {
       /// Продолжить
