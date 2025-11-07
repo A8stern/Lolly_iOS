@@ -21,12 +21,9 @@ final class AuthMethodsViewController: UIViewController {
 
     // MARK: - Views
 
-    private lazy var backgroundImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = Assets.Authorization.promoBackground.image
-        imageView.contentMode = .scaleAspectFill
-        imageView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
-        return imageView
+    private lazy var backgroundVideoView: VideoView = {
+        let videoView = VideoView()
+        return videoView
     }()
 
     private lazy var bottomShadowImageView: UIImageView = {
@@ -94,7 +91,7 @@ final class AuthMethodsViewController: UIViewController {
 
 extension AuthMethodsViewController {
     fileprivate func addSubviews() {
-        view.addSubview(backgroundImageView)
+        view.addSubview(backgroundVideoView)
         view.addSubview(bottomShadowImageView)
         view.addSubview(contentContainer)
     }
@@ -113,9 +110,8 @@ extension AuthMethodsViewController {
         contentStackView.setCustomSpace(12, after: appleSignInButton)
         contentStackView.addArrangedSubview(conditionsLabel)
 
-        backgroundImageView.snp.makeConstraints { make in
-            make.top.leading.trailing.equalToSuperview()
-            make.bottom.equalToSuperview()
+        backgroundVideoView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
 
         bottomShadowImageView.snp.makeConstraints { make in
@@ -137,6 +133,7 @@ extension AuthMethodsViewController {
 
 extension AuthMethodsViewController: AuthMethodsView {
     func displayInitialData(viewModel: AuthMethodsModels.InitialData.ViewModel) {
+        backgroundVideoView.viewModel = viewModel.backgroundVideoViewModel
         phoneSignInButton.viewModel = viewModel.phoneSignInButtonViewModel
         appleSignInButton.viewModel = viewModel.appleSignInButtonViewModel
         conditionsLabel.text = viewModel.conditions

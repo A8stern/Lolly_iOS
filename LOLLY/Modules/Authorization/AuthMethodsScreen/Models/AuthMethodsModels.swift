@@ -13,6 +13,7 @@ enum AuthMethodsModels {
         }
 
         struct ViewModel {
+            let backgroundVideoViewModel: VideoViewModel
             let phoneSignInButtonViewModel: ButtonViewModel?
             let appleSignInButtonViewModel: ButtonViewModel?
             let conditions: String

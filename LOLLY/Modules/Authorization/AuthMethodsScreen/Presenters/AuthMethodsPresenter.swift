@@ -67,11 +67,16 @@ extension AuthMethodsViewPresenter {
 
         view.displayInitialData(
             viewModel: AuthMethodsModels.InitialData.ViewModel(
+                backgroundVideoViewModel: makeVideoViewModel(),
                 phoneSignInButtonViewModel: phoneSignInButtonViewModel,
                 appleSignInButtonViewModel: appleSignInButtonViewModel,
                 conditions: L10n.AuthMethods.conditions
             )
         )
+    }
+
+    private func makeVideoViewModel() -> VideoViewModel {
+        VideoViewModel(fileName: "promo")
     }
 
     private func makePhoneSignInButtonViewModel() -> ButtonViewModel {
