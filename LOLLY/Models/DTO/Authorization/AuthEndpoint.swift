@@ -15,27 +15,27 @@ public enum AuthEndpoint {
 
     public var path: String {
         switch self {
-        case .checkPhone:
-            return "/check-phone"
+            case .checkPhone:
+                return "/check-phone"
 
-        case .register:
-            return "/authorize/register"
+            case .register:
+                return "/authorize/register"
 
-        case .sendOTP:
-            return "/authorize/send-otp"
+            case .sendOTP:
+                return "/authorize/send-otp"
 
-        case .verifyOTP:
-            return "/authorize/verify-otp"
+            case .verifyOTP:
+                return "/authorize/verify-otp"
         }
     }
 
     public var method: String {
         switch self {
-        case .checkPhone, .sendOTP:
-            return "GET"
+            case .checkPhone, .sendOTP:
+                return "GET"
 
-        case .register, .verifyOTP:
-            return "POST"
+            case .register, .verifyOTP:
+                return "POST"
         }
     }
 
@@ -46,6 +46,6 @@ public enum AuthEndpoint {
     }
 }
 
-public extension AuthEndpoint {
-    var endpoint: String { path }
+extension AuthEndpoint {
+    public var endpoint: String { path }
 }

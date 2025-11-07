@@ -1,5 +1,5 @@
 //
-//  SplashView.swift
+//  SplashViewController.swift
 //  LOLLY
 //
 //  Created by Kirill Prokofyev on 20.10.2025.
@@ -45,12 +45,12 @@ final class SplashViewController: UIViewController {
 
 // MARK: - Private methods
 
-private extension SplashViewController {
-    func addSubviews() {
+extension SplashViewController {
+    fileprivate func addSubviews() {
         view.addSubview(spinnerImageView)
     }
 
-    func setupConstraints() {
+    fileprivate func setupConstraints() {
         NSLayoutConstraint.activate([
             spinnerImageView.heightAnchor.constraint(equalToConstant: Constants.spinnerSize),
             spinnerImageView.widthAnchor.constraint(equalToConstant: Constants.spinnerSize),
@@ -59,7 +59,7 @@ private extension SplashViewController {
         ])
     }
 
-    func setupViews() {
+    fileprivate func setupViews() {
         navigationController?.isNavigationBarHidden = true
         view.backgroundColor = .white
 
@@ -80,7 +80,7 @@ private extension SplashViewController {
         )
     }
 
-    func startSpinnerAnimation(on imageView: UIImageView) {
+    fileprivate func startSpinnerAnimation(on imageView: UIImageView) {
         let rotationAnimation = CABasicAnimation(keyPath: "transform.rotation")
         rotationAnimation.fromValue = 0.0
         rotationAnimation.toValue = CGFloat.pi * 2.0
@@ -99,8 +99,8 @@ extension SplashViewController: SplashView { }
 
 // MARK: - Constants
 
-private extension SplashViewController {
-    enum Constants {
+extension SplashViewController {
+    fileprivate enum Constants {
         static let spinnerSize: CGFloat = 22.0
         enum ImageName {
             static let spinner: String = "spinner"

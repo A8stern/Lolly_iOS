@@ -77,15 +77,15 @@ public final class QRSectionView: UIView, ViewModellable {
     }
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
 
 // MARK: - Private methods
 
-private extension QRSectionView {
-    func setupLayout() {
+extension QRSectionView {
+    fileprivate func setupLayout() {
         addSubview(contentStack)
         contentStack.snp.makeConstraints { make in
             make.center.equalToSuperview()
@@ -109,13 +109,13 @@ private extension QRSectionView {
         }
     }
 
-    func setupUI() {
+    fileprivate func setupUI() {
         clipsToBounds = true
         backgroundColor = Colors.accentColor.color
         updateUI()
     }
 
-    func updateUI() {
+    fileprivate func updateUI() {
         isHidden = viewModel == nil
 
         guard let viewModel

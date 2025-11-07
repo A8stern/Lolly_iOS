@@ -55,7 +55,7 @@ public final class CalendarCell: UICollectionViewCell, ViewModellable {
     }
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -68,8 +68,8 @@ public final class CalendarCell: UICollectionViewCell, ViewModellable {
 
 // MARK: - ViewConfigurable
 
-public extension CalendarCell {
-    func setupLayout() {
+extension CalendarCell {
+    public func setupLayout() {
         snp.makeConstraints { make in
             make.height.width.equalTo(CalendarCell.fixedSize)
         }
@@ -85,7 +85,7 @@ public extension CalendarCell {
         }
     }
 
-    func setupUI() {
+    public func setupUI() {
         backgroundColor = Colors.accentColor.color
         layer.cornerRadius = 18
         layer.masksToBounds = true
@@ -93,9 +93,9 @@ public extension CalendarCell {
         updateUI()
     }
 
-    func setupBehaviour() { }
+    public func setupBehaviour() { }
 
-    func updateUI() {
+    public func updateUI() {
         isHidden = viewModel == nil
         guard let viewModel else { return }
 
@@ -118,8 +118,8 @@ public extension CalendarCell {
     }
 }
 
-public extension CalendarCell {
-    static let fixedSize: CGFloat = 102
+extension CalendarCell {
+    public static let fixedSize: CGFloat = 102
 
     private enum Constants {
         static let circleDiameter: CGFloat = 14

@@ -12,15 +12,15 @@ public enum SessionEndpoint {
 
     public var path: String {
         switch self {
-        case .checkToken:
-            return "/authorize/token"
+            case .checkToken:
+                return "/authorize/token"
         }
     }
 
     public var method: String {
         switch self {
-        case .checkToken:
-            return "GET"
+            case .checkToken:
+                return "GET"
         }
     }
 
@@ -31,6 +31,6 @@ public enum SessionEndpoint {
     }
 }
 
-public extension SessionEndpoint {
-    var endpoint: String { path }
+extension SessionEndpoint {
+    public var endpoint: String { path }
 }

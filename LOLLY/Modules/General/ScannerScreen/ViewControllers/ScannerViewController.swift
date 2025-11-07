@@ -1,4 +1,5 @@
 private import SnapKit
+
 //
 //  MainViewController.swift
 //  LOLLY
@@ -20,6 +21,7 @@ final class ScannerViewController: UIViewController {
     // MARK: - Private properties
 
     // MARK: - Views
+
     private lazy var QRSection: QRSectionView = {
         let section = QRSectionView()
         return section
@@ -62,18 +64,18 @@ final class ScannerViewController: UIViewController {
     }
 }
 
-private extension ScannerViewController {
+extension ScannerViewController {
     @objc
-    func onCloseTap() {
+    fileprivate func onCloseTap() {
         presenter?.onCloseTap()
     }
 
-    func addSubviews() {
+    fileprivate func addSubviews() {
         view.addSubview(QRSection)
         view.addSubview(closeButton)
     }
 
-    func setupConstraints() {
+    fileprivate func setupConstraints() {
         QRSection.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
@@ -86,7 +88,7 @@ private extension ScannerViewController {
         }
     }
 
-    func setupViews() {
+    fileprivate func setupViews() {
         view.backgroundColor = Colors.Custom.inverted.color
         navigationController?.isNavigationBarHidden = true
     }
@@ -104,8 +106,8 @@ extension ScannerViewController: ScannerView {
 
 // MARK: - Constants
 
-private extension ScannerViewController {
-    enum Constants {
+extension ScannerViewController {
+    fileprivate enum Constants {
         static let innerMargins: UIEdgeInsets = .zero
         static let contentMargins: UIEdgeInsets = .zero
         static let qrSize: CGFloat = 325.0

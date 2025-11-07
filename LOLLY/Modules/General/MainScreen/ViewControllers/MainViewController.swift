@@ -1,4 +1,5 @@
 private import SnapKit
+
 //
 //  MainView.swift
 //  LOLLY
@@ -117,16 +118,16 @@ final class MainViewController: UIViewController {
 
 // MARK: - Private methods
 
-private extension MainViewController {
-    func addSubviews() {
-        [blurView, scrollView, navBar].forEach {
-            view.addSubview($0)
+extension MainViewController {
+    fileprivate func addSubviews() {
+        for item in [blurView, scrollView, navBar] {
+            view.addSubview(item)
         }
         scrollView.addSubview(contentView)
         contentView.addSubview(sectionsStackView)
     }
 
-    func setupConstraints() {
+    fileprivate func setupConstraints() {
         extendedLayoutIncludesOpaqueBars = true
         view.layoutMargins = Constants.innerMargins
         contentView.layoutMargins = Constants.contentMargins
@@ -170,14 +171,14 @@ private extension MainViewController {
         )
     }
 
-    func setupViews() {
+    fileprivate func setupViews() {
         view.backgroundColor = Colors.Custom.inverted.color
         navigationController?.isNavigationBarHidden = true
         navBar.delegate = self
         gameSection.addGestureRecognizer(gameSectionTapGesture)
     }
 
-    func adjustScrollViewInsetIfNeeded() {
+    fileprivate func adjustScrollViewInsetIfNeeded() {
         let topInset: CGFloat = navBar.bounds.height - navBar.safeAreaInsets.top
         let bottomInset: CGFloat = .zero
 
@@ -193,7 +194,7 @@ private extension MainViewController {
     }
 
     @objc
-    func onGameSectionTap() {
+    fileprivate func onGameSectionTap() {
         presenter?.onGameSectionTap()
     }
 }
@@ -216,8 +217,8 @@ extension MainViewController: NavigationBarDelegate { }
 
 // MARK: - Constants
 
-private extension MainViewController {
-    enum Constants {
+extension MainViewController {
+    fileprivate enum Constants {
         static let innerMargins: UIEdgeInsets = .zero
         static let contentMargins: UIEdgeInsets = .zero
     }

@@ -7,8 +7,8 @@
 
 import Foundation
 
-public extension Int {
-    var timeFormatted: String {
+extension Int {
+    public var timeFormatted: String {
         String(self).timeFormatted
     }
 }

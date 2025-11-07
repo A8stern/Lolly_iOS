@@ -25,7 +25,7 @@ open class BaseCoordinator<RootType: Presenter>: NSObject, Coordinator, Coordina
 
     // MARK: - Private Properties
 
-    internal var delegateProxy = CoordinatorDelegateProxy()
+    var delegateProxy = CoordinatorDelegateProxy()
 
     // MARK: - Lifecycle
 
@@ -66,7 +66,7 @@ open class BaseCoordinator<RootType: Presenter>: NSObject, Coordinator, Coordina
             case let root as UIViewController:
                 root.dismiss(animated: animated, completion: { [weak self] in
                     guard let self else { return }
-                    self.didClosed()
+                    didClosed()
                 })
 
             default:
@@ -75,7 +75,7 @@ open class BaseCoordinator<RootType: Presenter>: NSObject, Coordinator, Coordina
     }
 
     open func didClosed() {
-        self.delegateProxy.coordinatorDidClose(self)
+        delegateProxy.coordinatorDidClose(self)
     }
 
     // MARK: - CoordinatorDelegate

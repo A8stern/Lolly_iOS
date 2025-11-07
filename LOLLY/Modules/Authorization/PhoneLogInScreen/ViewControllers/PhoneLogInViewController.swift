@@ -200,10 +200,10 @@ extension PhoneLogInViewController: TextFieldDelegate {
         let newValue = nsstring.replacingCharacters(in: range, with: string)
 
         switch textField {
-            case self.phoneTextField:
+            case phoneTextField:
                 presenter?.phoneFieldChanged(newValue)
 
-            case self.nameTextField:
+            case nameTextField:
                 presenter?.nameFieldChanged(newValue)
 
             default:
@@ -214,10 +214,10 @@ extension PhoneLogInViewController: TextFieldDelegate {
 
     func textFieldDidEndEditing(_ textField: TextField) {
         switch textField {
-            case self.phoneTextField:
+            case phoneTextField:
                 presenter?.phoneFieldEndEditing()
 
-            case self.nameTextField:
+            case nameTextField:
                 presenter?.nameFieldEndEditing()
 
             default:
@@ -229,7 +229,7 @@ extension PhoneLogInViewController: TextFieldDelegate {
 // MARK: - UIGestureRecognizerDelegate
 
 extension PhoneLogInViewController: UIGestureRecognizerDelegate {
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+    func gestureRecognizer(_: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         if touch.view is Button {
             return false
         }
@@ -239,8 +239,8 @@ extension PhoneLogInViewController: UIGestureRecognizerDelegate {
 
 // MARK: - Helpers
 
-private extension PhoneLogInViewController {
-    func makeTermsAttributedText(baseFont: UIFont) -> NSMutableAttributedString {
+extension PhoneLogInViewController {
+    fileprivate func makeTermsAttributedText(baseFont: UIFont) -> NSMutableAttributedString {
         let text = L10n.PhoneLogIn.Terms.text
         let attributed = NSMutableAttributedString(
             string: text,
@@ -263,8 +263,8 @@ private extension PhoneLogInViewController {
 
 // MARK: - Constants
 
-private extension PhoneLogInViewController {
-    enum Constants {
+extension PhoneLogInViewController {
+    fileprivate enum Constants {
         static let horizontalSpacing: CGFloat = 16
         static let termsOfferURL = "https://google.com"
         static let termsPrivacyURL = "https://google.com"

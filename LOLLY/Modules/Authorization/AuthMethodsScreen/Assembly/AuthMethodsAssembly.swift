@@ -1,5 +1,5 @@
 //
-//  AuthMethodsAssembly.swift.swift
+//  AuthMethodsAssembly.swift
 //  LOLLY
 //
 //  Created by Kirill Prokofyev on 24.10.2025.
@@ -22,8 +22,8 @@ final class AuthMethodsAssembly: Assembly {
 
 // MARK: Private Methods
 
-private extension AuthMethodsAssembly {
-    func assemblePresenter(view: AuthMethodsView, coordinator: AuthCoordinator) -> AuthMethodsPresenter {
+extension AuthMethodsAssembly {
+    fileprivate func assemblePresenter(view: AuthMethodsView, coordinator: AuthCoordinator) -> AuthMethodsPresenter {
         return define(
             scope: .prototype,
             init: AuthMethodsViewPresenter(

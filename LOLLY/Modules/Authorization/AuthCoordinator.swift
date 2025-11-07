@@ -1,5 +1,5 @@
 //
-//  GeneralCoordinator.swift
+//  AuthCoordinator.swift
 //  LOLLY
 //
 //  Created by Kirill Prokofyev on 24.10.2025.
@@ -14,7 +14,7 @@ final class AuthCoordinator: BaseNavigationCoordinator {
         openAuthMethods()
     }
 
-    override func close(animated: Bool) {
+    override func close(animated _: Bool) {
         delegate?.coordinatorDidClose(self)
     }
 

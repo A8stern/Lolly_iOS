@@ -30,8 +30,8 @@ final class OtpCodeViewController: UIViewController {
 
         field.addTarget(self, action: #selector(codeChanged), for: .editingChanged)
         field.onCodeFilled = { [weak self] code in
-            guard let self = self else { return }
-            self.presenter?.checkOTP(code: code)
+            guard let self else { return }
+            presenter?.checkOTP(code: code)
         }
 
         return field

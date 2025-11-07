@@ -1,5 +1,5 @@
 //
-//  CoordinatorDelegate.swift
+//  Coordinator.swift
 //  LOLLY
 //
 //  Created by Kirill Prokofyev on 20.10.2025.
@@ -11,8 +11,8 @@ public protocol CoordinatorDelegate: AnyObject {
     func coordinatorDidClose(_ coordinator: some Coordinator)
 }
 
-public extension CoordinatorDelegate {
-    func coordinatorDidClose(_ coordinator: some Coordinator) { }
+extension CoordinatorDelegate {
+    public func coordinatorDidClose(_: some Coordinator) { }
 }
 
 public protocol Coordinator: AnyObject {

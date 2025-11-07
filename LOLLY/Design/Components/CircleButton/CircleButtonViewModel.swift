@@ -11,6 +11,7 @@ public struct CircleButtonViewModel: Changeable {
     public enum CircleButtonType {
         case play
     }
+
     public var type: CircleButtonType
     public var tapHandler: (() -> Void)?
 

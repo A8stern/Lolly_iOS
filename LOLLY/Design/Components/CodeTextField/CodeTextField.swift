@@ -8,12 +8,13 @@
 import UIKit
 
 // MARK: - Основной контрол
+
 final class CodeTextField: UIControl, UITextFieldDelegate {
     static let defaultFont: UIFont = Fonts.TTTravels.medium.font(size: 30)
-    static let defaultFillColor: UIColor = UIColor(asset: Colors.Custom.textFieldBackground) ?? .systemGray6
-    static let defaultInactiveBorderColor: UIColor = UIColor(asset: Colors.Custom.textFieldBackground) ?? .systemGray6
-    static let defaultActiveBorderColor: UIColor = UIColor(asset: Colors.Constants.black) ?? .black
-    static let defaultTextColor: UIColor = UIColor(asset: Colors.Text.primary) ?? .label
+    static let defaultFillColor: UIColor = .init(asset: Colors.Custom.textFieldBackground) ?? .systemGray6
+    static let defaultInactiveBorderColor: UIColor = .init(asset: Colors.Custom.textFieldBackground) ?? .systemGray6
+    static let defaultActiveBorderColor: UIColor = .init(asset: Colors.Constants.black) ?? .black
+    static let defaultTextColor: UIColor = .init(asset: Colors.Text.primary) ?? .label
 
     var length: Int = 4 {
         didSet {
@@ -21,9 +22,11 @@ final class CodeTextField: UIControl, UITextFieldDelegate {
             invalidateIntrinsicContentSize()
         }
     }
+
     var spacing: CGFloat = 12 {
         didSet { stack.spacing = spacing }
     }
+
     var boxSize: CGSize = .init(width: 56, height: 56) {
         didSet {
             updateBoxSizes()
@@ -31,21 +34,27 @@ final class CodeTextField: UIControl, UITextFieldDelegate {
             invalidateIntrinsicContentSize()
         }
     }
+
     var cornerRadius: CGFloat = 12 {
         didSet { cells.forEach { $0.cornerRadius = cornerRadius } }
     }
+
     var font: UIFont = CodeTextField.defaultFont {
         didSet { cells.forEach { $0.font = font } }
     }
+
     var activeBorderColor: UIColor = CodeTextField.defaultActiveBorderColor {
         didSet { cells.forEach { $0.activeBorderColor = activeBorderColor } }
     }
+
     var inactiveBorderColor: UIColor = CodeTextField.defaultInactiveBorderColor {
         didSet { cells.forEach { $0.inactiveBorderColor = inactiveBorderColor } }
     }
+
     var fillColor: UIColor = CodeTextField.defaultFillColor {
         didSet { cells.forEach { $0.fillColor = fillColor } }
     }
+
     var textColor: UIColor = CodeTextField.defaultTextColor {
         didSet { cells.forEach { $0.label.textColor = textColor } }
     }
@@ -93,11 +102,13 @@ final class CodeTextField: UIControl, UITextFieldDelegate {
     }
 
     // MARK: - Init
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         applyDefaultStyle()
         setup()
     }
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         applyDefaultStyle()
@@ -186,6 +197,7 @@ final class CodeTextField: UIControl, UITextFieldDelegate {
     }
 
     // MARK: - Focus
+
     @objc
     private func focus() {
         _ = becomeFirstResponder()
@@ -206,6 +218,7 @@ final class CodeTextField: UIControl, UITextFieldDelegate {
     }
 
     // MARK: - API
+
     func setCode(_ new: String) {
         let digits = new.filter(\.isNumber)
         code = String(digits.prefix(length))
@@ -231,6 +244,7 @@ final class CodeTextField: UIControl, UITextFieldDelegate {
     }
 
     // MARK: - UI sync
+
     private func updateUI() {
         for (index, cell) in cells.enumerated() {
             let character: Character? = index < code.count ? Array(code)[index] : nil
@@ -255,6 +269,7 @@ final class CodeTextField: UIControl, UITextFieldDelegate {
     }
 
     // MARK: - UITextFieldDelegate (фильтрация ввода)
+
     func textField(
         _ textField: UITextField,
         shouldChangeCharactersIn range: NSRange,

@@ -20,7 +20,7 @@ public final class BlurView: UIVisualEffectView {
         setupUI()
     }
 
-    required init?(coder: NSCoder) {
+    required init?(coder _: NSCoder) {
         let effect: UIVisualEffect
         if #available(iOS 26.0, *) {
             effect = UIGlassEffect(style: .regular)

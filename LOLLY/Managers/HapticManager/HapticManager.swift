@@ -75,8 +75,8 @@ extension HapticManager: HapticManagerInterface {
 
 // MARK: - HapticNotificationWeight
 
-fileprivate extension HapticNotificationWeight {
-    func asFeedbackType() -> UINotificationFeedbackGenerator.FeedbackType {
+extension HapticNotificationWeight {
+    fileprivate func asFeedbackType() -> UINotificationFeedbackGenerator.FeedbackType {
         switch self {
             case .success: .success
             case .warning: .warning
@@ -87,8 +87,8 @@ fileprivate extension HapticNotificationWeight {
 
 // MARK: - HapticImpactWeight
 
-fileprivate extension HapticImpactWeight {
-    func asFeedbackStyle() -> UIImpactFeedbackGenerator.FeedbackStyle {
+extension HapticImpactWeight {
+    fileprivate func asFeedbackStyle() -> UIImpactFeedbackGenerator.FeedbackStyle {
         switch self {
             case .light: .light
             case .medium: .medium

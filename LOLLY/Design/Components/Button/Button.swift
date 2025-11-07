@@ -66,7 +66,7 @@ public final class Button: UIButton, ViewModellable {
     }
 
     @available(*, unavailable)
-    public required init?(coder: NSCoder) {
+    public required init?(coder _: NSCoder) {
         fatalError("Button ::: required init?(coder: NSCoder)")
     }
 
@@ -169,15 +169,15 @@ public final class Button: UIButton, ViewModellable {
 
 // MARK: - ViewConfigurable
 
-public extension Button {
-    func setupLayout() { }
+extension Button {
+    public func setupLayout() { }
 
-    func setupUI() {
+    public func setupUI() {
         makeCorners()
         updateUI()
     }
 
-    func setupBehaviour() {
+    public func setupBehaviour() {
         addTarget(
             self,
             action: #selector(didTapButton),
@@ -185,7 +185,7 @@ public extension Button {
         )
     }
 
-    func updateUI() {
+    public func updateUI() {
         isHidden = viewModel == nil
         guard let viewModel else { return }
 
@@ -242,8 +242,8 @@ extension ButtonViewModel.Size {
 
 // MARK: - ButtonViewModel extensions
 
-fileprivate extension ButtonViewModel {
-    var font: UIFont {
+extension ButtonViewModel {
+    fileprivate var font: UIFont {
         switch size {
             case .large:
                 return Fonts.TTTravels.demiBold.font(size: 16)
@@ -253,7 +253,7 @@ fileprivate extension ButtonViewModel {
         }
     }
 
-    var icon: ButtonViewModel.Icon? {
+    fileprivate var icon: ButtonViewModel.Icon? {
         switch type {
             case .primary(let option),
                 .secondary(let option):
@@ -264,7 +264,7 @@ fileprivate extension ButtonViewModel {
         }
     }
 
-    var imageTintColor: ColorAsset {
+    fileprivate var imageTintColor: ColorAsset {
         switch type {
             case .primary:
                 return Colors.Constants.white
@@ -277,7 +277,7 @@ fileprivate extension ButtonViewModel {
         }
     }
 
-    var contentColor: ColorAsset {
+    fileprivate var contentColor: ColorAsset {
         switch type {
             case .primary:
                 return Colors.Constants.white
@@ -290,7 +290,7 @@ fileprivate extension ButtonViewModel {
         }
     }
 
-    var enabledBackgroundColorAsset: ColorAsset {
+    fileprivate var enabledBackgroundColorAsset: ColorAsset {
         switch type {
             case .primary:
                 return Colors.Controls.primary
@@ -303,7 +303,7 @@ fileprivate extension ButtonViewModel {
         }
     }
 
-    var pressedBackgroundColorAsset: ColorAsset {
+    fileprivate var pressedBackgroundColorAsset: ColorAsset {
         switch type {
             case .primary:
                 return Colors.Controls.primaryPressed
@@ -316,7 +316,7 @@ fileprivate extension ButtonViewModel {
         }
     }
 
-    var disabledColor: ColorAsset {
+    fileprivate var disabledColor: ColorAsset {
         switch type {
             case .primary:
                 return Colors.Controls.disabled
@@ -329,7 +329,7 @@ fileprivate extension ButtonViewModel {
         }
     }
 
-    var needImageTint: Bool {
+    fileprivate var needImageTint: Bool {
         switch type {
             case .primary, .secondary:
                 return true

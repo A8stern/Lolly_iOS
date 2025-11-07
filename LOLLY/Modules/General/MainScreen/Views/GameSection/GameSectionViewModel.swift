@@ -13,7 +13,7 @@ public struct GameSectionViewModel: Changeable {
     public init(
         title: String,
         waveformImage: UIImage
-    ){
+    ) {
         self.title = title
         self.waveformImage = waveformImage
     }

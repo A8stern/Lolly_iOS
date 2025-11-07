@@ -24,8 +24,8 @@ final class MainAssembly: Assembly {
 
 // MARK: Private Methods
 
-private extension MainAssembly {
-    func assemblePresenter(view: MainView, coordinator: GeneralCoordinator) -> MainPresenter {
+extension MainAssembly {
+    fileprivate func assemblePresenter(view: MainView, coordinator: GeneralCoordinator) -> MainPresenter {
         return define(
             scope: .prototype,
             init: MainViewPresenter(

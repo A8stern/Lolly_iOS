@@ -51,15 +51,15 @@ public final class PromoSectionView: UIView, ViewModellable {
     }
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
 
 // MARK: - Private methods
 
-private extension PromoSectionView {
-    func setupLayout() {
+extension PromoSectionView {
+    fileprivate func setupLayout() {
         addSubview(leftCircleView)
         addSubview(rightCircleView)
         addSubview(promoLabel)
@@ -103,7 +103,7 @@ private extension PromoSectionView {
         }
     }
 
-    func setupUI() {
+    fileprivate func setupUI() {
         clipsToBounds = true
         backgroundColor = Colors.Controls.inactive.color
         layer.cornerRadius = Constants.cornerRadius
@@ -117,7 +117,7 @@ private extension PromoSectionView {
         updateUI()
     }
 
-    func updateUI() {
+    fileprivate func updateUI() {
         isHidden = viewModel == nil
 
         guard let viewModel else { return }

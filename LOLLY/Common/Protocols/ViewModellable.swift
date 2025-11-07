@@ -26,8 +26,8 @@ public struct ViewModellableBox<V: ViewModellable> {
     }
 }
 
-public extension ViewModellable {
-    static func box(with viewModel: Self.ViewModel) -> ViewModellableBox<Self> {
+extension ViewModellable {
+    public static func box(with viewModel: Self.ViewModel) -> ViewModellableBox<Self> {
         ViewModellableBox(
             viewModel: viewModel
         )

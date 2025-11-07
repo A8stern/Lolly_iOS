@@ -57,8 +57,8 @@ extension MainViewPresenter: MainPresenter {
 
 // MARK: - Private Methods
 
-private extension MainViewPresenter {
-    func responseInitialData(response: MainModels.InitialData.Response) {
+extension MainViewPresenter {
+    fileprivate func responseInitialData(response _: MainModels.InitialData.Response) {
         let viewModel = MainModels.InitialData.ViewModel(
             stickerSectionViewModel: makeStickerSectionViewModel(),
             promoSectionViewModel: makePromoSectionViewModel(),
@@ -70,7 +70,7 @@ private extension MainViewPresenter {
         view.displayInitialData(viewModel: viewModel)
     }
 
-    func makeStickerSectionViewModel() -> StickerSectionViewModel? {
+    fileprivate func makeStickerSectionViewModel() -> StickerSectionViewModel? {
         StickerSectionViewModel(
             title: "Карточка заполнена",
             sign: "=",
@@ -88,7 +88,7 @@ private extension MainViewPresenter {
         )
     }
 
-    func makeCalendarSectionViewModel() -> CalendarSectionViewModel? {
+    fileprivate func makeCalendarSectionViewModel() -> CalendarSectionViewModel? {
         CalendarSectionViewModel(
             month: "Май",
             days: [
@@ -109,20 +109,20 @@ private extension MainViewPresenter {
         )
     }
 
-    func makeGameSectionViewModel() -> GameSectionViewModel? {
+    fileprivate func makeGameSectionViewModel() -> GameSectionViewModel? {
         return GameSectionViewModel(
             title: L10n.Main.GameSection.title,
             waveformImage: Assets.Brand.Gamification.waveform.image
         )
     }
 
-    func makePromoSectionViewModel() -> PromoSectionViewModel? {
+    fileprivate func makePromoSectionViewModel() -> PromoSectionViewModel? {
         return PromoSectionViewModel(
             text: "Скидка -20% в день рождения"
         )
     }
 
-    func makeContactsSectionViewModel() -> ContactsSectionViewModel? {
+    fileprivate func makeContactsSectionViewModel() -> ContactsSectionViewModel? {
         ContactsSectionViewModel(
             title: "Ждём вас",
             backgroundImage: Assets.Brand.Photos.contactsBackground.image,
@@ -138,16 +138,14 @@ private extension MainViewPresenter {
 
 // MARK: - ButtonViewModel.Config
 
-public extension ButtonViewModel.Config {
-    static let yellow: ButtonViewModel.Config = {
-        ButtonViewModel.Config(
-            icon: .none,
-            imageTintColor: Colors.Text.primary,
-            contentColor: Colors.Text.primary,
-            enabledColor: Colors.Constants.yellow,
-            pressedColor: Colors.Constants.ocher,
-            disabledColor: Colors.Constants.grey,
-            needImageTint: true
-        )
-    }()
+extension ButtonViewModel.Config {
+    public static let yellow: ButtonViewModel.Config = .init(
+        icon: .none,
+        imageTintColor: Colors.Text.primary,
+        contentColor: Colors.Text.primary,
+        enabledColor: Colors.Constants.yellow,
+        pressedColor: Colors.Constants.ocher,
+        disabledColor: Colors.Constants.grey,
+        needImageTint: true
+    )
 }

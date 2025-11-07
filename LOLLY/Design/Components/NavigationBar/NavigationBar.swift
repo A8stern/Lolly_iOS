@@ -152,14 +152,14 @@ public final class NavigationBar: BaseNavigationBar {
 
 // MARK: - Private Methods
 
-private extension NavigationBar {
-    func addSubviews() {
+extension NavigationBar {
+    fileprivate func addSubviews() {
         contentView.addSubview(backButton)
         contentView.addSubview(rightButton)
         contentView.addSubview(titleLabel)
     }
 
-    func setupConstraints() {
+    fileprivate func setupConstraints() {
         backButton.snp.makeConstraints { make in
             make.leading.equalTo(contentView.layoutMarginsGuide.snp.leading)
             make.centerY.equalTo(contentView.layoutMarginsGuide.snp.centerY)
@@ -182,11 +182,11 @@ private extension NavigationBar {
         }
     }
 
-    func configure() {
+    fileprivate func configure() {
         setupBackButton()
     }
 
-    func setupBackButton() {
+    fileprivate func setupBackButton() {
         // Replace AppResources with your assets accessor if needed.
         backButton.setImage(
             Assets.Controls.backArrow.image.withRenderingMode(.alwaysTemplate),
@@ -195,7 +195,7 @@ private extension NavigationBar {
         backButton.tintColor = Colors.Text.primary.color
     }
 
-    func setupCloseButton() {
+    fileprivate func setupCloseButton() {
         guard prefersCloseButton else {
             backButton.isHidden = false
             rightButton.isHidden = true
@@ -211,7 +211,7 @@ private extension NavigationBar {
         setRightButton(image: closeIconImage)
     }
 
-    func setupBackCloseButton() {
+    fileprivate func setupBackCloseButton() {
         guard prefersBackCloseButton else {
             setupBackButton()
             return
@@ -223,11 +223,11 @@ private extension NavigationBar {
     }
 
     @objc
-    func handleBackTap() {
+    fileprivate func handleBackTap() {
         delegate?.didReceiveBackAction(self)
     }
 
-    func handleCloseTap() {
+    fileprivate func handleCloseTap() {
         delegate?.didReceiveCloseAction(self)
     }
 }

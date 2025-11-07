@@ -25,8 +25,8 @@ final class PhoneLogInAssembly: Assembly {
 
 // MARK: Private Methods
 
-private extension PhoneLogInAssembly {
-    func assemblePresenter(
+extension PhoneLogInAssembly {
+    fileprivate func assemblePresenter(
         view: PhoneLogInView,
         coordinator: AuthCoordinator
     ) -> PhoneLogInPresenter {

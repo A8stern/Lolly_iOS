@@ -14,7 +14,7 @@ public final class SplashCoordinator: BaseNavigationCoordinator {
         showSplashScreen()
     }
 
-    override public func close(animated: Bool) {
+    override public func close(animated _: Bool) {
         delegate?.coordinatorDidClose(self)
     }
 

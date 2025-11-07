@@ -1,5 +1,5 @@
 //
-//  ScannerViewModel.swift
+//  QRSectionViewModel.swift
 //  LOLLY
 //
 //  Created by Nikita on 04.11.2025.

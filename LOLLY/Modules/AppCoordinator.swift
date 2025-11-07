@@ -1,5 +1,5 @@
 //
-//  RootCoordinator.swift
+//  AppCoordinator.swift
 //  LOLLY
 //
 //  Created by Kirill Prokofyev on 20.10.2025.

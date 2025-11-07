@@ -28,7 +28,7 @@ public final class VerificationUseCase: VerificationUseCaseInterface {
     /// Оставшееся время текущего таймера
     private var runningTimerRemainingSeconds: Int? {
         guard let runningTimerFinishDate else { return nil }
-        return Int(ceil((runningTimerFinishDate.timeIntervalSince(Date()))))
+        return Int(ceil(runningTimerFinishDate.timeIntervalSince(Date())))
     }
 
     // MARK: - Lifecycle
@@ -52,8 +52,8 @@ public final class VerificationUseCase: VerificationUseCaseInterface {
 
 // MARK: - Private Methods
 
-private extension VerificationUseCase {
-    func startTimer() {
+extension VerificationUseCase {
+    fileprivate func startTimer() {
         let finishDate = Date().appending(DateComponents(second: 60))
         let timer = Timer(timeInterval: 1.0, repeats: true, block: { [weak self] _ in
             self?.handleTimerTick()
@@ -64,18 +64,15 @@ private extension VerificationUseCase {
         delegate?.verificationUseCaseDidTick(nextAttemptIn: 60)
     }
 
-    func stopTimer() {
+    fileprivate func stopTimer() {
         runningTimer?.invalidate()
         delegate?.verificationUseCaseDidStopTimer()
         runningTimer = nil
         runningTimerFinishDate = nil
     }
 
-    func handleTimerTick() {
-        guard
-            let runningTimerRemainingSeconds = runningTimerRemainingSeconds,
-            runningTimerRemainingSeconds > .zero
-        else {
+    fileprivate func handleTimerTick() {
+        guard let runningTimerRemainingSeconds, runningTimerRemainingSeconds > .zero else {
             stopTimer()
             return
         }

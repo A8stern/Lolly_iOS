@@ -17,9 +17,10 @@ final class DigitCellView: UIView {
     var borderWidth: CGFloat = 1 { didSet { layer.borderWidth = borderWidth } }
     var activeBorderColor: UIColor = .label
     var inactiveBorderColor: UIColor = .separator
-    var fillColor: UIColor = UIColor.systemGray6 {
+    var fillColor: UIColor = .systemGray6 {
         didSet { backgroundColor = fillColor }
     }
+
     var textColor: UIColor = .label
     var font: UIFont = .systemFont(ofSize: 28, weight: .regular) { didSet { label.font = font } }
 
@@ -44,7 +45,8 @@ final class DigitCellView: UIView {
         updateAppearance()
     }
 
-    required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) { fatalError("init(coder:) has not been implemented") }
 
     private func updateAppearance() {
         layer.borderColor = (isActive ? activeBorderColor : inactiveBorderColor).cgColor

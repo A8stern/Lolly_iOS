@@ -7,11 +7,11 @@
 
 import UIKit
 
-public extension UICollectionView {
+extension UICollectionView {
     /// Исправленная прокрутка к элементу по его индексу.
     /// Проблема: iOS 14.X неверно прокручивает коллекцию в некоторых случаях, из-за чего
     /// желаемый элемент может отобразиться в некорректной позиции.
-    func patchedScrollToItem(
+    public func patchedScrollToItem(
         at indexPath: IndexPath,
         at scrollPosition: UICollectionView.ScrollPosition,
         animated: Bool
@@ -34,19 +34,19 @@ public extension UICollectionView {
     }
 
     /// Останавливает процесс прокрутки.
-    func stopScrolling() {
-        self.isScrollEnabled = false
+    public func stopScrolling() {
+        isScrollEnabled = false
         DispatchQueue.main.async {
             self.isScrollEnabled = true
         }
     }
 }
 
-public extension UICollectionView {
+extension UICollectionView {
     /// Регистрирует класс ячейки для использования в `UICollectionView`
     ///
     /// - Parameter cellType: Тип ячейки, которая реализует протокол `Reusable`
-    func registerCellClass<T: UICollectionViewCell>(_ cellType: T.Type) {
+    public func registerCellClass(_ cellType: (some UICollectionViewCell).Type) {
         register(cellType, forCellWithReuseIdentifier: cellType.reuseId)
     }
 
@@ -56,15 +56,14 @@ public extension UICollectionView {
     ///   - cellType: Тип ячейки (должна реализовывать протокол Reusable).
     ///   - indexPath: Index path.
     /// - Returns: Экземпляр ячейки.
-    func dequeueReusableCell<T: UICollectionViewCell>(
+    public func dequeueReusableCell<T: UICollectionViewCell>(
         ofType cellType: T.Type,
         at indexPath: IndexPath
     ) -> T {
-        guard
-            let cell = dequeueReusableCell(
-                withReuseIdentifier: cellType.reuseId,
-                for: indexPath
-            ) as? T
+        guard let cell = dequeueReusableCell(
+            withReuseIdentifier: cellType.reuseId,
+            for: indexPath
+        ) as? T
         else {
             assertionFailure("Не удалось найти ячейку с идентификатором \(cellType.reuseId)")
             return T()
@@ -73,10 +72,10 @@ public extension UICollectionView {
     }
 
     /// Регистрирует класс view для использования в `UICollectionView`
-    func registerSupplementaryClass<T: UICollectionReusableView>(
-        _ viewType: T.Type,
+    public func registerSupplementaryClass(
+        _ viewType: (some UICollectionReusableView & Reusable).Type,
         kind: String
-    ) where T: Reusable {
+    ) {
         register(
             viewType,
             forSupplementaryViewOfKind: kind,
@@ -85,17 +84,16 @@ public extension UICollectionView {
     }
 
     /// Возвращает экземпляр переиспользуемой view по ее типу.
-    func dequeueReusableSupplementary<T: UICollectionReusableView>(
+    public func dequeueReusableSupplementary<T: UICollectionReusableView>(
         ofType viewType: T.Type,
         kind: String,
         at indexPath: IndexPath
     ) -> T where T: Reusable {
-        guard
-            let view = dequeueReusableSupplementaryView(
-                ofKind: kind,
-                withReuseIdentifier: viewType.reuseId,
-                for: indexPath
-            ) as? T
+        guard let view = dequeueReusableSupplementaryView(
+            ofKind: kind,
+            withReuseIdentifier: viewType.reuseId,
+            for: indexPath
+        ) as? T
         else {
             assertionFailure("Не удалось найти view с идентификатором \(viewType.reuseId)")
             return T()

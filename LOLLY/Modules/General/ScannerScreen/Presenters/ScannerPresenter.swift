@@ -7,7 +7,7 @@
 
 import UIKit
 
-internal protocol ScannerPresenter: AnyObject {
+protocol ScannerPresenter: AnyObject {
     func onViewDidLoad()
     func onViewWillAppear()
     func onViewDidAppear()
@@ -52,16 +52,16 @@ extension ScannerViewPresenter: ScannerPresenter {
     }
 }
 
-private extension ScannerViewPresenter {
-    func responseInitialData(response: ScannerModels.InitialData.Response) {
+extension ScannerViewPresenter {
+    fileprivate func responseInitialData(response _: ScannerModels.InitialData.Response) {
         let viewModel = ScannerModels.InitialData.ViewModel(
-            QRSectionViewModel: makeQRSectionViewModel(),
+            QRSectionViewModel: makeQRSectionViewModel()
         )
 
         view.displayInitialData(viewModel: viewModel)
     }
 
-    func makeQRSectionViewModel() -> QRSectionViewModel {
+    fileprivate func makeQRSectionViewModel() -> QRSectionViewModel {
         let fakeMockInternalUserId = "12345"
         return QRSectionViewModel(
             qrImage: generateQRCode(from: fakeMockInternalUserId),
@@ -69,7 +69,7 @@ private extension ScannerViewPresenter {
         )
     }
 
-    func generateQRCode(from string: String) -> UIImage? {
+    fileprivate func generateQRCode(from string: String) -> UIImage? {
         guard let data = string.data(using: .utf8) else { return nil }
         guard let filter = CIFilter(name: "CIQRCodeGenerator") else { return nil }
 
@@ -95,8 +95,8 @@ private extension ScannerViewPresenter {
 
 // MARK: - Constants
 
-private extension ScannerViewPresenter {
-    enum Constants {
+extension ScannerViewPresenter {
+    fileprivate enum Constants {
         static let qrSize: CGFloat = 325.0
     }
 }

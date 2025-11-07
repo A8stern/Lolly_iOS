@@ -112,8 +112,9 @@ public final class AuthorizationService: AuthorizationServiceInterface {
 }
 
 // MARK: - Private helpers
-private extension AuthorizationService {
-    func validateAndFormatPhone(_ rawPhone: String) throws -> String {
+
+extension AuthorizationService {
+    fileprivate func validateAndFormatPhone(_ rawPhone: String) throws -> String {
         do {
             let parsed = try phoneNumberKit.parse(rawPhone)
             return phoneNumberKit.format(parsed, toType: .e164)

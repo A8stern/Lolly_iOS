@@ -46,15 +46,15 @@ public final class AddressView: UIView, ViewModellable {
     }
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
 
 // MARK: - ViewConfigurable
 
-public extension AddressView {
-    func setupLayout() {
+extension AddressView {
+    public func setupLayout() {
         addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.left.top.bottom.equalToSuperview()
@@ -67,13 +67,13 @@ public extension AddressView {
         }
     }
 
-    func setupUI() {
+    public func setupUI() {
         updateUI()
     }
 
-    func setupBehaviour() { }
+    public func setupBehaviour() { }
 
-    func updateUI() {
+    public func updateUI() {
         isHidden = viewModel == nil
         guard let viewModel else { return }
 
@@ -83,8 +83,8 @@ public extension AddressView {
     }
 }
 
-private extension AddressView {
-    enum Constants {
+extension AddressView {
+    fileprivate enum Constants {
         static let spacing: CGFloat = 4
     }
 }

@@ -17,7 +17,7 @@ final class SplashViewPresenter {
     private unowned let view: SplashView
     private let coordinator: SplashCoordinator
 
-// TODO: Здесь должна быть проверка авторизован ли юзер
+    // TODO: Здесь должна быть проверка авторизован ли юзер
 //    private let profileUseCase: Domain.ProfileUseCase
 
     // MARK: - Lifecycle
@@ -35,6 +35,11 @@ final class SplashViewPresenter {
 
 extension SplashViewPresenter: SplashPresenter {
     func onViewDidLoad() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            guard let self else { return }
+            configureFlow()
+        }
+
 // MARK: Что-то в духе:
 //        profileUseCase.fetchProfile { [weak self] result in
 //            switch result {
@@ -55,27 +60,21 @@ extension SplashViewPresenter: SplashPresenter {
 //                }
 //            }
 //        }
-
-//      Пока тут заглушка на 5 секунд
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
-            guard let self else { return }
-            configureFlow()
-        }
     }
 }
 
 // MARK: - Private Methods
 
-private extension SplashViewPresenter {
-    func configureFlow() {
+extension SplashViewPresenter {
+    fileprivate func configureFlow() {
         coordinator.close(animated: true)
     }
 }
 
 // MARK: - Constants
 
-private extension SplashViewPresenter {
-    enum Constants {
+extension SplashViewPresenter {
+    fileprivate enum Constants {
         static let defaultVerificationValue: Bool = false
     }
 }

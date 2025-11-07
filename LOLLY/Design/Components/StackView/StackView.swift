@@ -33,7 +33,7 @@ public final class StackView: UIStackView {
     }
 
     @available(*, unavailable)
-    public required init(coder: NSCoder) {
+    public required init(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -72,16 +72,16 @@ public final class StackView: UIStackView {
 
 // MARK: - ViewConfigurable
 
-public extension StackView {
-    func setupLayout() {
+extension StackView {
+    public func setupLayout() {
         super.spacing = space
     }
 
-    func setupUI() { }
+    public func setupUI() { }
 
-    func setupBehaviour() { }
+    public func setupBehaviour() { }
 
-    func updateUI() { }
+    public func updateUI() { }
 }
 
 // MARK: - Contentable

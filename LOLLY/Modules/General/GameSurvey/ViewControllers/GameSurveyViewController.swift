@@ -32,8 +32,8 @@ final class GameSurveyViewController: UIViewController {
 
 // MARK: - Setup
 
-private extension GameSurveyViewController {
-    func setupLayout() {
+extension GameSurveyViewController {
+    fileprivate func setupLayout() {
         view.addSubview(closeButton)
         closeButton.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(Constants.closeButtonTopInset)
@@ -42,12 +42,12 @@ private extension GameSurveyViewController {
         }
     }
 
-    func setupViews() {
+    fileprivate func setupViews() {
         view.backgroundColor = Colors.Custom.inverted.color
     }
 
     @objc
-    func onCloseTap() {
+    fileprivate func onCloseTap() {
         presenter?.onCloseTap()
     }
 }
@@ -58,8 +58,8 @@ extension GameSurveyViewController: GameSurveyView { }
 
 // MARK: - Constants
 
-private extension GameSurveyViewController {
-    enum Constants {
+extension GameSurveyViewController {
+    fileprivate enum Constants {
         static let closeButtonSize: CGSize = .init(width: 44, height: 44)
         static let closeButtonHorizontalInset: CGFloat = 16.0
         static let closeButtonTopInset: CGFloat = 8.0

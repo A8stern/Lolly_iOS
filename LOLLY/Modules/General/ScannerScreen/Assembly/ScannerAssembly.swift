@@ -18,8 +18,8 @@ final class ScannerAssembly: Assembly {
     }
 }
 
-private extension ScannerAssembly {
-    func assemblePresenter(view: ScannerView, coordinator: GeneralCoordinator) -> ScannerPresenter {
+extension ScannerAssembly {
+    fileprivate func assemblePresenter(view: ScannerView, coordinator: GeneralCoordinator) -> ScannerPresenter {
         return define(
             scope: .prototype,
             init: ScannerViewPresenter(

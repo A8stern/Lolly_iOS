@@ -54,8 +54,8 @@ extension AuthMethodsViewPresenter: AuthMethodsPresenter {
 
 // MARK: - Private Methods
 
-private extension AuthMethodsViewPresenter {
-    func responseInitialData(response: AuthMethodsModels.InitialData.Response) {
+extension AuthMethodsViewPresenter {
+    fileprivate func responseInitialData(response: AuthMethodsModels.InitialData.Response) {
         let phoneSignInButtonViewModel: ButtonViewModel? = {
             guard response.isPhoneAuthAvailable else { return nil }
             return makePhoneSignInButtonViewModel()
@@ -105,8 +105,8 @@ private extension AuthMethodsViewPresenter {
 
 // MARK: - ButtonViewModel.Config
 
-public extension ButtonViewModel.Config {
-    static func appleSignIn() -> ButtonViewModel.Config {
+extension ButtonViewModel.Config {
+    public static func appleSignIn() -> ButtonViewModel.Config {
         ButtonViewModel.Config(
             icon: .left(icon: Assets.Icons24.Social.apple),
             imageTintColor: Colors.Text.inverted,

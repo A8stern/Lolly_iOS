@@ -83,15 +83,15 @@ public final class StickerSectionView: UIView, ViewModellable {
     }
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
 
 // MARK: - ViewConfigurable
 
-public extension StickerSectionView {
-    func setupLayout() {
+extension StickerSectionView {
+    public func setupLayout() {
         snp.makeConstraints { make in
             make.height.equalTo(Constants.sectionHeight)
         }
@@ -138,7 +138,7 @@ public extension StickerSectionView {
         }
     }
 
-    func setupUI() {
+    public func setupUI() {
         layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         layer.cornerRadius = 18.0
         layer.cornerCurve = .continuous
@@ -153,9 +153,9 @@ public extension StickerSectionView {
         updateUI()
     }
 
-    func setupBehaviour() { }
+    public func setupBehaviour() { }
 
-    func updateUI() {
+    public func updateUI() {
         isHidden = viewModel == nil
 
         guard let viewModel else { return }
@@ -168,8 +168,8 @@ public extension StickerSectionView {
     }
 }
 
-private extension StickerSectionView {
-    enum Constants {
+extension StickerSectionView {
+    fileprivate enum Constants {
         static let sectionHeight: CGFloat = 147.0
         static let cardAspectRatio: CGFloat = 97 / 110
         static let signFrameSize: CGFloat = 43

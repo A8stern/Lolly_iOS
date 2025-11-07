@@ -42,7 +42,7 @@ final class OtpCodeViewPresenter {
     /// Оставшееся время текущего таймера
     private var runningTimerRemainingSeconds: Int? {
         guard let runningTimerFinishDate else { return nil }
-        return Int(ceil((runningTimerFinishDate.timeIntervalSince(Date()))))
+        return Int(ceil(runningTimerFinishDate.timeIntervalSince(Date())))
     }
 
     // Настройки повторных попыток
@@ -118,11 +118,10 @@ extension OtpCodeViewPresenter: OtpCodePresenter {
 
 // MARK: - Private Methods
 
-private extension OtpCodeViewPresenter {
-    func responseInitialData(response: AuthMethodsModels.InitialData.Response) {
-    }
+extension OtpCodeViewPresenter {
+    fileprivate func responseInitialData(response _: AuthMethodsModels.InitialData.Response) { }
 
-    func requestOTPWithRetries() async {
+    fileprivate func requestOTPWithRetries() async {
         var attempt = 0
         var delay = RetryConfig.initialDelaySeconds
 
@@ -134,7 +133,7 @@ private extension OtpCodeViewPresenter {
                     return
                 } else {
                     if attempt < RetryConfig.maxAttempts {
-                        try? await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
+                        try? await Task.sleep(nanoseconds: UInt64(delay * 1000000000))
                         delay *= RetryConfig.backoffMultiplier
                         continue
                     } else {
@@ -143,7 +142,7 @@ private extension OtpCodeViewPresenter {
                 }
             } catch {
                 if attempt < RetryConfig.maxAttempts {
-                    try? await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
+                    try? await Task.sleep(nanoseconds: UInt64(delay * 1000000000))
                     delay *= RetryConfig.backoffMultiplier
                     continue
                 } else {
@@ -153,7 +152,7 @@ private extension OtpCodeViewPresenter {
         }
     }
 
-    func startTimer() {
+    fileprivate func startTimer() {
         let finishDate = Date().appending(DateComponents(second: Constants.resendButtonAppearDelayInSeconds))
         let timer = Timer(fire: finishDate, interval: .zero, repeats: false) { [weak self] _ in
             guard let self else { return }
@@ -200,8 +199,8 @@ extension OtpCodeViewPresenter: VerificationUseCaseDelegate {
 
 // MARK: - Constants
 
-private extension OtpCodeViewPresenter {
-    enum Constants {
+extension OtpCodeViewPresenter {
+    fileprivate enum Constants {
         static let otpLength = 4
         static let resendButtonAppearDelayInSeconds = 60
     }

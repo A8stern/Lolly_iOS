@@ -18,8 +18,8 @@ final class GameSurveyAssembly: Assembly {
     }
 }
 
-private extension GameSurveyAssembly {
-    func assemblePresenter(
+extension GameSurveyAssembly {
+    fileprivate func assemblePresenter(
         view: GameSurveyView,
         coordinator: GeneralCoordinator
     ) -> GameSurveyPresenter {

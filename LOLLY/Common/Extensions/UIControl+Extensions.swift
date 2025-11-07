@@ -8,20 +8,21 @@
 import ObjectiveC
 import UIKit
 
-public extension UIControl {
+extension UIControl {
     @objc
-    func addActionHandler(_ handler: @escaping () -> Void, for event: UIControl.Event) {
+    public func addActionHandler(_ handler: @escaping () -> Void, for event: UIControl.Event) {
         removeTarget(self, action: #selector(handleAction), for: event)
         addTarget(self, action: #selector(handleAction), for: event)
         actionHandler = handler
     }
 }
 
-private extension UIControl {
-    enum AssociatedKeys {
+extension UIControl {
+    fileprivate enum AssociatedKeys {
         static var actionHandlerKey: Int = 0
     }
-    var actionHandler: (() -> Void)? {
+
+    fileprivate var actionHandler: (() -> Void)? {
         get {
             objc_getAssociatedObject(self, &AssociatedKeys.actionHandlerKey) as? (() -> Void)
         }
@@ -37,8 +38,9 @@ private extension UIControl {
             )
         }
     }
+
     @objc
-    func handleAction() {
+    fileprivate func handleAction() {
         actionHandler?()
     }
 }

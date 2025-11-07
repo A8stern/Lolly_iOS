@@ -16,7 +16,7 @@ final class GeneralCoordinator: BaseNavigationCoordinator {
         showMain()
     }
 
-    override func close(animated: Bool) {
+    override func close(animated _: Bool) {
         delegate?.coordinatorDidClose(self)
     }
 

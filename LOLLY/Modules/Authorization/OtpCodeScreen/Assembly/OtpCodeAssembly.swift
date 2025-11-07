@@ -27,8 +27,12 @@ final class OtpCodeAssembly: Assembly {
 
 // MARK: Private Methods
 
-private extension OtpCodeAssembly {
-    func assemblePresenter(view: OtpCodeView, coordinator: AuthCoordinator, phone: String) -> OtpCodePresenter {
+extension OtpCodeAssembly {
+    fileprivate func assemblePresenter(
+        view: OtpCodeView,
+        coordinator: AuthCoordinator,
+        phone: String
+    ) -> OtpCodePresenter {
         return define(
             scope: .prototype,
             init: OtpCodeViewPresenter(

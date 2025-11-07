@@ -5,7 +5,7 @@
 //  Created by Егор on 03.11.2025.
 //
 
-internal protocol GameSurveyPresenter: AnyObject {
+protocol GameSurveyPresenter: AnyObject {
     func onViewDidLoad()
     func onCloseTap()
 }

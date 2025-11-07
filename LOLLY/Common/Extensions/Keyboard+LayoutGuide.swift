@@ -7,7 +7,7 @@
 
 import UIKit
 
-internal class Keyboard {
+class Keyboard {
     static let shared = Keyboard()
     var currentHeight: CGFloat = 0
 }
@@ -52,7 +52,7 @@ open class KeyboardLayoutGuide: UILayoutGuide {
     private var bottomConstraint: NSLayoutConstraint?
 
     @available(*, unavailable)
-    public required init?(coder aDecoder: NSCoder) {
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -74,7 +74,7 @@ open class KeyboardLayoutGuide: UILayoutGuide {
         )
     }
 
-    internal func setUp() {
+    func setUp() {
         guard let view = owningView else { return }
         NSLayoutConstraint.activate(
             [
@@ -87,7 +87,7 @@ open class KeyboardLayoutGuide: UILayoutGuide {
     }
 
     func updateBottomAnchor() {
-        if let bottomConstraint = bottomConstraint {
+        if let bottomConstraint {
             bottomConstraint.isActive = false
         }
 
@@ -118,12 +118,11 @@ open class KeyboardLayoutGuide: UILayoutGuide {
         }
     }
 
-    private func animate(_ note: Notification) {
-        if
-            let owningView = self.owningView,
+    private func animate(_: Notification) {
+        if let owningView,
             isVisible(view: owningView)
         {
-        self.owningView?.layoutIfNeeded()
+            self.owningView?.layoutIfNeeded()
         } else {
             UIView.performWithoutAnimation {
                 self.owningView?.layoutIfNeeded()
@@ -135,7 +134,7 @@ open class KeyboardLayoutGuide: UILayoutGuide {
 // MARK: - Helpers
 
 extension UILayoutGuide {
-    internal var heightConstraint: NSLayoutConstraint? {
+    var heightConstraint: NSLayoutConstraint? {
         return owningView?.constraints.first {
             $0.firstItem as? UILayoutGuide == self && $0.firstAttribute == .height
         }
@@ -153,7 +152,7 @@ extension Notification {
         } else {
             let keyWindow = UIApplication.shared.connectedScenes
                 .compactMap { $0 as? UIWindowScene }
-                .flatMap { $0.windows }
+                .flatMap(\.windows)
                 .first { $0.isKeyWindow }
 
             let screenHeight = keyWindow?.bounds.height ?? UIScreen.main.bounds.height
@@ -162,7 +161,7 @@ extension Notification {
     }
 
     var animationDuration: CGFloat? {
-        return self.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? CGFloat
+        return userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? CGFloat
     }
 }
 
@@ -171,7 +170,7 @@ extension Notification {
 /// (по крайней мере частично) видимым в scrollview.
 func isVisible(view: UIView) -> Bool {
     func isVisible(view: UIView, inView: UIView?) -> Bool {
-        guard let inView = inView else { return true }
+        guard let inView else { return true }
         let viewFrame = inView.convert(view.bounds, from: view)
         if viewFrame.intersects(inView.bounds) {
             return isVisible(view: view, inView: inView.superview)

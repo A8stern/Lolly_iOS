@@ -42,8 +42,8 @@ public class BaseNavigationBar: UIView {
 
     // MARK: - Internal Properties
 
-    internal let contentView = UIView()
-    internal let stackView: UIStackView = {
+    let contentView = UIView()
+    let stackView: UIStackView = {
         let stackView = UIStackView(frame: .zero)
         stackView.axis = .vertical
         stackView.spacing = 20.0
@@ -79,14 +79,14 @@ public class BaseNavigationBar: UIView {
 
 // MARK: - Private Methods
 
-private extension BaseNavigationBar {
-    func addSubviews() {
+extension BaseNavigationBar {
+    fileprivate func addSubviews() {
         addSubview(blurView)
         addSubview(stackView)
         stackView.addArrangedSubview(contentView)
     }
 
-    func setupConstraints() {
+    fileprivate func setupConstraints() {
         layoutMargins = innerMargins
         contentView.layoutMargins = contentMargins
 
@@ -106,7 +106,7 @@ private extension BaseNavigationBar {
         }
     }
 
-    func configure() {
+    fileprivate func configure() {
         layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         layer.cornerRadius = 32.0
         layer.cornerCurve = .continuous

@@ -9,8 +9,8 @@ public protocol Changeable {
     func changing(_ change: (inout Self) -> Void) -> Self
 }
 
-public extension Changeable {
-    func changing(_ change: (inout Self) -> Void) -> Self {
+extension Changeable {
+    public func changing(_ change: (inout Self) -> Void) -> Self {
         var value = self
         change(&value)
         return value

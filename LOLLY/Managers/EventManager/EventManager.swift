@@ -9,7 +9,7 @@ import EventKit
 import Foundation
 
 public final class EventManager {
-    let eventStore: EKEventStore = EKEventStore()
+    let eventStore: EKEventStore = .init()
 
     public init() { }
 }
@@ -26,7 +26,7 @@ extension EventManager: EventManagerInterface {
     ) {
         eventStore.requestAccess(to: .event) { [weak self] granted, error in
             guard granted, error == nil else {
-                if let error = error {
+                if let error {
                     completion(.failure(error))
                 } else {
                     completion(
@@ -44,15 +44,15 @@ extension EventManager: EventManagerInterface {
 
             guard let self else { return }
 
-            let event = EKEvent(eventStore: self.eventStore)
+            let event = EKEvent(eventStore: eventStore)
             event.title = title
             event.startDate = startDate
             event.endDate = endDate
             event.notes = notes
-            event.calendar = self.eventStore.defaultCalendarForNewEvents
+            event.calendar = eventStore.defaultCalendarForNewEvents
 
             do {
-                try self.eventStore.save(event, span: .thisEvent, commit: true)
+                try eventStore.save(event, span: .thisEvent, commit: true)
                 completion(.success(()))
             } catch {
                 completion(.failure(error))

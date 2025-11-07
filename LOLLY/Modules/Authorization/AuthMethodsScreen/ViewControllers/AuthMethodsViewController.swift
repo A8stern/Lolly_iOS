@@ -40,14 +40,12 @@ final class AuthMethodsViewController: UIViewController {
         return stackView
     }()
 
-    private lazy var contentContainer: ViewContainer<StackView> = {
-        ViewContainer(
-            block: {
-                contentStackView
-            },
-            insets: Constants.contentContainerInsets
-        )
-    }()
+    private lazy var contentContainer: ViewContainer<StackView> = ViewContainer(
+        block: {
+            contentStackView
+        },
+        insets: Constants.contentContainerInsets
+    )
 
     private lazy var conditionsLabel: UILabel = {
         let label = UILabel()
@@ -94,14 +92,14 @@ final class AuthMethodsViewController: UIViewController {
 
 // MARK: - Private methods
 
-private extension AuthMethodsViewController {
-    func addSubviews() {
+extension AuthMethodsViewController {
+    fileprivate func addSubviews() {
         view.addSubview(backgroundImageView)
         view.addSubview(bottomShadowImageView)
         view.addSubview(contentContainer)
     }
 
-    func setupConstraints() {
+    fileprivate func setupConstraints() {
         contentContainer.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(view).inset(24)
@@ -125,9 +123,9 @@ private extension AuthMethodsViewController {
         }
     }
 
-    func setupViews() {
-        view.subviews.forEach {
-            $0.overrideUserInterfaceStyle = .dark
+    fileprivate func setupViews() {
+        for subview in view.subviews {
+            subview.overrideUserInterfaceStyle = .dark
         }
 
         view.backgroundColor = Colors.Constants.white.color
@@ -145,8 +143,8 @@ extension AuthMethodsViewController: AuthMethodsView {
     }
 }
 
-private extension AuthMethodsViewController {
-    enum Constants {
+extension AuthMethodsViewController {
+    fileprivate enum Constants {
         static let contentContainerInsets = UIEdgeInsets(top: 20, left: 32, bottom: 20, right: 32)
     }
 }

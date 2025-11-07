@@ -31,6 +31,7 @@ open class BaseNavigationCoordinator: BaseCoordinator<UINavigationController> {
     }
 
     // MARK: - Back actions
+
     // 'goBack' - для полноэкранного отображения
     // 'close' - для Sheet-отображения
 
@@ -45,13 +46,14 @@ extension BaseNavigationCoordinator: UINavigationControllerDelegate {
     public func navigationController(
         _ navigationController: UINavigationController,
         didShow viewController: UIViewController,
-        animated: Bool
+        animated _: Bool
     ) {
         guard isCloseOnEmptyStack else {
             return
         }
         guard let sourceViewController = viewController.transitionCoordinator?.viewController(forKey: .from) else {
-            // При установке root-контроллера `transitionCoordinator` не содержит источника перехода — увеличиваем счётчик вручную.
+            // При установке root-контроллера `transitionCoordinator` не содержит источника перехода — увеличиваем
+            // счётчик вручную.
             if navigationController.viewControllers.contains(viewController) {
                 localStackSize += 1 // Root
             }

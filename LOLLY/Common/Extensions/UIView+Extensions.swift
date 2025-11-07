@@ -8,9 +8,9 @@
 import ObjectiveC
 import UIKit
 
-public extension UIView {
+extension UIView {
     @objc
-    func addTapActionHandler(_ handler: @escaping () -> Void) {
+    public func addTapActionHandler(_ handler: @escaping () -> Void) {
         isUserInteractionEnabled = true
         tapActionHandler = handler
 
@@ -27,12 +27,12 @@ public extension UIView {
     }
 }
 
-private extension UIView {
-    enum AssociatedKeys {
+extension UIView {
+    fileprivate enum AssociatedKeys {
         static var tapActionHandlerKey: UInt8 = 0
     }
 
-    var tapActionHandler: (() -> Void)? {
+    fileprivate var tapActionHandler: (() -> Void)? {
         get {
             objc_getAssociatedObject(self, &AssociatedKeys.tapActionHandlerKey) as? (() -> Void)
         }
@@ -47,7 +47,7 @@ private extension UIView {
     }
 
     @objc
-    func handleTapAction() {
+    fileprivate func handleTapAction() {
         tapActionHandler?()
     }
 }

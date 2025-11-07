@@ -11,7 +11,7 @@ public enum NetworkClientError: Error {
 }
 
 public actor NetworkService {
-    public let baseURL: URL = URL(string: "https://lolly-project.ru/api/")!
+    public let baseURL: URL? = URL(string: "https://lolly-project.ru/api/")
     private let session: URLSession
 
     public init(session: URLSession) {
@@ -21,10 +21,11 @@ public actor NetworkService {
     // MARK: - private request
 
     // MARK: Post Put Patch
-    public func request<Request: Encodable & Sendable, Response: Decodable & Sendable>(
+
+    public func request<Response: Decodable & Sendable>(
         endpoint: String,
         method: String,
-        body: Request,
+        body: some Encodable & Sendable,
         headers: [String: String] = [:]
     ) async throws -> Response {
         guard let url = URL(string: endpoint, relativeTo: baseURL) else {
@@ -62,6 +63,7 @@ public actor NetworkService {
     }
 
     // MARK: Get Delete
+
     public func request<Response: Decodable & Sendable>(
         endpoint: String,
         method: String = "GET",
@@ -89,7 +91,7 @@ public actor NetworkService {
         guard 200..<300 ~= httpResponse.statusCode else {
             throw NetworkClientError.httpError(statusCode: httpResponse.statusCode, data: data)
         }
-        if data.isEmpty && httpResponse.statusCode == 204 {
+        if data.isEmpty, httpResponse.statusCode == 204 {
             throw NetworkClientError.emptyBodyExpectedNonEmptyResponse
         }
 
@@ -97,6 +99,7 @@ public actor NetworkService {
     }
 
     // MARK: - private
+
     private func buildURL(endpoint: String) -> URL? {
         let cleanEndpoint = endpoint.hasPrefix("/") ? String(endpoint.dropFirst()) : endpoint
         return URL(string: cleanEndpoint, relativeTo: baseURL)
@@ -116,7 +119,7 @@ public actor NetworkService {
         return request
     }
 
-    private func decode<Response: Decodable & Sendable>(_ type: Response.Type, from data: Data) async throws -> Response {
+    private func decode<Response: Decodable & Sendable>(_: Response.Type, from data: Data) async throws -> Response {
         do {
             let decoder = JSONDecoder()
             decoder.dateDecodingStrategy = .custom { decoder in

@@ -79,15 +79,15 @@ public final class CalendarSectionView: UIView, ViewModellable {
     }
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
 
 // MARK: - ViewConfigurable
 
-public extension CalendarSectionView {
-    func setupLayout() {
+extension CalendarSectionView {
+    public func setupLayout() {
         addSubview(calendarView)
         calendarView.snp.makeConstraints { make in
             make.left.right.top.equalToSuperview().inset(Constants.spacing)
@@ -114,7 +114,7 @@ public extension CalendarSectionView {
         }
     }
 
-    func setupUI() {
+    public func setupUI() {
         layer.cornerRadius = 18.0
         clipsToBounds = true
         backgroundColor = Colors.secondaryColor.color
@@ -122,9 +122,9 @@ public extension CalendarSectionView {
         updateUI()
     }
 
-    func setupBehaviour() { }
+    public func setupBehaviour() { }
 
-    func updateUI() {
+    public func updateUI() {
         isHidden = viewModel == nil
 
         guard let viewModel else { return }
@@ -167,8 +167,8 @@ extension CalendarSectionView: UICollectionViewDataSource {
     }
 }
 
-private extension CalendarSectionView {
-    enum Constants {
+extension CalendarSectionView {
+    fileprivate enum Constants {
         static let spacing: CGFloat = 18
     }
 }

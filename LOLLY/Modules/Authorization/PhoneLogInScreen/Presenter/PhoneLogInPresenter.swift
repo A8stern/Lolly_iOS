@@ -106,8 +106,8 @@ extension PhoneLogInViewPresenter: PhoneLogInPresenter {
 
 // MARK: - Private Methods
 
-private extension PhoneLogInViewPresenter {
-    func responseInitialData(response: PhoneLogInModels.InitialData.Response) {
+extension PhoneLogInViewPresenter {
+    fileprivate func responseInitialData(response _: PhoneLogInModels.InitialData.Response) {
         let viewModel = PhoneLogInModels.InitialData.ViewModel(
             continueButtonViewModel: ButtonViewModel(
                 title: L10n.PhoneLogIn.Buttons.continue,
@@ -136,7 +136,7 @@ private extension PhoneLogInViewPresenter {
         view.displayInitialData(viewModel: viewModel)
     }
 
-    func isValid(name string: String) -> Bool {
+    fileprivate func isValid(name string: String) -> Bool {
         guard string.count >= 2 else { return false }
 
         let predicate = NSPredicate(format: "SELF MATCHES[c] %@", RegExConstants.namePattern)
@@ -144,7 +144,7 @@ private extension PhoneLogInViewPresenter {
         return predicate.evaluate(with: string)
     }
 
-    func isValid(phone string: String) -> Bool {
+    fileprivate func isValid(phone string: String) -> Bool {
         let parsedPhone: PhoneNumber
         do {
             /// Распарсенный номер +79139999999
@@ -158,19 +158,19 @@ private extension PhoneLogInViewPresenter {
         return true
     }
 
-    func isValidSymbols(name string: String) -> Bool {
+    fileprivate func isValidSymbols(name string: String) -> Bool {
         let predicate = NSPredicate(format: "SELF MATCHES[c] %@", RegExConstants.validSymbols)
 
         return predicate.evaluate(with: string)
     }
 
-    func isValidSymbols(phone string: String) -> Bool {
+    fileprivate func isValidSymbols(phone string: String) -> Bool {
         let predicate = NSPredicate(format: "SELF MATCHES[c] %@", RegExConstants.validPhoneSymbols)
 
         return predicate.evaluate(with: string)
     }
 
-    func updateNameFieldCaption() {
+    fileprivate func updateNameFieldCaption() {
         nameCaption = {
             guard isNameValid == false else {
                 return nil
@@ -180,7 +180,7 @@ private extension PhoneLogInViewPresenter {
         }()
     }
 
-    func updateNameField() {
+    fileprivate func updateNameField() {
         let viewModel = PhoneLogInModels.NameField.ViewModel(
             name: name,
             state: {
@@ -198,7 +198,7 @@ private extension PhoneLogInViewPresenter {
         view.updateNameField(viewModel: viewModel)
     }
 
-    func updatePhoneField() {
+    fileprivate func updatePhoneField() {
         guard let phone else { return }
 
         let viewModel = PhoneLogInModels.PhoneField.ViewModel(
@@ -214,7 +214,7 @@ private extension PhoneLogInViewPresenter {
         view.updatePhoneField(viewModel: viewModel)
     }
 
-    func updateContinueButton() {
+    fileprivate func updateContinueButton() {
         let isReadyToLogin = isLoading == false && isPhoneValid
         let isReadyToRegister = isLoading == false && isNameValid && isPhoneValid && isCheckboxSelected
 
@@ -224,7 +224,7 @@ private extension PhoneLogInViewPresenter {
         view.updateContinueButton(viewModel: viewModel)
     }
 
-    func registerNewAccount() {
+    fileprivate func registerNewAccount() {
         guard let phone else { return }
 
         isLoading = true
@@ -248,7 +248,7 @@ private extension PhoneLogInViewPresenter {
         }
     }
 
-    func fetchUserStatus(phone: Phone) {
+    fileprivate func fetchUserStatus(phone: Phone) {
         isLoading = true
         updateContinueButton()
         Task {
@@ -289,8 +289,8 @@ private extension PhoneLogInViewPresenter {
     }
 }
 
-private extension PhoneLogInViewPresenter {
-    enum RegExConstants {
+extension PhoneLogInViewPresenter {
+    fileprivate enum RegExConstants {
         static let validPhoneSymbols = "^\\+?[0-9]+$"
         static let namePattern = "^[А-Яа-я](?!.*[-\\s]{2,})[А-Яа-я\\-\\s]*$"
         static let validSymbols: String = "^[А-Яа-я\\-\\s]+$"

@@ -43,15 +43,15 @@ public final class GameSectionView: UIView, ViewModellable {
     }
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
 
 // MARK: - ViewConfigurable
 
-public extension GameSectionView {
-    func setupLayout() {
+extension GameSectionView {
+    public func setupLayout() {
         snp.makeConstraints { make in
             make.height.equalTo(Constants.sectionHeight)
         }
@@ -71,7 +71,7 @@ public extension GameSectionView {
         }
     }
 
-    func setupUI() {
+    public func setupUI() {
         layer.cornerRadius = 18.0
         clipsToBounds = true
         backgroundColor = Colors.Constants.yellow.color
@@ -79,9 +79,9 @@ public extension GameSectionView {
         updateUI()
     }
 
-    func setupBehaviour() { }
+    public func setupBehaviour() { }
 
-    func updateUI() {
+    public func updateUI() {
         isHidden = viewModel == nil
 
         guard let viewModel else { return }
@@ -91,8 +91,8 @@ public extension GameSectionView {
     }
 }
 
-private extension GameSectionView {
-    enum Constants {
+extension GameSectionView {
+    fileprivate enum Constants {
         static let sectionHeight: CGFloat = 151.0
         static let padding: CGFloat = 16.0
         static let textToWaveformSpacing: CGFloat = 12.0

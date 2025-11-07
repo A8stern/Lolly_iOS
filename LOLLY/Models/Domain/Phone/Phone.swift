@@ -15,8 +15,8 @@ public struct Phone {
     }
 }
 
-public extension Phone {
-    func partialFormatted() -> String {
+extension Phone {
+    public func partialFormatted() -> String {
         return PartialFormatter().formatPartial(raw)
     }
 }

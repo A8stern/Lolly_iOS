@@ -1,5 +1,5 @@
 //
-//  CheckBox.swift
+//  LabeledCheckbox.swift
 //  LOLLY
 //
 //  Created by Kirill Prokofyev on 06.11.2025.
@@ -90,12 +90,12 @@ public final class LabeledCheckbox: UIView {
 
 // MARK: - Private methods
 
-private extension LabeledCheckbox {
-    func addSubviews() {
+extension LabeledCheckbox {
+    fileprivate func addSubviews() {
         addSubview(stackView)
     }
 
-    func setupConstraints() {
+    fileprivate func setupConstraints() {
         stackView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
@@ -104,12 +104,12 @@ private extension LabeledCheckbox {
         }
     }
 
-    func updateState() {
+    fileprivate func updateState() {
         checkbox.isEnabled = state == .normal
         renderState()
     }
 
-    func renderState() {
+    fileprivate func renderState() {
         checkbox.tintColor = state.checkboxColor
         label.textColor = state.textColor
         label.linkTextAttributes = [
@@ -118,7 +118,7 @@ private extension LabeledCheckbox {
     }
 
     @objc
-    func checkboxTapped() {
+    fileprivate func checkboxTapped() {
         checkbox.isSelected.toggle()
         tapHandler?()
     }
@@ -126,8 +126,8 @@ private extension LabeledCheckbox {
 
 // MARK: - CheckboxState
 
-private extension CheckboxState {
-    var checkboxColor: UIColor {
+extension CheckboxState {
+    fileprivate var checkboxColor: UIColor {
         switch self {
             case .normal:
                 return Colors.Text.primary.color
@@ -137,7 +137,7 @@ private extension CheckboxState {
         }
     }
 
-    var textColor: UIColor {
+    fileprivate var textColor: UIColor {
         switch self {
             case .normal:
                 return Colors.Text.primary.color
@@ -147,17 +147,17 @@ private extension CheckboxState {
         }
     }
 
-    func checkboxImage(isSelected: Bool) -> UIImage? {
+    fileprivate func checkboxImage(isSelected: Bool) -> UIImage? {
         isSelected
-        ? Assets.Controls.Checkbox.checkboxSelected.image.withRenderingMode(.alwaysTemplate)
-        : Assets.Controls.Checkbox.checkboxUnselected.image.withRenderingMode(.alwaysTemplate)
+            ? Assets.Controls.Checkbox.checkboxSelected.image.withRenderingMode(.alwaysTemplate)
+            : Assets.Controls.Checkbox.checkboxUnselected.image.withRenderingMode(.alwaysTemplate)
     }
 }
 
 // MARK: - Constants
 
-private extension LabeledCheckbox {
-    enum Constants {
+extension LabeledCheckbox {
+    fileprivate enum Constants {
         static let checkboxSize: CGFloat = 24.0
         static let horizontalSpacing: CGFloat = 15.0
     }

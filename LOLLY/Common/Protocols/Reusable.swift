@@ -11,8 +11,8 @@ public protocol Reusable {
     static var reuseId: String { get }
 }
 
-public extension Reusable {
-    static var reuseId: String {
+extension Reusable {
+    public static var reuseId: String {
         String(describing: self)
     }
 }

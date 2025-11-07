@@ -1,5 +1,5 @@
 //
-//  AuthStatus.swift
+//  UserRoleStatus.swift
 //  LOLLY
 //
 //  Created by Kovalev Gleb on 05.11.2025.
@@ -17,20 +17,20 @@ public enum UserRoleStatus: String, Codable, CaseIterable, Sendable {
     public init(from statusString: String) {
         let normalized = statusString.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
         switch normalized {
-        case UserRoleStatus.user.rawValue:
-            self = .user
+            case UserRoleStatus.user.rawValue:
+                self = .user
 
-        case UserRoleStatus.notRegistered.rawValue, "notregistered":
-            self = .notRegistered
+            case UserRoleStatus.notRegistered.rawValue, "notregistered":
+                self = .notRegistered
 
-        case UserRoleStatus.admin.rawValue:
-            self = .admin
+            case UserRoleStatus.admin.rawValue:
+                self = .admin
 
-        case UserRoleStatus.barista.rawValue:
-            self = .barista
+            case UserRoleStatus.barista.rawValue:
+                self = .barista
 
-        default:
-            self = .unknown
+            default:
+                self = .unknown
         }
     }
 
@@ -41,11 +41,11 @@ public enum UserRoleStatus: String, Codable, CaseIterable, Sendable {
 
     public var statusString: String {
         switch self {
-        case .user, .notRegistered, .admin, .barista:
-            return rawValue
+            case .user, .notRegistered, .admin, .barista:
+                return rawValue
 
-        case .unknown:
-            return "unknown"
+            case .unknown:
+                return "unknown"
         }
     }
 }

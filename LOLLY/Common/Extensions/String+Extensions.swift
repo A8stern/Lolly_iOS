@@ -5,14 +5,14 @@
 //  Created by Kirill Prokofyev on 07.11.2025.
 //
 
-public extension String {
+extension String {
     /// Строка из цифр
-    var digitsOnlyString: String {
+    public var digitsOnlyString: String {
         replacingOccurrences(of: "[^0-9]+", with: "", options: .regularExpression, range: range(of: self))
     }
 
     /// Отформатированная строка вида `mm:ss`
-    var timeFormatted: String {
+    public var timeFormatted: String {
         guard let seconds = Int(digitsOnlyString) else {
             return ""
         }

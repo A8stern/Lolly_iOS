@@ -77,15 +77,15 @@ public final class ContactsSectionView: UIView, ViewModellable {
     }
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
 
 // MARK: - ViewConfigurable
 
-public extension ContactsSectionView {
-    func setupLayout() {
+extension ContactsSectionView {
+    public func setupLayout() {
         addSubview(backgroundImageView)
         backgroundImageView.snp.makeConstraints { make in
             make.left.top.right.equalToSuperview()
@@ -126,7 +126,7 @@ public extension ContactsSectionView {
         }
     }
 
-    func setupUI() {
+    public func setupUI() {
         layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         layer.cornerRadius = 18.0
         layer.cornerCurve = .continuous
@@ -140,9 +140,9 @@ public extension ContactsSectionView {
         updateUI()
     }
 
-    func setupBehaviour() { }
+    public func setupBehaviour() { }
 
-    func updateUI() {
+    public func updateUI() {
         isHidden = viewModel == nil
 
         guard let viewModel else { return }
@@ -152,7 +152,7 @@ public extension ContactsSectionView {
         topSeparatorLineView.isHidden = viewModel.title == nil
 
         addressesStackView.subviews.forEach { $0.removeFromSuperview() }
-        viewModel.addresses.forEach { addressViewModel in
+        for addressViewModel in viewModel.addresses {
             let addressView = AddressView(viewModel: addressViewModel)
             addressesStackView.addArrangedSubviews(addressView)
         }
@@ -162,8 +162,8 @@ public extension ContactsSectionView {
 
 // MARK: - Constants
 
-private extension ContactsSectionView {
-    enum Constants {
+extension ContactsSectionView {
+    fileprivate enum Constants {
         static let spacing: CGFloat = 21
         static let imageAspectRatio: CGFloat = 3 / 2
     }

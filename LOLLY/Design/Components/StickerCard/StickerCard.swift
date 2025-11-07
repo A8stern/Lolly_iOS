@@ -33,22 +33,22 @@ public final class StickerCard: UIView, ViewModellable {
     }
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
 
 // MARK: - ViewConfigurable
 
-public extension StickerCard {
-    func setupLayout() {
+extension StickerCard {
+    public func setupLayout() {
         addSubview(blurView)
         blurView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
     }
 
-    func setupUI() {
+    public func setupUI() {
         layer.maskedCorners = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner]
         layer.cornerRadius = 9.0
         layer.cornerCurve = .continuous
@@ -58,14 +58,14 @@ public extension StickerCard {
         updateUI()
     }
 
-    func setupBehaviour() { }
+    public func setupBehaviour() { }
 
-    func updateUI() {
+    public func updateUI() {
         // isHidden = viewModel == nil
         // guard let viewModel else { return }
     }
 }
 
-private extension StickerCard {
-    enum Constants { }
+extension StickerCard {
+    fileprivate enum Constants { }
 }

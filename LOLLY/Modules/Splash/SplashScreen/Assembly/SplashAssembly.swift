@@ -24,8 +24,8 @@ final class SplashAssembly: Assembly {
 
 // MARK: - Private Methods
 
-private extension SplashAssembly {
-    func assemblePresenter(view: SplashView, coordinator: SplashCoordinator) -> SplashPresenter {
+extension SplashAssembly {
+    fileprivate func assemblePresenter(view: SplashView, coordinator: SplashCoordinator) -> SplashPresenter {
         return define(
             scope: .prototype,
             init: SplashViewPresenter(

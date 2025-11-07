@@ -52,15 +52,15 @@ public final class EventView: UIView, ViewModellable {
     }
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
 
 // MARK: - ViewConfigurable
 
-public extension EventView {
-    func setupLayout() {
+extension EventView {
+    public func setupLayout() {
         snp.makeConstraints { make in
             make.height.greaterThanOrEqualTo(47)
         }
@@ -87,14 +87,14 @@ public extension EventView {
         }
     }
 
-    func setupUI() {
+    public func setupUI() {
         lineView.layer.cornerRadius = Constants.lineWidth / 2
         lineView.layer.masksToBounds = true
 
         updateUI()
     }
 
-    func setupBehaviour() {
+    public func setupBehaviour() {
         addTapActionHandler { [weak self] in
             guard let self else { return }
             guard let viewModel else { return }
@@ -103,7 +103,7 @@ public extension EventView {
         }
     }
 
-    func updateUI() {
+    public func updateUI() {
         isHidden = viewModel == nil
         guard let viewModel else { return }
 
@@ -112,8 +112,8 @@ public extension EventView {
     }
 }
 
-private extension EventView {
-    enum Constants {
+extension EventView {
+    fileprivate enum Constants {
         static let circleDiameter: CGFloat = 14
         static let lineWidth: CGFloat = 8
     }

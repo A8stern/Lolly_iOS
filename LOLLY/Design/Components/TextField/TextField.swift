@@ -28,7 +28,7 @@ public class TextField: UIView {
 
     public weak var delegate: TextFieldDelegate?
 
-    public var title: String = String() {
+    public var title: String = .init() {
         didSet {
             updateTitle()
         }
@@ -51,7 +51,7 @@ public class TextField: UIView {
     }
 
     /// Подзаголовок под полем ввода
-    public var caption: String = String() {
+    public var caption: String = .init() {
         didSet {
             updateCaption()
         }
@@ -151,8 +151,8 @@ public class TextField: UIView {
 
 // MARK: - Private methods
 
-private extension TextField {
-    func configure() {
+extension TextField {
+    fileprivate func configure() {
         backgroundColor = .clear
         fieldContainerView.backgroundColor = Colors.Custom.textFieldBackground.color
         textField.delegate = self
@@ -161,14 +161,13 @@ private extension TextField {
         updateState(animated: false)
     }
 
-    func updateTitle() {
+    fileprivate func updateTitle() {
         titleLabel.text = title
         updatePlaceholder()
     }
 
-    func updateTitleVisibilityIfNeeded() {
-        guard
-            shouldDisplayTitleWhenNonEmpty,
+    fileprivate func updateTitleVisibilityIfNeeded() {
+        guard shouldDisplayTitleWhenNonEmpty,
             titleLabel.isHidden,
             isEmpty == false
         else {
@@ -180,31 +179,31 @@ private extension TextField {
         fieldBottomConstraint?.update(inset: Constants.verticalInset - Constants.focusOffset)
     }
 
-    func updatePlaceholder() {
+    fileprivate func updatePlaceholder() {
         // Плейсхолдер может быть как из заголовка, тк и задаваться через отдельное свойство
         let placeholder = isEditing ?
-        placeholder ?? title :
-        title
+            placeholder ?? title :
+            title
         textField.attributedPlaceholder = NSAttributedString(
             string: placeholder,
             attributes: [NSAttributedString.Key.foregroundColor: state.titleColor]
         )
     }
 
-    func updateCaption() {
+    fileprivate func updateCaption() {
         captionLabel.isHidden = caption.isEmpty
         captionTopConstraint?.update(offset: caption.isEmpty ? 0 : Constants.captionTopOffset)
         captionLabel.text = caption
     }
 
-    func addSubviews() {
+    fileprivate func addSubviews() {
         addSubview(captionLabel)
         addSubview(fieldContainerView)
         fieldContainerView.addSubview(textField)
         fieldContainerView.addSubview(titleLabel)
     }
 
-    func setupConstraints() {
+    fileprivate func setupConstraints() {
         snp.makeConstraints { make in
             make.height.greaterThanOrEqualTo(Constants.height)
         }
@@ -234,20 +233,20 @@ private extension TextField {
         }
     }
 
-    func updateState(animated: Bool = true) {
+    fileprivate func updateState(animated: Bool = true) {
         UIView.animate(withDuration: animated ? Constants.animationDuration : 0) { [weak self] in
             guard let self else { return }
-            textField.tintColor = self.state.foregroundColor
-            textField.textColor = self.state.foregroundColor
-            captionLabel.textColor = self.state.captionColor
-            titleLabel.textColor = self.state.titleColor
+            textField.tintColor = state.foregroundColor
+            textField.textColor = state.foregroundColor
+            captionLabel.textColor = state.captionColor
+            titleLabel.textColor = state.titleColor
             updateBorderState()
             updatePlaceholder()
         }
         textField.isUserInteractionEnabled = state != .disabled
     }
 
-    func updateBorderState() {
+    fileprivate func updateBorderState() {
         guard isEditing == true || state == .invalid else {
             fieldContainerView.layer.borderColor = UIColor.clear.cgColor
             return
@@ -258,28 +257,28 @@ private extension TextField {
 
     // MARK: - Focusing
 
-    func animateFocus() {
+    fileprivate func animateFocus() {
         isEditing = true
         UIView.animate(withDuration: Constants.animationDuration) { [weak self] in
             guard let self else { return }
-            self.titleLabel.isHidden = false
-            self.updatePlaceholder()
-            self.updateBorderState()
-            self.layoutIfNeeded()
+            titleLabel.isHidden = false
+            updatePlaceholder()
+            updateBorderState()
+            layoutIfNeeded()
         }
         fieldTopConstraint?.update(offset: Constants.verticalInset + Constants.focusOffset)
         fieldBottomConstraint?.update(inset: Constants.verticalInset - Constants.focusOffset)
     }
 
-    func animateUnfocus() {
+    fileprivate func animateUnfocus() {
         isEditing = false
         let isTitleHidden = isEmpty == true
         UIView.animate(withDuration: Constants.animationDuration) { [weak self] in
             guard let self else { return }
-            self.titleLabel.isHidden = isTitleHidden
-            self.textField.placeholder = self.title
-            self.updateBorderState()
-            self.layoutIfNeeded()
+            titleLabel.isHidden = isTitleHidden
+            textField.placeholder = title
+            updateBorderState()
+            layoutIfNeeded()
         }
         if isTitleHidden {
             fieldTopConstraint?.update(offset: Constants.verticalInset)
@@ -296,18 +295,18 @@ extension TextField: UITextFieldDelegate {
         updateState()
     }
 
-    public func textFieldDidBeginEditing(_ textField: UITextField) {
+    public func textFieldDidBeginEditing(_: UITextField) {
         animateFocus()
         delegate?.textFieldDidBeginEditing?(self)
     }
 
-    public func textFieldDidEndEditing(_ textField: UITextField) {
+    public func textFieldDidEndEditing(_: UITextField) {
         animateUnfocus()
         delegate?.textFieldDidEndEditing?(self)
     }
 
     public func textField(
-        _ textField: UITextField,
+        _: UITextField,
         shouldChangeCharactersIn range: NSRange,
         replacementString string: String
     ) -> Bool {
@@ -318,7 +317,7 @@ extension TextField: UITextFieldDelegate {
         ) ?? true
     }
 
-    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    public func textFieldShouldReturn(_: UITextField) -> Bool {
         endEditing(true)
         return false
     }
@@ -326,28 +325,28 @@ extension TextField: UITextFieldDelegate {
 
 // MARK: - Backward compatibility
 
-public extension TextField {
-    var beginningOfDocument: UITextPosition {
+extension TextField {
+    public var beginningOfDocument: UITextPosition {
         textField.beginningOfDocument
     }
 
-    var endOfDocument: UITextPosition {
+    public var endOfDocument: UITextPosition {
         textField.endOfDocument
     }
 
-    func textRange(from fromPosition: UITextPosition, to toPosition: UITextPosition) -> UITextRange? {
+    public func textRange(from fromPosition: UITextPosition, to toPosition: UITextPosition) -> UITextRange? {
         return textField.textRange(from: fromPosition, to: toPosition)
     }
 
-    func range(from textRange: UITextRange) -> Range<String.Index>? {
+    public func range(from textRange: UITextRange) -> Range<String.Index>? {
         return textField.range(from: textRange)
     }
 }
 
 // MARK: - Constants
 
-private extension TextField {
-    enum Constants {
+extension TextField {
+    fileprivate enum Constants {
         static let height: CGFloat = 68.0
         static let borderWidth: CGFloat = 1.5
         static let buttonSize: CGFloat = 24.0
@@ -360,8 +359,8 @@ private extension TextField {
     }
 }
 
-private extension TextFieldState {
-    var titleColor: UIColor {
+extension TextFieldState {
+    fileprivate var titleColor: UIColor {
         switch self {
             case .correct, .empty, .invalid:
                 return Colors.Text.secondary.color
@@ -371,7 +370,7 @@ private extension TextFieldState {
         }
     }
 
-    var borderColor: UIColor {
+    fileprivate var borderColor: UIColor {
         switch self {
             case .correct:
                 return Colors.Text.primary.color
@@ -387,7 +386,7 @@ private extension TextFieldState {
         }
     }
 
-    var foregroundColor: UIColor {
+    fileprivate var foregroundColor: UIColor {
         switch self {
             case .correct:
                 return Colors.Text.primary.color
@@ -403,7 +402,7 @@ private extension TextFieldState {
         }
     }
 
-    var captionColor: UIColor {
+    fileprivate var captionColor: UIColor {
         switch self {
             case .correct:
                 return .green
@@ -420,8 +419,8 @@ private extension TextFieldState {
     }
 }
 
-fileprivate extension UITextInput {
-    func range(from textRange: UITextRange) -> Range<String.Index>? {
+extension UITextInput {
+    fileprivate func range(from textRange: UITextRange) -> Range<String.Index>? {
         guard let text = text(in: textRange) else { return nil }
         let location = offset(from: beginningOfDocument, to: textRange.start)
         let length = offset(from: textRange.start, to: textRange.end)

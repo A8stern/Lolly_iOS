@@ -10,7 +10,7 @@ public protocol NavigationBarDelegate: AnyObject {
     func didReceiveCloseAction(_ navigationBar: NavigationBar)
 }
 
-public extension NavigationBarDelegate {
-    func didReceiveBackAction(_ navigationBar: NavigationBar) { }
-    func didReceiveCloseAction(_ navigationBar: NavigationBar) { }
+extension NavigationBarDelegate {
+    public func didReceiveBackAction(_: NavigationBar) { }
+    public func didReceiveCloseAction(_: NavigationBar) { }
 }

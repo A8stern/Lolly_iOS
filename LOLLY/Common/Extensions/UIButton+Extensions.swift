@@ -7,9 +7,12 @@
 
 import UIKit
 
-public extension UIButton {
+extension UIButton {
     @objc
-    override func addActionHandler(_ handler: @escaping () -> Void, for event: UIControl.Event = .touchUpInside) {
+    override public func addActionHandler(
+        _ handler: @escaping () -> Void,
+        for event: UIControl.Event = .touchUpInside
+    ) {
         super.addActionHandler(handler, for: event)
     }
 }

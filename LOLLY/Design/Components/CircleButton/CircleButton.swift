@@ -61,7 +61,7 @@ public final class CircleButton: UIButton, ViewModellable {
     }
 
     @available(*, unavailable)
-    public required init?(coder: NSCoder) {
+    public required init?(coder _: NSCoder) {
         fatalError("Button ::: required init?(coder: NSCoder)")
     }
 
@@ -76,8 +76,8 @@ public final class CircleButton: UIButton, ViewModellable {
 
 // MARK: - ViewConfigurable
 
-public extension CircleButton {
-    func setupLayout() {
+extension CircleButton {
+    public func setupLayout() {
         addSubview(innerCircleView)
         innerCircleView.snp.makeConstraints { make in
             make.center.equalToSuperview()
@@ -90,7 +90,7 @@ public extension CircleButton {
         }
     }
 
-    func setupUI() {
+    public func setupUI() {
         backgroundColor = Colors.secondaryColor.color
         layer.cornerRadius = Constants.diameter / 2
         layer.masksToBounds = true
@@ -98,14 +98,14 @@ public extension CircleButton {
         updateUI()
     }
 
-    func setupBehaviour() {
+    public func setupBehaviour() {
         addTapActionHandler { [weak self] in
             guard let self else { return }
             viewModel?.tapHandler?()
         }
     }
 
-    func updateUI() {
+    public func updateUI() {
         isHidden = viewModel == nil
         guard let viewModel else { return }
 
