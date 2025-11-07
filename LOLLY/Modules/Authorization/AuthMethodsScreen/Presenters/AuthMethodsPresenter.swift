@@ -83,6 +83,7 @@ extension AuthMethodsViewPresenter {
         ButtonViewModel(
             title: L10n.AuthMethods.Buttons.signInWithPhone,
             type: .secondary(.none),
+            style: .liquidGlassIfPossible,
             size: .large,
             tapHandler: { [weak self] in
                 guard let self else { return }

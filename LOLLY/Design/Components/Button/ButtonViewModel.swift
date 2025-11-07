@@ -34,6 +34,11 @@ public struct ButtonViewModel: Changeable {
         }
     }
 
+    public enum Style {
+        case liquidGlassIfPossible
+        case normal
+    }
+
     public enum `Type` {
         /// Основная закрашенная кнопка
         case primary(Icon?)
@@ -60,17 +65,20 @@ public struct ButtonViewModel: Changeable {
 
     public var title: String?
     public let type: `Type`
+    public let style: Style
     public let size: Size
     public var tapHandler: (() -> Void)?
 
     public init(
         title: String? = nil,
         type: Type = .primary(.none),
+        style: Style = .normal,
         size: Size = .large,
         tapHandler: (() -> Void)? = nil
     ) {
         self.title = title
         self.type = type
+        self.style = style
         self.size = size
         self.tapHandler = tapHandler
     }

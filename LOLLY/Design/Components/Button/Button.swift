@@ -177,6 +177,22 @@ extension Button {
         updateUI()
     }
 
+    public func updateStyle() {
+        guard let viewModel else { return }
+
+        switch viewModel.style {
+            case .liquidGlassIfPossible:
+                if #available(iOS 26.0, *) {
+                    self.configuration = .glass()
+                } else {
+                    self.configuration = nil
+                }
+
+            case .normal:
+                self.configuration = nil
+        }
+    }
+
     public func setupBehaviour() {
         addTarget(
             self,
@@ -188,6 +204,8 @@ extension Button {
     public func updateUI() {
         isHidden = viewModel == nil
         guard let viewModel else { return }
+
+        updateStyle()
 
         updateHeight(viewModel.size.height)
         makeCorners()
@@ -296,7 +314,7 @@ extension ButtonViewModel {
                 return Colors.Controls.primary
 
             case .secondary:
-                return Colors.Controls.secondary
+                return style == .liquidGlassIfPossible ? Colors.Constants.clear : Colors.Controls.secondary
 
             case .custom(let config):
                 return config.enabledColor
