@@ -21,7 +21,7 @@ public final class CalendarSectionView: UIView, ViewModellable {
         let label = UILabel()
         label.textAlignment = .left
         label.numberOfLines = 1
-        label.font = Fonts.TTTravels.bold.font(size: 24)
+        label.font = Fonts.Styles.title1
         label.textColor = Colors.Text.primary.color
         return label
     }()

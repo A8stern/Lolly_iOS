@@ -42,7 +42,7 @@ public final class ContactsSectionView: UIView, ViewModellable {
         let label = UILabel()
         label.textAlignment = .left
         label.numberOfLines = 3
-        label.font = Fonts.TTTravels.demiBold.font(size: 16)
+        label.font = Fonts.Styles.title3
         label.textColor = Colors.Text.primary.color
         return label
     }()

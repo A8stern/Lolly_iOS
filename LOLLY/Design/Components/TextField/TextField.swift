@@ -89,7 +89,7 @@ public class TextField: UIView {
         let label = UILabel()
         label.numberOfLines = 1
         label.lineBreakMode = .byTruncatingTail
-        label.font = Fonts.TTTravels.medium.font(size: 13)
+        label.font = Fonts.Styles.caption
         return label
     }()
 
@@ -98,7 +98,7 @@ public class TextField: UIView {
         label.numberOfLines = 3
         label.lineBreakMode = .byTruncatingTail
         label.textColor = Colors.Text.secondary.color
-        label.font = Fonts.TTTravels.medium.font(size: 13)
+        label.font = Fonts.Styles.caption
 
         return label
     }()
@@ -108,7 +108,7 @@ public class TextField: UIView {
         field.spellCheckingType = .no
         field.autocapitalizationType = .none
         field.textColor = Colors.Text.primary.color
-        field.font = Fonts.TTTravels.medium.font(size: 18)
+        field.font = Fonts.Styles.title2
         field.addTarget(self, action: #selector(edittingChanged), for: .editingChanged)
 
         return field

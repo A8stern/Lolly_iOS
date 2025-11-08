@@ -19,7 +19,7 @@ public final class CalendarCell: UICollectionViewCell, ViewModellable {
         let label = UILabel()
         label.textAlignment = .center
         label.numberOfLines = 1
-        label.font = Fonts.TTTravels.bold.font(size: 50)
+        label.font = Fonts.Styles.custom(weight: .bold, size: 50)
         label.textColor = Colors.Text.inverted.color
         return label
     }()

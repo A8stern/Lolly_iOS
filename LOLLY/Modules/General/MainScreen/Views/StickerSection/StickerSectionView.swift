@@ -21,7 +21,7 @@ public final class StickerSectionView: UIView, ViewModellable {
         let label = UILabel()
         label.textAlignment = .left
         label.numberOfLines = 2
-        label.font = Fonts.TTTravels.bold.font(size: 24)
+        label.font = Fonts.Styles.title1
         label.textColor = Colors.Text.inverted.color
         return label
     }()
@@ -39,7 +39,7 @@ public final class StickerSectionView: UIView, ViewModellable {
     private lazy var signLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.font = Fonts.TTTravels.demiBold.font(size: 74)
+        label.font = Fonts.Styles.custom(weight: .demiBold, size: 74)
         label.textColor = Colors.Text.inverted.color
         label.transform = CGAffineTransform(rotationAngle: CGFloat(10 * CGFloat.pi / 180))
         return label
@@ -67,7 +67,7 @@ public final class StickerSectionView: UIView, ViewModellable {
     private lazy var backCountLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .right
-        label.font = Fonts.TTTravels.bold.font(size: 200)
+        label.font = Fonts.Styles.custom(weight: .bold, size: 200)
         label.textColor = Colors.Text.inverted.color.withAlphaComponent(0.2)
         return label
     }()

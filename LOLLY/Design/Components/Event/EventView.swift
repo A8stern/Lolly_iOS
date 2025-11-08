@@ -21,7 +21,7 @@ public final class EventView: UIView, ViewModellable {
         let label = UILabel()
         label.textAlignment = .left
         label.numberOfLines = 1
-        label.font = Fonts.TTTravels.demiBold.font(size: 14)
+        label.font = Fonts.Styles.body
         label.textColor = Colors.Text.secondary.color
         return label
     }()
@@ -30,7 +30,7 @@ public final class EventView: UIView, ViewModellable {
         let label = UILabel()
         label.textAlignment = .left
         label.numberOfLines = 0
-        label.font = Fonts.TTTravels.demiBold.font(size: 14)
+        label.font = Fonts.Styles.body
         label.textColor = Colors.Text.primary.color
         return label
     }()

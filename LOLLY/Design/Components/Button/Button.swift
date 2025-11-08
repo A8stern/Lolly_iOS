@@ -264,10 +264,10 @@ extension ButtonViewModel {
     fileprivate var font: UIFont {
         switch size {
             case .large:
-                return Fonts.TTTravels.demiBold.font(size: 16)
+                return Fonts.Styles.title3
 
             case .medium:
-                return Fonts.TTTravels.medium.font(size: 12)
+                return Fonts.Styles.caption
         }
     }
 

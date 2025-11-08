@@ -10,7 +10,6 @@ import UIKit
 // MARK: - Основной контрол
 
 final class CodeTextField: UIControl, UITextFieldDelegate {
-    static let defaultFont: UIFont = Fonts.TTTravels.medium.font(size: 30)
     static let defaultFillColor: UIColor = .init(asset: Colors.Custom.textFieldBackground) ?? .systemGray6
     static let defaultInactiveBorderColor: UIColor = .init(asset: Colors.Custom.textFieldBackground) ?? .systemGray6
     static let defaultActiveBorderColor: UIColor = .init(asset: Colors.Constants.black) ?? .black
@@ -39,7 +38,7 @@ final class CodeTextField: UIControl, UITextFieldDelegate {
         didSet { cells.forEach { $0.cornerRadius = cornerRadius } }
     }
 
-    var font: UIFont = CodeTextField.defaultFont {
+    var font: UIFont = Fonts.Styles.custom(weight: .medium, size: 30) {
         didSet { cells.forEach { $0.font = font } }
     }
 
@@ -117,7 +116,7 @@ final class CodeTextField: UIControl, UITextFieldDelegate {
 
     /// Применяет ваши кастомные стили по умолчанию
     private func applyDefaultStyle() {
-        font = CodeTextField.defaultFont
+        font = Fonts.Styles.custom(weight: .medium, size: 30)
         fillColor = CodeTextField.defaultFillColor
         inactiveBorderColor = CodeTextField.defaultInactiveBorderColor
         activeBorderColor = CodeTextField.defaultActiveBorderColor

@@ -22,6 +22,8 @@ protocol OtpCodePresenter: AnyObject {
 
     /// Обработка закрытия
     func onViewDidDisappear()
+
+    func onTelegramBotButtonTap()
 }
 
 final class OtpCodeViewPresenter {
@@ -32,6 +34,7 @@ final class OtpCodeViewPresenter {
     private let verificationUseCase: VerificationUseCaseInterface
     private let authorizationService: AuthorizationServiceInterface
     private let phone: String
+    private let telegramUrl: URL? = URL(string: "https://t.me/kprokofyev")
 
     /// Текущий таймер
     private var runningTimer: Timer?
@@ -113,6 +116,11 @@ extension OtpCodeViewPresenter: OtpCodePresenter {
                 print("ERROR: \(error.localizedDescription)")
             }
         }
+    }
+
+    func onTelegramBotButtonTap() {
+        guard let telegramUrl else { return }
+        coordinator.openInSafari(url: telegramUrl)
     }
 }
 

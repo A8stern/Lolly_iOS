@@ -21,7 +21,7 @@ public final class PromoSectionView: UIView, ViewModellable {
         let label = UILabel()
         label.textAlignment = .center
         label.numberOfLines = 0
-        label.font = Fonts.TTTravels.demiBold.font(size: 18)
+        label.font = Fonts.Styles.title2
         label.textColor = Colors.Text.primary.color
         return label
     }()

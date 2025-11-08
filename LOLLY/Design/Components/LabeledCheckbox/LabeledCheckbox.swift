@@ -49,7 +49,7 @@ public final class LabeledCheckbox: UIView {
     private lazy var label: UITextView = {
         let label = UITextView()
         label.backgroundColor = .clear
-        label.font = Fonts.TTTravels.medium.font(size: 13)
+        label.font = Fonts.Styles.caption
         label.isEditable = false
         label.isScrollEnabled = false
         label.isSelectable = true

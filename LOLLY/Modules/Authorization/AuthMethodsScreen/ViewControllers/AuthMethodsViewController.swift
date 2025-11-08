@@ -48,7 +48,7 @@ final class AuthMethodsViewController: UIViewController {
         let label = UILabel()
         label.textAlignment = .center
         label.numberOfLines = .zero
-        label.font = Fonts.TTTravels.regular.font(size: 12)
+        label.font = Fonts.Styles.caption
         label.textColor = Colors.Constants.grey.color
         return label
     }()

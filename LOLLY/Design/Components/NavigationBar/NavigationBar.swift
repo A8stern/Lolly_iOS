@@ -85,7 +85,7 @@ public final class NavigationBar: BaseNavigationBar {
         let button = UIButton(type: .system)
         button.tintColor = Colors.Text.primary.color
         button.isHidden = true
-        button.titleLabel?.font = Fonts.TTTravels.medium.font(size: 18)
+        button.titleLabel?.font = Fonts.Styles.title2
         button.setTitleColor(Colors.Text.primary.color, for: .normal)
         button.setTitleColor(Colors.Controls.disabled.color, for: .disabled)
         return button
@@ -95,7 +95,7 @@ public final class NavigationBar: BaseNavigationBar {
         let label = UILabel(frame: .zero)
         label.textAlignment = .center
         label.numberOfLines = .zero
-        label.font = Fonts.TTTravels.medium.font(size: 18)
+        label.font = Fonts.Styles.title2
         label.textColor = Colors.Text.primary.color
         label.backgroundColor = .clear
         label.text = ""

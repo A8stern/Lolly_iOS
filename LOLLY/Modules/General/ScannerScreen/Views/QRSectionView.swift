@@ -21,7 +21,7 @@ public final class QRSectionView: UIView, ViewModellable {
         let label = UILabel()
         label.textAlignment = .center
         label.numberOfLines = 0
-        label.font = Fonts.TTTravels.medium.font(size: 14)
+        label.font = Fonts.Styles.body
         label.textColor = Colors.Text.inverted.color
         return label
     }()

@@ -43,7 +43,7 @@ final class PhoneLogInViewController: UIViewController {
 
     private lazy var privacyCheckBox: LabeledCheckbox = {
         let checkbox = LabeledCheckbox()
-        let baseFont = Fonts.TTTravels.regular.font(size: 13)
+        let baseFont = Fonts.Styles.caption
         checkbox.attributedText = makeTermsAttributedText(baseFont: baseFont)
         return checkbox
     }()

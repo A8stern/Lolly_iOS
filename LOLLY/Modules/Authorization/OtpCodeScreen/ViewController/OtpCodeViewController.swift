@@ -39,7 +39,7 @@ final class OtpCodeViewController: UIViewController {
 
     private lazy var enterCodeLabel: UILabel = {
         let label = UILabel()
-        label.font = Fonts.TTTravels.medium.font(size: Constants.labelFontSize)
+        label.font = Fonts.Styles.caption
         label.textColor = UIColor(asset: Colors.Text.primary)
         label.text = L10n.Otp.Verification.caption
         return label
@@ -49,7 +49,7 @@ final class OtpCodeViewController: UIViewController {
         let button = UIButton(type: .system)
         button.setTitleColor(Colors.accentColor.color, for: .normal)
         button.setTitleColor(Colors.Text.secondary.color, for: .disabled)
-        button.titleLabel?.font = Fonts.TTTravels.regular.font(size: Constants.buttonFontSize)
+        button.titleLabel?.font = Fonts.Styles.caption
 
         button.addTarget(self, action: #selector(didTapResend), for: .touchUpInside)
 
@@ -62,8 +62,7 @@ final class OtpCodeViewController: UIViewController {
         button.setTitle(L10n.Otp.Verification.telegram, for: .normal)
         button.setTitleColor(Colors.accentColor.color, for: .normal)
         button.setTitleColor(Colors.Text.secondary.color, for: .disabled)
-        button.titleLabel?.font = Fonts.TTTravels.regular.font(size: Constants.buttonFontSize)
-
+        button.titleLabel?.font = Fonts.Styles.caption
         button.addTarget(self, action: #selector(didTapTelegramBotButton), for: .touchUpInside)
 
         return button
@@ -144,7 +143,9 @@ final class OtpCodeViewController: UIViewController {
     private func didTapResend() { }
 
     @objc
-    private func didTapTelegramBotButton() { }
+    private func didTapTelegramBotButton() {
+        presenter?.onTelegramBotButtonTap()
+    }
 
     @objc
     private func codeChanged() { }
@@ -178,11 +179,9 @@ private enum Constants {
     static let codeBoxTopOffsetRatio: CGFloat = 234.0 / 844.0
     static let codeBoxSideInset: CGFloat = 24
 
-    static let labelFontSize: CGFloat = 13
     static let labelTopOffset: CGFloat = 16
     static let labelHeight: CGFloat = 18
 
-    static let buttonFontSize: CGFloat = 13
     static let resendButtonTopOffset: CGFloat = 32
     static let telegramButtonTopOffset: CGFloat = 12
     static let buttonHeight: CGFloat = 18
