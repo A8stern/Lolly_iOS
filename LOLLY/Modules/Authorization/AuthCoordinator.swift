@@ -7,7 +7,7 @@
 
 internal import UIKit
 
-final class AuthCoordinator: BaseNavigationCoordinator {
+final class AuthCoordinator: BaseNavigationCoordinator, SystemBrowserRoute {
     // MARK: - Lifecycle
 
     override func start() {
