@@ -60,6 +60,7 @@ extension MainViewPresenter: MainPresenter {
 extension MainViewPresenter {
     fileprivate func responseInitialData(response _: MainModels.InitialData.Response) {
         let viewModel = MainModels.InitialData.ViewModel(
+            profileButtonViewModel: makeProfileButtonViewModel(),
             stickerSectionViewModel: makeStickerSectionViewModel(),
             promoSectionViewModel: makePromoSectionViewModel(),
             gameSectionViewModel: makeGameSectionViewModel(),
@@ -133,6 +134,13 @@ extension MainViewPresenter {
                 AddressViewModel(address: "Ленина, 3", description: "12:00 - 22:00")
             ]
         )
+    }
+
+    fileprivate func makeProfileButtonViewModel() -> ProfileButtonViewModel {
+        ProfileButtonViewModel(tapHandler: { [weak self] in
+            guard let self else { return }
+            coordinator.showProfile()
+        })
     }
 }
 

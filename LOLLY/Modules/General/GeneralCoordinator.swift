@@ -46,4 +46,13 @@ final class GeneralCoordinator: BaseNavigationCoordinator {
     func closeScanner() {
         navigationController.dismiss(animated: true)
     }
+
+    func showProfile() {
+        let coordinator = ProfileCoordinator(navigationController: navigationController)
+        add(child: coordinator)
+        coordinator.start()
+        coordinator.onCompleted = { [coordinator, weak self] in
+            self?.remove(child: coordinator)
+        }
+    }
 }

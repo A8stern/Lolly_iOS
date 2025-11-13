@@ -46,6 +46,9 @@ public enum Assets {
     public static let close = ImageAsset(name: "controls/close")
     public static let nextArrow = ImageAsset(name: "controls/nextArrow")
   }
+  public enum Icons18 {
+    public static let profile = ImageAsset(name: "icons18/profile")
+  }
   public enum Icons24 {
     public enum Social {
       public static let apple = ImageAsset(name: "icons24/social/apple")

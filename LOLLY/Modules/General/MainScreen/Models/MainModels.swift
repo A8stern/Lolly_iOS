@@ -10,6 +10,7 @@ enum MainModels {
         struct Response { }
 
         struct ViewModel {
+            let profileButtonViewModel: ProfileButtonViewModel
             let stickerSectionViewModel: StickerSectionViewModel?
             let promoSectionViewModel: PromoSectionViewModel?
             let gameSectionViewModel: GameSectionViewModel?

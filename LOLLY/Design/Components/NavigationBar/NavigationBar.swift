@@ -81,6 +81,12 @@ public final class NavigationBar: BaseNavigationBar {
         return button
     }()
 
+    private lazy var rightStackView: StackView = {
+        let stack = StackView(axis: .horizontal, space: 4)
+        stack.alignment = .center
+        return stack
+    }()
+
     private lazy var rightButton: UIButton = {
         let button = UIButton(type: .system)
         button.tintColor = Colors.Text.primary.color
@@ -145,6 +151,12 @@ public final class NavigationBar: BaseNavigationBar {
         setNeedsLayout()
     }
 
+    public func addRightButton<T>(_ button: T) where T: UIButton, T: ViewModellable {
+        rightStackView.addArrangedSubview(button)
+        setNeedsLayout()
+        layoutIfNeeded()
+    }
+
     public func setRightButton(image: UIImage?) {
         rightButton.setImage(image, for: [])
     }
@@ -155,7 +167,8 @@ public final class NavigationBar: BaseNavigationBar {
 extension NavigationBar {
     fileprivate func addSubviews() {
         contentView.addSubview(backButton)
-        contentView.addSubview(rightButton)
+        contentView.addSubview(rightStackView)
+        rightStackView.addArrangedSubview(rightButton)
         contentView.addSubview(titleLabel)
     }
 
@@ -167,7 +180,7 @@ extension NavigationBar {
             backButtonWidthConstraint = make.width.equalTo(contentSize).constraint
         }
 
-        rightButton.snp.makeConstraints { make in
+        rightStackView.snp.makeConstraints { make in
             make.trailing.equalTo(contentView.layoutMarginsGuide.snp.trailing)
             make.centerY.equalTo(contentView.layoutMarginsGuide.snp.centerY)
             rightButtonHeightConstraint = make.height.equalTo(contentSize).constraint
@@ -187,7 +200,6 @@ extension NavigationBar {
     }
 
     fileprivate func setupBackButton() {
-        // Replace AppResources with your assets accessor if needed.
         backButton.setImage(
             Assets.Controls.backArrow.image.withRenderingMode(.alwaysTemplate),
             for: []

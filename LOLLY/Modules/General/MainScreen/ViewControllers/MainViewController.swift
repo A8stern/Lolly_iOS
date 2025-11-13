@@ -82,6 +82,11 @@ final class MainViewController: UIViewController {
         return section
     }()
 
+    private lazy var profileButton: ProfileButton = {
+        let button = ProfileButton()
+        return button
+    }()
+
     private lazy var gameSectionTapGesture: UITapGestureRecognizer = {
         let gesture = UITapGestureRecognizer(target: self, action: #selector(onGameSectionTap))
         return gesture
@@ -173,8 +178,12 @@ extension MainViewController {
 
     fileprivate func setupViews() {
         view.backgroundColor = Colors.Custom.inverted.color
+
         navigationController?.isNavigationBarHidden = true
         navBar.delegate = self
+        navBar.addRightButton(profileButton)
+        navBar.contentSize = 24.0
+
         gameSection.addGestureRecognizer(gameSectionTapGesture)
     }
 
@@ -203,6 +212,7 @@ extension MainViewController {
 
 extension MainViewController: MainView {
     func displayInitialData(viewModel: MainModels.InitialData.ViewModel) {
+        profileButton.viewModel = viewModel.profileButtonViewModel
         stickerSection.viewModel = viewModel.stickerSectionViewModel
         calendarSection.viewModel = viewModel.calendarSectionViewModel
         gameSection.viewModel = viewModel.gameSectionViewModel

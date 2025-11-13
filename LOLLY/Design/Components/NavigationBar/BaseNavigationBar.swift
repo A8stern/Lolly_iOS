@@ -43,10 +43,8 @@ public class BaseNavigationBar: UIView {
     // MARK: - Internal Properties
 
     let contentView = UIView()
-    let stackView: UIStackView = {
-        let stackView = UIStackView(frame: .zero)
-        stackView.axis = .vertical
-        stackView.spacing = 20.0
+    let stackView: StackView = {
+        let stackView = StackView(axis: .vertical, space: 20)
         return stackView
     }()
 
@@ -107,9 +105,6 @@ extension BaseNavigationBar {
     }
 
     fileprivate func configure() {
-        layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-        layer.cornerRadius = 32.0
-        layer.cornerCurve = .continuous
         clipsToBounds = true
     }
 }
@@ -120,6 +115,6 @@ extension BaseNavigationBar {
     enum Constants {
         static let contentSize: CGFloat = 36.0
         static let innerMargins = UIEdgeInsets(top: 12.0, left: .zero, bottom: 20.0, right: .zero)
-        static let contentMargins = UIEdgeInsets(top: .zero, left: 10.0, bottom: .zero, right: 10.0)
+        static let contentMargins = UIEdgeInsets(top: .zero, left: 24.0, bottom: .zero, right: 24.0)
     }
 }
