@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum AuthEndpoint {
+public enum AuthEndpoint: Endpoint {
     case checkPhone
     case register
     case sendOTP
@@ -29,13 +29,13 @@ public enum AuthEndpoint {
         }
     }
 
-    public var method: String {
+    public var method: HTTPMethod {
         switch self {
             case .checkPhone, .sendOTP:
-                return "GET"
+                return .get
 
             case .register, .verifyOTP:
-                return "POST"
+                return .post
         }
     }
 
@@ -44,8 +44,4 @@ public enum AuthEndpoint {
         // Authorization и Content-Type уже ставит NetworkService.
         return [:]
     }
-}
-
-extension AuthEndpoint {
-    public var endpoint: String { path }
 }

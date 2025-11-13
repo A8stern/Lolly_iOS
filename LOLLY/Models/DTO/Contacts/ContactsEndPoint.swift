@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum ContactsEndPoint {
+public enum ContactsEndPoint: Endpoint {
     case getContactsData
 
     public var path: String {
@@ -17,18 +17,14 @@ public enum ContactsEndPoint {
         }
     }
 
-    public var method: String {
+    public var method: HTTPMethod {
         switch self {
             case .getContactsData:
-                return "GET"
+                return .get
         }
     }
 
     public var headers: [String: String] {
         return [:]
     }
-}
-
-extension ContactsEndPoint {
-    public var endpoint: String { path }
 }

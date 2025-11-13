@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct VerifyOTPResponse: Decodable {
+struct VerifyOTPResponseModel: ResponseModel {
     let accessToken: String
     let refreshToken: String
 

@@ -20,13 +20,11 @@ public final class MainService: MainServiceInterface {
 
     public func getContactsData() async throws -> [String: Any] {
         let endpoint = ContactsEndPoint.getContactsData
-        print("ENO")
-        let DTOData: ContactsInfoResponse = try await networkService.request(
+        let DTOData: ContactsInfoResponseModel = try await networkService.request(
             endpoint: endpoint.endpoint,
             method: endpoint.method,
             headers: endpoint.headers
         )
-        print(DTOData.text, "POINT")
 
         let placesArray: [[String: Any]] = DTOData.places.map { place in
             [

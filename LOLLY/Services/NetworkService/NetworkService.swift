@@ -22,10 +22,10 @@ public actor NetworkService {
 
     // MARK: Post Put Patch
 
-    public func request<Response: Decodable & Sendable>(
+    public func request<Response: ResponseModel & Sendable>(
         endpoint: String,
-        method: String,
-        body: some Encodable & Sendable,
+        method: HTTPMethod,
+        body: some RequestModel & Sendable,
         headers: [String: String] = [:]
     ) async throws -> Response {
         guard let url = URL(string: endpoint, relativeTo: baseURL) else {
@@ -64,9 +64,9 @@ public actor NetworkService {
 
     // MARK: Get Delete
 
-    public func request<Response: Decodable & Sendable>(
+    public func request<Response: ResponseModel & Sendable>(
         endpoint: String,
-        method: String = "GET",
+        method: HTTPMethod = .get,
         headers: [String: String] = [:]
     ) async throws -> Response {
         guard let url = buildURL(endpoint: endpoint) else {
@@ -107,11 +107,11 @@ public actor NetworkService {
 
     private func createRequest(
         url: URL,
-        method: String,
+        method: HTTPMethod,
         headers: [String: String]
     ) -> URLRequest {
         var request = URLRequest(url: url)
-        request.httpMethod = method
+        request.httpMethod = method.rawValue
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         for (key, value) in headers {
             request.setValue(value, forHTTPHeaderField: key)
@@ -119,7 +119,7 @@ public actor NetworkService {
         return request
     }
 
-    private func decode<Response: Decodable & Sendable>(_: Response.Type, from data: Data) async throws -> Response {
+    private func decode<Response: ResponseModel & Sendable>(_: Response.Type, from data: Data) async throws -> Response {
         do {
             let decoder = JSONDecoder()
             decoder.dateDecodingStrategy = .custom { decoder in

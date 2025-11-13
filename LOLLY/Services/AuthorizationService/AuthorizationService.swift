@@ -30,10 +30,10 @@ public final class AuthorizationService: AuthorizationServiceInterface {
         }
 
         let formattedPhone = try validateAndFormatPhone(phone)
-        let requestBody = PhoneCheckRequest(phone: formattedPhone)
+        let requestBody = PhoneCheckRequestModel(phone: formattedPhone)
 
         let endpoint = AuthEndpoint.checkPhone
-        let answer: PhoneCheckResponse = try await networkService.request(
+        let answer: PhoneCheckResponseModel = try await networkService.request(
             endpoint: endpoint.endpoint,
             method: endpoint.method,
             body: requestBody,
@@ -50,10 +50,10 @@ public final class AuthorizationService: AuthorizationServiceInterface {
 
         let formattedPhone = try validateAndFormatPhone(phone)
 
-        let body = RegisterRequest(phone: formattedPhone, name: name)
+        let body = RegisterRequestModel(phone: formattedPhone, name: name)
         let endpoint = AuthEndpoint.register
 
-        let _: EmptyDecodable = try await networkService.request(
+        let _: EmptyResponseModel = try await networkService.request(
             endpoint: endpoint.endpoint,
             method: endpoint.method,
             body: body,
@@ -69,10 +69,10 @@ public final class AuthorizationService: AuthorizationServiceInterface {
 
         let formattedPhone = try validateAndFormatPhone(phone)
 
-        let body = OTPRequest(phone: formattedPhone)
+        let body = OTPRequestModel(phone: formattedPhone)
         let endpoint = AuthEndpoint.sendOTP
 
-        let _: EmptyDecodable = try await networkService.request(
+        let _: EmptyResponseModel = try await networkService.request(
             endpoint: endpoint.endpoint,
             method: endpoint.method,
             body: body,
@@ -93,10 +93,10 @@ public final class AuthorizationService: AuthorizationServiceInterface {
         let formattedPhone = try validateAndFormatPhone(phone)
 
         let endpoint = AuthEndpoint.verifyOTP
-        let body = VerifyOTPRequest(phone: formattedPhone, otp: otp)
+        let body = VerifyOTPRequestModel(phone: formattedPhone, otp: otp)
 
         // Decode tokens. If needed, persist them here.
-        let response: VerifyOTPResponse = try await networkService.request(
+        let response: VerifyOTPResponseModel = try await networkService.request(
             endpoint: endpoint.endpoint,
             method: endpoint.method,
             body: body,

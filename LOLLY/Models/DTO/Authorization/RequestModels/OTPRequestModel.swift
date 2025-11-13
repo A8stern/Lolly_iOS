@@ -1,5 +1,5 @@
 //
-//  VerifyOTPRequest.swift
+//  OTPRequestModel.swift
 //  LOLLY
 //
 //  Created by Kovalev Gleb on 04.11.2025.
@@ -7,7 +7,6 @@
 
 import Foundation
 
-struct VerifyOTPRequest: Encodable {
+struct OTPRequestModel: RequestModel {
     let phone: String
-    let otp: String
 }
