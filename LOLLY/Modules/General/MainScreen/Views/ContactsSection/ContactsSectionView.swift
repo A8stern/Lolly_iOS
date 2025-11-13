@@ -64,6 +64,21 @@ public final class ContactsSectionView: UIView, ViewModellable {
         return view
     }()
 
+    private lazy var buttonsStackView: StackView = {
+        let stackView = StackView(axis: .horizontal)
+        return stackView
+    }()
+
+    private lazy var socialButtonsStackView: StackView = {
+        let stackView = StackView(axis: .horizontal, space: 8)
+        return stackView
+    }()
+
+    private lazy var websiteButton: Button = {
+        let button = Button()
+        return button
+    }()
+
     // MARK: - Lifecycle
 
     public init(viewModel: ViewModel = nil) {
@@ -112,7 +127,8 @@ extension ContactsSectionView {
             titleLabel,
             topSeparatorLineView,
             addressesStackView,
-            bottomSeparatorLineView
+            bottomSeparatorLineView,
+            buttonsStackView
         )
 
         topSeparatorLineView.snp.makeConstraints { make in
@@ -150,6 +166,7 @@ extension ContactsSectionView {
         backgroundImageView.image = viewModel.backgroundImage
         titleLabel.text = viewModel.title
         topSeparatorLineView.isHidden = viewModel.title == nil
+        websiteButton.viewModel = viewModel.websiteButton
 
         addressesStackView.subviews.forEach { $0.removeFromSuperview() }
         for addressViewModel in viewModel.addresses {
@@ -157,6 +174,24 @@ extension ContactsSectionView {
             addressesStackView.addArrangedSubviews(addressView)
         }
         bottomSeparatorLineView.isHidden = viewModel.addresses.isEmpty
+
+        buttonsStackView.addArrangedSubviews(websiteButton, UIView(), socialButtonsStackView)
+        for socialButtonModel in viewModel.socialButtonViewModels {
+            let button = SocialCircleButton()
+            button.viewModel = socialButtonModel
+
+            socialButtonsStackView.addArrangedSubview(button)
+            button.snp.makeConstraints { make in
+                make.width.equalTo(button.snp.height)
+            }
+            button.addTapActionHandler {
+                socialButtonModel.tapHandler?()
+            }
+        }
+        socialButtonsStackView.snp.makeConstraints { make in
+            make.trailing.equalToSuperview()
+            make.centerY.equalToSuperview()
+        }
     }
 }
 

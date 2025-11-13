@@ -7,7 +7,7 @@
 
 internal import UIKit
 
-final class GeneralCoordinator: BaseNavigationCoordinator {
+final class GeneralCoordinator: BaseNavigationCoordinator, SystemBrowserRoute {
     // MARK: - Private Properties
 
     // MARK: - Lifecycle
@@ -23,7 +23,10 @@ final class GeneralCoordinator: BaseNavigationCoordinator {
     // MARK: - Screens
 
     func showMain() {
-        let viewController = MainAssembly.instance().assembleModule(coordinator: self)
+        let session = URLSession.shared
+        let networkService = NetworkService(session: session)
+        let service = MainService(networkService: networkService, isMock: false)
+        let viewController = MainAssembly.instance().assembleModule(coordinator: self, mainService: service)
         navigationController.pushViewController(viewController, animated: true)
     }
 

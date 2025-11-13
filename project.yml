@@ -16,6 +16,9 @@ packages:
   PhoneNumberKit:
     url: https://github.com/marmelroy/PhoneNumberKit.git
     from: 4.1.8
+  Kingfisher:
+    url: https://github.com/onevcat/Kingfisher.git
+    from: 8.6.1
 settings:
   base:
     VERSIONING_SYSTEM: apple-generic
@@ -53,6 +56,7 @@ targets:
     dependencies:
       - package: SnapKit
       - package: PhoneNumberKit
+      - package: Kingfisher
     bundleId: com.kprokofyev.loyalty.LOLLY
     prebuildScripts:
       - name: SwiftLint

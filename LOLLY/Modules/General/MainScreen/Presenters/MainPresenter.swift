@@ -26,15 +26,18 @@ final class MainViewPresenter {
 
     private unowned let view: MainView
     private let coordinator: GeneralCoordinator
+    private let mainService: MainServiceInterface
 
     // MARK: - Initialization
 
     init(
         view: MainView,
-        coordinator: GeneralCoordinator
+        coordinator: GeneralCoordinator,
+        mainService: MainServiceInterface
     ) {
         self.view = view
         self.coordinator = coordinator
+        self.mainService = mainService
     }
 }
 
@@ -132,7 +135,43 @@ extension MainViewPresenter {
                 AddressViewModel(address: "Пр. Карла Маркса, 47", description: "11:00 - 22:00"),
                 AddressViewModel(address: "Мичурина, 12", description: "11:00 - 22:00"),
                 AddressViewModel(address: "Ленина, 3", description: "12:00 - 22:00")
-            ]
+            ],
+            socialButtonViewModels: [
+                SocialCircleButtonViewModel(
+                    iconURL: "https://i.yapx.ru/cGYdW.png",
+                    tapHandler: { [weak self] in
+                        guard let self else { return }
+                        guard let url = URL(string: "https://facebook.com/") else { return }
+                        coordinator.openInSafari(url: url)
+                    }
+                ),
+                SocialCircleButtonViewModel(
+                    iconURL: "https://i.yapx.ru/cGYiz.png",
+                    tapHandler: { [weak self] in
+                        guard let self else { return }
+                        guard let url = URL(string: "https://vk.com/") else { return }
+                        coordinator.openInSafari(url: url)
+                    }
+                ),
+                SocialCircleButtonViewModel(
+                    iconURL: "https://i.yapx.ru/cGYjI.png",
+                    tapHandler: { [weak self] in
+                        guard let self else { return }
+                        guard let url = URL(string: "https://instagram.com/") else { return }
+                        coordinator.openInSafari(url: url)
+                    }
+                )
+            ],
+            websiteButton: ButtonViewModel(
+                title: L10n.Main.ContactsSection.website,
+                type: .primary(nil),
+                size: .large,
+                tapHandler: { [weak self] in
+                    guard let self else { return }
+                    guard let webSiteURL = URL(string: "https://harucha.ru") else { return }
+                    coordinator.openInSafari(url: webSiteURL)
+                }
+            )
         )
     }
 

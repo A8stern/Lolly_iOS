@@ -22,6 +22,10 @@ internal enum L10n {
     }
   }
   internal enum Main {
+    internal enum ContactsSection {
+      /// Вебсайт
+      internal static let website = L10n.tr("Localizable", "Main.ContactsSection.Website", fallback: "Вебсайт")
+    }
     internal enum GameSection {
       /// Main
       internal static let title = L10n.tr("Localizable", "Main.GameSection.Title", fallback: "Нейросеть выберет\nнапиток за тебя")

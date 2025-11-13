@@ -13,10 +13,11 @@ final class MainAssembly: Assembly {
     // MARK: - Internal Methods
 
     func assembleModule(
-        coordinator: GeneralCoordinator
+        coordinator: GeneralCoordinator,
+        mainService: MainServiceInterface
     ) -> MainViewController {
         return define(scope: .prototype, init: MainViewController()) { view in
-            view.presenter = self.assemblePresenter(view: view, coordinator: coordinator)
+            view.presenter = self.assemblePresenter(view: view, coordinator: coordinator, mainService: mainService)
             return view
         }
     }
@@ -25,12 +26,17 @@ final class MainAssembly: Assembly {
 // MARK: Private Methods
 
 extension MainAssembly {
-    fileprivate func assemblePresenter(view: MainView, coordinator: GeneralCoordinator) -> MainPresenter {
+    fileprivate func assemblePresenter(
+        view: MainView,
+        coordinator: GeneralCoordinator,
+        mainService: MainServiceInterface
+    ) -> MainPresenter {
         return define(
             scope: .prototype,
             init: MainViewPresenter(
                 view: view,
-                coordinator: coordinator
+                coordinator: coordinator,
+                mainService: mainService
             )
         )
     }
