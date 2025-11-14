@@ -22,10 +22,10 @@ public actor NetworkService {
 
     // MARK: Post Put Patch
 
-    public func request<Response: ResponseModel & Sendable>(
+    public func request<Response: ResponseModel>(
         endpoint: String,
         method: HTTPMethod,
-        body: some RequestModel & Sendable,
+        body: some RequestModel,
         headers: [String: String] = [:]
     ) async throws -> Response {
         guard let url = URL(string: endpoint, relativeTo: baseURL) else {
@@ -38,7 +38,7 @@ public actor NetworkService {
                 try JSONEncoder().encode(body)
             }.value
             if let jsonString = String(data: encodedBody, encoding: .utf8) {
-                 print("REQUEST BODY JSON:", jsonString)
+                print("REQUEST BODY JSON:", jsonString)
             }
             request.httpBody = encodedBody
         } catch {
@@ -64,7 +64,7 @@ public actor NetworkService {
 
     // MARK: Get Delete
 
-    public func request<Response: ResponseModel & Sendable>(
+    public func request<Response: ResponseModel>(
         endpoint: String,
         method: HTTPMethod = .get,
         headers: [String: String] = [:]
@@ -119,7 +119,20 @@ public actor NetworkService {
         return request
     }
 
-    private func decode<Response: ResponseModel & Sendable>(_: Response.Type, from data: Data) async throws -> Response {
+    private func decode<Response: ResponseModel & Sendable>(
+        _: Response.Type,
+        from data: Data
+    ) async throws -> Response {
+        if data.isEmpty {
+            /// Если вызывающий ожидает пустой ответ — считаем это нормой
+            if let empty = EmptyResponseModel() as? Response {
+                return empty
+            } else {
+                throw NetworkClientError.emptyBodyExpectedNonEmptyResponse
+            }
+        }
+
+        /// Непустое тело
         do {
             let decoder = JSONDecoder()
             decoder.dateDecodingStrategy = .custom { decoder in

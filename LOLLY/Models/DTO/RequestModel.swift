@@ -7,4 +7,4 @@
 
 import Foundation
 
-public protocol RequestModel: Encodable { }
+public protocol RequestModel: Encodable & Sendable { }

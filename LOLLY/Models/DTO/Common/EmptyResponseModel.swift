@@ -7,6 +7,4 @@
 
 import Foundation
 
-struct EmptyResponseModel: ResponseModel {
-    init(from _: Decoder) throws { }
-}
+struct EmptyResponseModel: ResponseModel { }
