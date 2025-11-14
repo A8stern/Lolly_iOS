@@ -22,8 +22,24 @@ public protocol Endpoint {
 
     /// Полный endpoint
     var endpoint: String { get }
+
+    var head: PathHeadType { get }
+
+    var controller: PathControllerType { get }
 }
 
 public extension Endpoint {
-    var endpoint: String { path }
+    var endpoint: String {
+        [
+            head.rawValue,
+            controller.rawValue,
+            path
+        ]
+            .map { $0.trimmingCharacters(in: CharacterSet(charactersIn: Constants.separator)) }
+            .joined(separator: Constants.separator)
+    }
+}
+
+fileprivate enum Constants {
+        static let separator: String = "/"
 }

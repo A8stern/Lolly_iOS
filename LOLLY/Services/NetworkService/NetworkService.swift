@@ -11,7 +11,7 @@ public enum NetworkClientError: Error {
 }
 
 public actor NetworkService {
-    public let baseURL: URL? = URL(string: "https://lolly-project.ru/api/")
+    public let baseURL: URL? = URL(string: "https://lolly-project.ru")
     private let session: URLSession
 
     public init(session: URLSession) {
@@ -38,7 +38,7 @@ public actor NetworkService {
                 try JSONEncoder().encode(body)
             }.value
             if let jsonString = String(data: encodedBody, encoding: .utf8) {
-//                 print("REQUEST BODY JSON:", jsonString)
+                 print("REQUEST BODY JSON:", jsonString)
             }
             request.httpBody = encodedBody
         } catch {

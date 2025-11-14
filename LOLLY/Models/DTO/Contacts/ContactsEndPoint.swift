@@ -13,7 +13,7 @@ public enum ContactsEndPoint: Endpoint {
     public var path: String {
         switch self {
             case .getContactsData:
-                return "organization/information"
+                return "information"
         }
     }
 
@@ -23,6 +23,10 @@ public enum ContactsEndPoint: Endpoint {
                 return .get
         }
     }
+
+    public var head: PathHeadType { .api }
+
+    public var controller: PathControllerType { .organization }
 
     public var headers: [String: String] {
         return [:]

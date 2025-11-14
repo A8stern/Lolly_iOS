@@ -16,28 +16,32 @@ public enum AuthEndpoint: Endpoint {
     public var path: String {
         switch self {
             case .checkPhone:
-                return "/check-phone"
+                return "is-user"
 
             case .register:
-                return "/authorize/register"
+                return "register"
 
             case .sendOTP:
-                return "/authorize/send-otp"
+                return "send-otp"
 
             case .verifyOTP:
-                return "/authorize/verify-otp"
+                return "verify-otp"
         }
     }
 
     public var method: HTTPMethod {
         switch self {
             case .checkPhone, .sendOTP:
-                return .get
+                return .post
 
             case .register, .verifyOTP:
                 return .post
         }
     }
+
+    public var head: PathHeadType { .api }
+
+    public var controller: PathControllerType { .authorize }
 
     public var headers: [String: String] {
         // Добавьте кастомные заголовки, если потребуется.

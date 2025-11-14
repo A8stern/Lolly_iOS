@@ -7,22 +7,26 @@
 
 import Foundation
 
-public enum SessionEndpoint {
+public enum SessionEndpoint: Endpoint {
     case checkToken
 
     public var path: String {
         switch self {
             case .checkToken:
-                return "/authorize/token"
+                return "token"
         }
     }
 
-    public var method: String {
+    public var method: HTTPMethod {
         switch self {
             case .checkToken:
-                return "GET"
+                return .get
         }
     }
+
+    public var head: PathHeadType { .api }
+
+    public var controller: PathControllerType { .authorize }
 
     public var headers: [String: String] {
         // Добавьте кастомные заголовки, если потребуется.
