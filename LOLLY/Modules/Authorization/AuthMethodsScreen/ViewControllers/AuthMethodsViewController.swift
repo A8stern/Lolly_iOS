@@ -8,7 +8,7 @@
 private import SnapKit
 import UIKit
 
-protocol AuthMethodsView: AnyObject {
+protocol AuthMethodsView: AnyObject, SnackDisplayable {
     func displayInitialData(viewModel: AuthMethodsModels.InitialData.ViewModel)
 }
 

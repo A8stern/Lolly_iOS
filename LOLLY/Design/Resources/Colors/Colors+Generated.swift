@@ -48,6 +48,12 @@ public enum Colors {
     public static let inverted = ColorAsset(name: "Custom/inverted")
     public static let textFieldBackground = ColorAsset(name: "Custom/textFieldBackground")
   }
+  public enum Notification {
+    public static let background = ColorAsset(name: "Notification/background")
+    public static let error = ColorAsset(name: "Notification/error")
+    public static let success = ColorAsset(name: "Notification/success")
+    public static let text = ColorAsset(name: "Notification/text")
+  }
   public static let secondaryColor = ColorAsset(name: "SecondaryColor")
   public enum Text {
     public static let primary = ColorAsset(name: "Text/Primary")

@@ -9,7 +9,7 @@ private import PhoneNumberKit
 private import SnapKit
 import UIKit
 
-protocol OtpCodeView: AnyObject {
+protocol OtpCodeView: AnyObject, SnackDisplayable {
     func displayResendButton(viewModel: OtpCodeModels.ResendButton.ViewModel)
 }
 

@@ -7,7 +7,7 @@
 
 internal import UIKit
 
-protocol SplashView: AnyObject { }
+protocol SplashView: AnyObject, SnackDisplayable { }
 
 final class SplashViewController: UIViewController {
     // MARK: - Internal Properties

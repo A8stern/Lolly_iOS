@@ -8,7 +8,7 @@
 private import SnapKit
 import UIKit
 
-protocol ProfileView: AnyObject {
+protocol ProfileView: AnyObject, SnackDisplayable {
     func displayInitialData(viewModel: ProfileModels.InitialData.ViewModel)
 }
 

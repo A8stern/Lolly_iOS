@@ -113,7 +113,9 @@ extension OtpCodeViewPresenter: OtpCodePresenter {
                     }
                 }
             } catch {
-                print("ERROR: \(error.localizedDescription)")
+                await MainActor.run {
+                    view.showSnack(with: .error(text: error.localizedDescription))
+                }
             }
         }
     }

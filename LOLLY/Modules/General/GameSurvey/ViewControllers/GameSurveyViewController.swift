@@ -1,7 +1,7 @@
 private import SnapKit
 internal import UIKit
 
-protocol GameSurveyView: AnyObject { }
+protocol GameSurveyView: AnyObject, SnackDisplayable { }
 
 final class GameSurveyViewController: UIViewController {
     // MARK: - Internal Properties

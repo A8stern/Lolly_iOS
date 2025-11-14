@@ -242,8 +242,8 @@ extension PhoneLogInViewPresenter {
                 await MainActor.run {
                     isLoading = false
                     updateContinueButton()
+                    view.showSnack(with: .error(text: error.localizedDescription))
                 }
-                print("ERROR: \(error.localizedDescription)")
             }
         }
     }
@@ -282,8 +282,8 @@ extension PhoneLogInViewPresenter {
                 await MainActor.run {
                     isLoading = false
                     updateContinueButton()
+                    view.showSnack(with: .error(text: error.localizedDescription))
                 }
-                print("ERROR: \(error.localizedDescription)")
             }
         }
     }

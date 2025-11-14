@@ -9,7 +9,7 @@ private import SnapKit
 
 internal import UIKit
 
-protocol MainView: AnyObject {
+protocol MainView: AnyObject, SnackDisplayable {
     func displayInitialData(viewModel: MainModels.InitialData.ViewModel)
 }
 

@@ -8,7 +8,7 @@
 private import SnapKit
 import UIKit
 
-protocol PhoneLogInView: AnyObject {
+protocol PhoneLogInView: AnyObject, SnackDisplayable {
     func displayInitialData(viewModel: PhoneLogInModels.InitialData.ViewModel)
     func displayRegistration(viewModel: PhoneLogInModels.Registration.ViewModel)
     func updatePhoneField(viewModel: PhoneLogInModels.PhoneField.ViewModel)
