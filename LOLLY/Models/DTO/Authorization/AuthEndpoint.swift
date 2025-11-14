@@ -41,7 +41,15 @@ public enum AuthEndpoint: Endpoint {
 
     public var head: PathHeadType { .api }
 
-    public var controller: PathControllerType { .authorize }
+    public var controller: PathControllerType {
+        switch self {
+            case .checkPhone, .sendOTP, .verifyOTP:
+                return .authorize
+
+            case .register:
+                return .user
+        }
+    }
 
     public var headers: [String: String] {
         // Добавьте кастомные заголовки, если потребуется.

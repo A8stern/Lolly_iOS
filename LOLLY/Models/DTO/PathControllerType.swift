@@ -8,4 +8,5 @@
 public enum PathControllerType: String {
     case authorize
     case organization
+    case user
 }
