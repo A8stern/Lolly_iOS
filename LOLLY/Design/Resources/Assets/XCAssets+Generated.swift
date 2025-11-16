@@ -45,6 +45,7 @@ public enum Assets {
     }
     public static let close = ImageAsset(name: "controls/close")
     public static let nextArrow = ImageAsset(name: "controls/nextArrow")
+    public static let playButton = ImageAsset(name: "controls/playButton")
   }
   public static let error = ImageAsset(name: "error")
   public enum Icons18 {

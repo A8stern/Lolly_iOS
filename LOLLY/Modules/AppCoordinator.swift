@@ -14,6 +14,10 @@ public final class AppCoordinator: BaseCoordinator<UIWindow> {
         root as UIWindow
     }
 
+    // MARK: - Private Properties
+
+    private let serviceAssembly = ServiceAssembly.instance()
+
     // MARK: - Lifecycle
 
     public init(window: UIWindow) {
@@ -84,7 +88,10 @@ public final class AppCoordinator: BaseCoordinator<UIWindow> {
 
     public func goToGeneralFlow() {
         let navigationController = UINavigationController()
-        let coordinator = GeneralCoordinator(navigationController: navigationController)
+        let coordinator = GeneralCoordinator(
+            navigationController: navigationController,
+            serviceAssembly: serviceAssembly
+        )
         add(child: coordinator)
         coordinator.start()
     }

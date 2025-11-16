@@ -10,7 +10,17 @@ internal import UIKit
 final class GeneralCoordinator: BaseNavigationCoordinator, SystemBrowserRoute {
     // MARK: - Private Properties
 
+    private let serviceAssembly: ServiceAssembly
+
     // MARK: - Lifecycle
+
+    init(
+        navigationController: UINavigationController,
+        serviceAssembly: ServiceAssembly
+    ) {
+        self.serviceAssembly = serviceAssembly
+        super.init(navigationController: navigationController)
+    }
 
     override func start() {
         showMain()
@@ -31,7 +41,10 @@ final class GeneralCoordinator: BaseNavigationCoordinator, SystemBrowserRoute {
     }
 
     func showGameSurvey() {
-        let viewController = GameSurveyAssembly.instance().assembleModule(coordinator: self)
+        let viewController = GameSurveyAssembly.instance().assembleModule(
+            coordinator: self,
+            serviceAssembly: serviceAssembly
+        )
         viewController.modalPresentationStyle = .fullScreen
         navigationController.present(viewController, animated: true)
     }

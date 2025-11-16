@@ -82,7 +82,7 @@ opt_in_rules:
   - nsobject_prefer_isequal
   - object_literal
   - operator_usage_whitespace
-  - function_name_whitespace
+  - operator_whitespace
   - pattern_matching_keywords
   - prefixed_toplevel_constant
   - private_action
@@ -99,6 +99,7 @@ opt_in_rules:
   - redundant_discardable_let
   - redundant_nil_coalescing
   - redundant_objc_attribute
+  - redundant_optional_initialization
   - redundant_set_access_control
   - redundant_string_enum_value
   - redundant_void_return
@@ -148,17 +149,19 @@ disabled_rules:
   - control_statement
   - private_over_fileprivate
   - switch_case_on_newline
-  - extension_access_modifier
 
 warning_threshold: 15
+
+excluded:
+  - LOLLY/Design/Resources/Strings/Strings+Generated.swift
+  - LOLLY/Design/Resources/Assets/XCAssets+Generated.swift
 
 analyzer_rules:
   - explicit_self
   - unused_declaration
   - unused_import
 
-force_cast:
-  error
+force_cast: error
 
 force_try:
   severity: error
@@ -196,16 +199,6 @@ identifier_name:
     - io
     - x
     - y
-    - day
-
-file_name: 
-  excluded: [
-    "XCAssets+Generated", 
-    "Colors+Generated.swift", 
-    "Fonts+Generated.swift",
-    "Strings+Generated.swift",
-    "XCAssets+Generated.swift"
-  ]
 
 nesting:
   type_level: 3
@@ -218,4 +211,4 @@ conditional_returns_on_newline:
 
 indentation_width: 4
 
-reporter: "xcode"
+reporter: 'xcode'

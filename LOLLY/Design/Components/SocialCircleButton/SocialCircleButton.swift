@@ -7,7 +7,6 @@
 
 private import SnapKit
 import UIKit
-
 import Kingfisher
 
 public final class SocialCircleButton: UIButton, ViewModellable {

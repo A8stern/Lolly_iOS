@@ -21,6 +21,16 @@ internal enum L10n {
       internal static let signInWithPhone = L10n.tr("Localizable", "AuthMethods.Buttons.SignInWithPhone", fallback: "Войти по номеру телефона")
     }
   }
+  internal enum Gamification {
+    /// Поздравляем!
+    internal static let congratulation = L10n.tr("Localizable", "Gamification.Congratulation", fallback: "Поздравляем!")
+    /// Не удалось загрузить опрос. Попробуйте позже.
+    internal static let error = L10n.tr("Localizable", "Gamification.Error", fallback: "Не удалось загрузить опрос. Попробуйте позже.")
+    /// Опрос завершён
+    internal static let gameEnd = L10n.tr("Localizable", "Gamification.GameEnd", fallback: "Опрос завершён")
+    /// Gamification
+    internal static let start = L10n.tr("Localizable", "Gamification.Start", fallback: "Начнём?")
+  }
   internal enum Main {
     internal enum ContactsSection {
       /// Вебсайт

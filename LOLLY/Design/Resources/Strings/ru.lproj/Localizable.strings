@@ -41,3 +41,9 @@
 
 "Scanner.Title" = "Поднесите телефон к считывателю";
 
+/* Gamification */
+
+"Gamification.Start" = "Начнём?";
+"Gamification.Congratulation" = "Поздравляем!";
+"Gamification.GameEnd" = "Опрос завершён";
+"Gamification.Error" = "Не удалось загрузить опрос. Попробуйте позже.";

@@ -28,4 +28,13 @@ public final class ServiceAssembly: Assembly {
             )
         )
     }
+
+    public var gameSurveyService: GameSurveyServiceInterface {
+        define(
+            scope: .lazySingleton,
+            init: GameSurveyService(
+                networkService: self.networkService
+            )
+        )
+    }
 }

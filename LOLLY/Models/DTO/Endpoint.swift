@@ -5,7 +5,6 @@
 //  Created by Kirill Prokofyev on 14.11.2025.
 //
 
-
 import Foundation
 
 // MARK: - Common Protocol
@@ -41,5 +40,5 @@ public extension Endpoint {
 }
 
 fileprivate enum Constants {
-        static let separator: String = "/"
+    static let separator: String = "/"
 }
