@@ -28,7 +28,7 @@ final class LoyaltyLoadingViewPresenter {
     ) {
         self.view = view
         self.coordinator = coordinator
-        stickersService = service
+        self.stickersService = service
     }
 }
 
@@ -37,11 +37,11 @@ extension LoyaltyLoadingViewPresenter: LoyaltyLoadingPresenter {
         checkChanges()
     }
 
-    func onViewWillAppear() {}
+    func onViewWillAppear() { }
 
-    func onViewDidAppear() {}
+    func onViewDidAppear() { }
 
-    func onViewWillDisappear() {}
+    func onViewWillDisappear() { }
 
     func onCloseTap() {
         Task { @MainActor in
@@ -51,8 +51,8 @@ extension LoyaltyLoadingViewPresenter: LoyaltyLoadingPresenter {
     }
 }
 
-private extension LoyaltyLoadingViewPresenter {
-    func checkChanges() {
+extension LoyaltyLoadingViewPresenter {
+    fileprivate func checkChanges() {
         Task {
             while changesStatus == .notChanged {
                 changesStatus = await stickersService.changingCheck()
@@ -68,7 +68,7 @@ private extension LoyaltyLoadingViewPresenter {
                     }
                 } else {
                     do {
-                        try await Task.sleep(nanoseconds: 5_000_000_000)
+                        try await Task.sleep(nanoseconds: 5000000000)
                     } catch {
                         await MainActor.run {
                             changesStatus = .error
@@ -84,8 +84,8 @@ private extension LoyaltyLoadingViewPresenter {
 
 // MARK: - Constants
 
-private extension LoyaltyLoadingViewPresenter {
-    enum Constants {
+extension LoyaltyLoadingViewPresenter {
+    fileprivate enum Constants {
         static let qrSize: CGFloat = 325.0
     }
 }

@@ -57,14 +57,14 @@ public final class SnackView: BaseView {
 
 // MARK: - Private Methods
 
-private extension SnackView {
-    func addSubviews() {
+extension SnackView {
+    fileprivate func addSubviews() {
         installBackgroundView(contentView, insets: .init(top: .zero, left: 16.0, bottom: .zero, right: 16.0))
         contentView.addSubview(iconView)
         contentView.addSubview(textLabel)
     }
 
-    func setupConstraints() {
+    fileprivate func setupConstraints() {
         iconView.translatesAutoresizingMaskIntoConstraints = false
         textLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.translatesAutoresizingMaskIntoConstraints = false
@@ -82,23 +82,23 @@ private extension SnackView {
         ])
     }
 
-    func configureMessage(props: SnackProps) {
+    fileprivate func configureMessage(props: SnackProps) {
         switch props {
-            case let .error(icon, text):
+            case .error(let icon, let text):
                 textLabel.text = text
                 let iconImage = icon ?? Assets.error.image
                 iconView.image = iconImage.withRenderingMode(.alwaysTemplate)
                 iconView.tintColor = Colors.Notification.error.color
                 contentView.backgroundColor = Colors.Notification.background.color
 
-            case let .warning(icon, text):
+            case .warning(let icon, let text):
                 textLabel.text = text
                 let iconImage = icon ?? Assets.error.image
                 iconView.image = iconImage.withRenderingMode(.alwaysTemplate)
                 iconView.tintColor = Colors.Notification.error.color
                 contentView.backgroundColor = Colors.Notification.background.color
 
-            case let .success(icon, text):
+            case .success(let icon, let text):
                 textLabel.text = text
                 let iconImage = icon ?? Assets.error.image
                 iconView.image = iconImage.withRenderingMode(.alwaysTemplate)
@@ -110,8 +110,8 @@ private extension SnackView {
 
 // MARK: - Consntants
 
-private extension SnackView {
-    enum Constants {
+extension SnackView {
+    fileprivate enum Constants {
         static let iconSize: CGFloat = 24
         static let spacing: CGFloat = 12
     }

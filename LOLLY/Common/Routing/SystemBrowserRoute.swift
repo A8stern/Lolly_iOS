@@ -13,15 +13,15 @@ public protocol SystemBrowserRoute {
     func openInApp(url: URL)
 }
 
-public extension SystemBrowserRoute where Self: Coordinator, RootType: UIViewController {
-    func openInSafari(url: URL) {
+extension SystemBrowserRoute where Self: Coordinator, RootType: UIViewController {
+    public func openInSafari(url: URL) {
         guard UIApplication.shared.canOpenURL(url) else {
             return
         }
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
 
-    func openInApp(url: URL) {
+    public func openInApp(url: URL) {
         guard UIApplication.shared.canOpenURL(url) else {
             return
         }

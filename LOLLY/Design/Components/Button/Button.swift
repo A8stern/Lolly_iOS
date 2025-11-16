@@ -185,11 +185,11 @@ extension Button {
                 if #available(iOS 26.0, *) {
                     self.configuration = .glass()
                 } else {
-                    self.configuration = nil
+                    configuration = nil
                 }
 
             case .normal:
-                self.configuration = nil
+                configuration = nil
         }
     }
 
@@ -274,7 +274,7 @@ extension ButtonViewModel {
     fileprivate var icon: ButtonViewModel.Icon? {
         switch type {
             case .primary(let option),
-                .secondary(let option):
+                 .secondary(let option):
                 return option
 
             case .custom(let config):

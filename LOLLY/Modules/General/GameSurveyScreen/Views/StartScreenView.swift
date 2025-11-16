@@ -99,8 +99,8 @@ public final class StartScreenView: UIView {
 
 // MARK: - Setup
 
-private extension StartScreenView {
-    func setupLayout() {
+extension StartScreenView {
+    fileprivate func setupLayout() {
         addSubview(circleBackgroundView)
         circleBackgroundView.snp.makeConstraints { make in
             make.center.equalToSuperview()
@@ -133,25 +133,25 @@ private extension StartScreenView {
         }
     }
 
-    func setupUI() {
+    fileprivate func setupUI() {
         backgroundColor = Colors.Custom.inverted.color
 
         circleBackgroundView.layer.cornerRadius = Constants.circleSize / 2
         circleBackgroundView.clipsToBounds = true
     }
 
-    func setupBehaviour() {}
+    fileprivate func setupBehaviour() { }
 
     @objc
-    func onPlayTap() {
+    fileprivate func onPlayTap() {
         onStartTap?()
     }
 }
 
 // MARK: - Constants
 
-private extension StartScreenView {
-    enum Constants {
+extension StartScreenView {
+    fileprivate enum Constants {
         static let circleSize: CGFloat = 280
         static let titleOffsetFromCenter: CGFloat = -30
         static let subtitleTopOffset: CGFloat = 8

@@ -1,5 +1,5 @@
 //
-//  VerifyOTPResponse.swift
+//  VerifyOTPResponseModel.swift
 //  LOLLY
 //
 //  Created by Kovalev Gleb on 04.11.2025.

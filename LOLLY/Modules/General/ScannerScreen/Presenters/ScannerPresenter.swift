@@ -46,8 +46,7 @@ final class ScannerViewPresenter {
 }
 
 extension ScannerViewPresenter: ScannerPresenter {
-    func onViewDidLoad() {
-    }
+    func onViewDidLoad() { }
 
     func onViewWillAppear() {
         screenBrightnessManager.set(to: .full)
@@ -88,14 +87,14 @@ extension ScannerViewPresenter {
         initialDataTask = Task { [weak self] in
             guard let self else { return }
             do {
-                let hash = try await self.fetchHash()
+                let hash = try await fetchHash()
 
                 let viewModel = ScannerModels.InitialData.ViewModel(
-                    QRSectionViewModel: self.makeQRSectionViewModel(hash: hash)
+                    QRSectionViewModel: makeQRSectionViewModel(hash: hash)
                 )
-                self.checkChanges()
+                checkChanges()
                 await MainActor.run { [weak self] in
-                    guard let self, let view = self.view else { return }
+                    guard let self, let view else { return }
                     view.displayInitialData(viewModel: viewModel)
                 }
             } catch is CancellationError {
@@ -148,22 +147,22 @@ extension ScannerViewPresenter {
         checkChangesTask?.cancel()
         checkChangesTask = Task { [weak self] in
             guard let self else { return }
-            while !Task.isCancelled, self.changesStatus == .error {
-                let status = await self.stickersService.changingCheck()
+            while !Task.isCancelled, changesStatus == .error {
+                let status = await stickersService.changingCheck()
                 if Task.isCancelled {
                     return
                 }
-                self.changesStatus = status
+                changesStatus = status
 
                 if status != .error {
                     await MainActor.run { [weak self] in
-                        guard let self, let coordinator = self.coordinator else { return }
+                        guard let self, let coordinator else { return }
                         coordinator.showLoading()
                     }
                     return
                 } else {
                     do {
-                        try await Task.sleep(nanoseconds: 5_000_000_000)
+                        try await Task.sleep(nanoseconds: 5000000000)
                     } catch {
                         return
                     }

@@ -97,8 +97,8 @@ public final class QuestionScreenView: UIView {
 
 // MARK: - Setup
 
-private extension QuestionScreenView {
-    func setupLayout() {
+extension QuestionScreenView {
+    fileprivate func setupLayout() {
         // Декоративный круг на заднем плане
         addSubview(circleBackgroundView)
         circleBackgroundView.snp.makeConstraints { make in
@@ -137,7 +137,7 @@ private extension QuestionScreenView {
         }
     }
 
-    func setupUI() {
+    fileprivate func setupUI() {
         backgroundColor = Colors.Custom.inverted.color
 
         circleBackgroundView.layer.cornerRadius = Constants.defaultCircleSize / 2
@@ -147,8 +147,8 @@ private extension QuestionScreenView {
 
 // MARK: - Constants
 
-private extension QuestionScreenView {
-    enum Constants {
+extension QuestionScreenView {
+    fileprivate enum Constants {
         static let defaultCircleSize: CGFloat = 300
         static let circleVerticalOffset: CGFloat = -50
         static let pageIndicatorTopOffset: CGFloat = 16

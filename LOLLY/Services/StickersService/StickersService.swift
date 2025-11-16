@@ -22,7 +22,7 @@ public final class StickersService: StickersServiceInterface {
 
     public func generateHash() async throws -> String {
         if isMock {
-            try await Task.sleep(nanoseconds: 1_000_000_000)
+            try await Task.sleep(nanoseconds: 1000000000)
             return "HASH"
         }
 
@@ -42,7 +42,7 @@ public final class StickersService: StickersServiceInterface {
     public func changingCheck() async -> ChangingCheckStatus {
         if isMock {
             do {
-                try await Task.sleep(nanoseconds: 1_000_000_000)
+                try await Task.sleep(nanoseconds: 1000000000)
             } catch {
                 return .error
             }
@@ -66,16 +66,16 @@ public final class StickersService: StickersServiceInterface {
             }
             if let networkError = error as? NetworkClientError {
                 switch networkError {
-                case .httpError(let statusCode, _):
-                    if statusCode == 204 {
+                    case .httpError(let statusCode, _):
+                        if statusCode == 204 {
+                            return .notChanged
+                        }
+
+                    case .emptyBodyExpectedNonEmptyResponse:
                         return .notChanged
-                    }
 
-                case .emptyBodyExpectedNonEmptyResponse:
-                    return .notChanged
-
-                default:
-                    break
+                    default:
+                        break
                 }
             }
             return .error

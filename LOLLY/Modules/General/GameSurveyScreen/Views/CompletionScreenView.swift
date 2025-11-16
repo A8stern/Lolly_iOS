@@ -70,8 +70,8 @@ public final class CompletionScreenView: UIView {
 
 // MARK: - Setup
 
-private extension CompletionScreenView {
-    func setupLayout() {
+extension CompletionScreenView {
+    fileprivate func setupLayout() {
         addSubview(circleBackgroundView)
         circleBackgroundView.snp.makeConstraints { make in
             make.center.equalToSuperview()
@@ -98,7 +98,7 @@ private extension CompletionScreenView {
         }
     }
 
-    func setupUI() {
+    fileprivate func setupUI() {
         backgroundColor = Colors.Custom.inverted.color
 
         circleBackgroundView.layer.cornerRadius = Constants.circleSize / 2
@@ -108,8 +108,8 @@ private extension CompletionScreenView {
 
 // MARK: - Constants
 
-private extension CompletionScreenView {
-    enum Constants {
+extension CompletionScreenView {
+    fileprivate enum Constants {
         static let circleSize: CGFloat = 300
         static let congratulationsOffsetFromCenter: CGFloat = -20
         static let descriptionTopOffset: CGFloat = 16

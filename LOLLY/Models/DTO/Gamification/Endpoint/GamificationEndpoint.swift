@@ -14,24 +14,24 @@ enum GamificationEndpoint: Endpoint {
 
     var path: String {
         switch self {
-        case .quiz:
-            return "quiz"
+            case .quiz:
+                return "quiz"
 
-        case .result:
-            return "quiz/result"
+            case .result:
+                return "quiz/result"
 
-        case .overview:
-            return "overview"
+            case .overview:
+                return "overview"
         }
     }
 
     var method: HTTPMethod {
         switch self {
-        case .quiz, .overview:
-            return .get
+            case .quiz, .overview:
+                return .get
 
-        case .result:
-            return .post
+            case .result:
+                return .post
         }
     }
 

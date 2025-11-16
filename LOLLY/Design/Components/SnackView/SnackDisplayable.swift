@@ -15,11 +15,11 @@ public protocol SnackDisplayable: AnyObject {
     func enqueueMessage(with props: SnackView.SnackProps)
 }
 
-public extension SnackDisplayable {
+extension SnackDisplayable {
     // MARK: - Public Methods
 
     @MainActor
-    func showSnack(with props: SnackView.SnackProps) {
+    public func showSnack(with props: SnackView.SnackProps) {
         guard SwiftMessages.sharedInstance.current() == nil else {
             return
         }
@@ -27,12 +27,12 @@ public extension SnackDisplayable {
     }
 
     @MainActor
-    func enqueueMessage(with props: SnackView.SnackProps) {
+    public func enqueueMessage(with props: SnackView.SnackProps) {
         showSnack(props: props)
     }
 
     @MainActor
-    func hideCurrentMessage() {
+    public func hideCurrentMessage() {
         guard SwiftMessages.sharedInstance.current() != nil else {
             return
         }

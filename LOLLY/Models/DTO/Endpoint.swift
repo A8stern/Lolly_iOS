@@ -27,8 +27,8 @@ public protocol Endpoint {
     var controller: PathControllerType { get }
 }
 
-public extension Endpoint {
-    var endpoint: String {
+extension Endpoint {
+    public var endpoint: String {
         [
             head.rawValue,
             controller.rawValue,

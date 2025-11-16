@@ -1,5 +1,5 @@
 //
-//  BaristaScanRequest.swift
+//  BaristaScanRequestModel.swift
 //  LOLLY
 //
 //  Created by Kovalev Gleb on 12.11.2025.

@@ -36,8 +36,8 @@ public final class QuestionOptionButton: UIButton {
 
 // MARK: - Setup
 
-private extension QuestionOptionButton {
-    func setupUI(title: String) {
+extension QuestionOptionButton {
+    fileprivate func setupUI(title: String) {
         setTitle(title, for: .normal)
         titleLabel?.font = Fonts.TTTravels.medium.font(size: 16)
         titleLabel?.numberOfLines = 0
@@ -62,20 +62,20 @@ private extension QuestionOptionButton {
         configuration = config
     }
 
-    func setupBehaviour() {
+    fileprivate func setupBehaviour() {
         addTarget(self, action: #selector(handleTap), for: .touchUpInside)
     }
 
     @objc
-    func handleTap() {
+    fileprivate func handleTap() {
         onTap?()
     }
 }
 
 // MARK: - Constants
 
-private extension QuestionOptionButton {
-    enum Constants {
+extension QuestionOptionButton {
+    fileprivate enum Constants {
         static let verticalPadding: CGFloat = 16.0
         static let horizontalPadding: CGFloat = 24.0
     }

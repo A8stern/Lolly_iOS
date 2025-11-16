@@ -1,5 +1,5 @@
 //
-//  GenerateHashResponse.swift
+//  GenerateHashResponseModel.swift
 //  LOLLY
 //
 //  Created by Kovalev Gleb on 12.11.2025.

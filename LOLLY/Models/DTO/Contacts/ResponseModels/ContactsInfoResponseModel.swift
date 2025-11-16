@@ -1,5 +1,5 @@
 //
-//  ContactsInfoResponse.swift
+//  ContactsInfoResponseModel.swift
 //  LOLLY
 //
 //  Created by Nikita on 12.11.2025.

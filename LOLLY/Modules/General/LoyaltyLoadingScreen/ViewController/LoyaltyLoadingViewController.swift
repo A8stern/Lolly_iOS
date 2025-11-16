@@ -84,15 +84,15 @@ final class LoyaltyLoadingViewController: UIViewController {
     }
 }
 
-private extension LoyaltyLoadingViewController {
-    func addSubviews() {
+extension LoyaltyLoadingViewController {
+    fileprivate func addSubviews() {
         view.addSubview(closeButton)
         view.addSubview(transparentCircleImageView)
         view.addSubview(activityIndicator)
         view.addSubview(loadingTextLabel)
     }
 
-    func setupConstraints() {
+    fileprivate func setupConstraints() {
         closeButton.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(16)
             make.leading.equalTo(view.safeAreaLayoutGuide.snp.leading).inset(16)
@@ -120,7 +120,7 @@ private extension LoyaltyLoadingViewController {
         }
     }
 
-    func setupViews() {
+    fileprivate func setupViews() {
         view.backgroundColor = Colors.accentColor.color
         navigationController?.isNavigationBarHidden = true
     }
@@ -147,8 +147,8 @@ extension LoyaltyLoadingViewController: LoyaltyLoadingView {
 
 // MARK: - Constants
 
-private extension LoyaltyLoadingViewController {
-    enum Constants {
+extension LoyaltyLoadingViewController {
+    fileprivate enum Constants {
         static let innerMargins: UIEdgeInsets = .zero
         static let contentMargins: UIEdgeInsets = .zero
         static let qrSize: CGFloat = 325.0

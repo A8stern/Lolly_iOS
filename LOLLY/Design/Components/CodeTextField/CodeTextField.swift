@@ -248,9 +248,9 @@ final class CodeTextField: UIControl, UITextFieldDelegate {
         cells.forEach { $0.activeBorderColor = redColor }
         updateActiveCell()
         DispatchQueue.main.asyncAfter(deadline: .now() + duration) { [weak self] in
-            guard let self = self else { return }
-            self.cells.forEach { $0.activeBorderColor = previousColor }
-            self.updateActiveCell()
+            guard let self else { return }
+            cells.forEach { $0.activeBorderColor = previousColor }
+            updateActiveCell()
         }
     }
 

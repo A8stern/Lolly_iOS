@@ -31,7 +31,7 @@ public enum StickersEndpoint: Endpoint {
                 return .get
 
             case .baristaScan:
-            return .post
+                return .post
         }
     }
 

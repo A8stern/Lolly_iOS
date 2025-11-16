@@ -57,7 +57,7 @@ extension GameSurveyViewPresenter: GameSurveyPresenter {
     }
 
     func onStartTap() {
-        guard let quiz = quiz, quiz.steps.isEmpty == false else {
+        guard let quiz, quiz.steps.isEmpty == false else {
             loadInitialData()
             view.showSnack(with: .warning(text: L10n.Gamification.error))
             return
@@ -69,7 +69,7 @@ extension GameSurveyViewPresenter: GameSurveyPresenter {
     }
 
     func onOptionSelected(_ optionIndex: Int) {
-        guard let quiz = quiz, currentQuestionIndex < quiz.steps.count else {
+        guard let quiz, currentQuestionIndex < quiz.steps.count else {
             return
         }
 
@@ -94,8 +94,8 @@ extension GameSurveyViewPresenter: GameSurveyPresenter {
 
 // MARK: - Private Methods
 
-private extension GameSurveyViewPresenter {
-    func loadInitialData() {
+extension GameSurveyViewPresenter {
+    fileprivate func loadInitialData() {
         view.setLoading(true)
 
         Task {
@@ -129,13 +129,13 @@ private extension GameSurveyViewPresenter {
         }
     }
 
-    func showCurrentQuestion() {
-        guard let quiz = quiz, currentQuestionIndex < quiz.steps.count else {
+    fileprivate func showCurrentQuestion() {
+        guard let quiz, currentQuestionIndex < quiz.steps.count else {
             return
         }
 
         let step = quiz.steps[currentQuestionIndex]
-        let options = step.options.map { $0.text }
+        let options = step.options.map(\.text)
         let size = circleSize(for: currentQuestionIndex, total: quiz.steps.count)
 
         let viewModel = GameSurveyModels.Question.ViewModel(
@@ -148,7 +148,7 @@ private extension GameSurveyViewPresenter {
         view.showQuestion(viewModel: viewModel)
     }
 
-    func submitResults() {
+    fileprivate func submitResults() {
         view.setLoading(true)
 
         let answers = selectedAnswers
@@ -180,7 +180,7 @@ private extension GameSurveyViewPresenter {
         }
     }
 
-    func circleSize(for index: Int, total: Int) -> CGFloat {
+    fileprivate func circleSize(for index: Int, total: Int) -> CGFloat {
         let maxSize: CGFloat = 300
         let minSize: CGFloat = 120
         guard total > 1 else { return maxSize }
@@ -191,8 +191,8 @@ private extension GameSurveyViewPresenter {
 
 // MARK: - Constants
 
-private extension GameSurveyViewPresenter {
-    enum Constants {
+extension GameSurveyViewPresenter {
+    fileprivate enum Constants {
         static let userIDKey = "GameSurveyUserInternalId"
     }
 }

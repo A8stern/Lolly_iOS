@@ -151,7 +151,7 @@ public final class NavigationBar: BaseNavigationBar {
         setNeedsLayout()
     }
 
-    public func addRightButton<T>(_ button: T) where T: UIButton, T: ViewModellable {
+    public func addRightButton(_ button: some UIButton & ViewModellable) {
         rightStackView.addArrangedSubview(button)
         setNeedsLayout()
         layoutIfNeeded()

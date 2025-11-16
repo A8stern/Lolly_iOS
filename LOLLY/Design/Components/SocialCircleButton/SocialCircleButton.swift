@@ -5,9 +5,9 @@
 //  Created by Nikita on 11.11.2025.
 //
 
+import Kingfisher
 private import SnapKit
 import UIKit
-import Kingfisher
 
 public final class SocialCircleButton: UIButton, ViewModellable {
     public typealias ViewModel = SocialCircleButtonViewModel?
