@@ -101,7 +101,6 @@ extension OtpCodeViewPresenter: OtpCodePresenter {
 
     func onViewDidDisappear() {
         verificationUseCase.stopOtpTimer()
-        coordinator.close(animated: true)
     }
 
     func checkOTP(code: String) {
@@ -111,11 +110,13 @@ extension OtpCodeViewPresenter: OtpCodePresenter {
                     await MainActor.run {
                         coordinator.close(animated: true)
                     }
+                } else {
+                    await MainActor.run {
+                        view.displayInvalidCodeState()
+                    }
                 }
             } catch {
-                await MainActor.run {
-                    view.showSnack(with: .error(text: error.localizedDescription))
-                }
+                print("ERROR: \(error.localizedDescription)")
             }
         }
     }

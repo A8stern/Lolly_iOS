@@ -242,6 +242,18 @@ final class CodeTextField: UIControl, UITextFieldDelegate {
         layer.add(anim, forKey: "shake")
     }
 
+    func highlightRed(for duration: TimeInterval = 1.0) {
+        let previousColor = activeBorderColor
+        let redColor = Colors.Status.error.color
+        cells.forEach { $0.activeBorderColor = redColor }
+        updateActiveCell()
+        DispatchQueue.main.asyncAfter(deadline: .now() + duration) { [weak self] in
+            guard let self = self else { return }
+            self.cells.forEach { $0.activeBorderColor = previousColor }
+            self.updateActiveCell()
+        }
+    }
+
     // MARK: - UI sync
 
     private func updateUI() {

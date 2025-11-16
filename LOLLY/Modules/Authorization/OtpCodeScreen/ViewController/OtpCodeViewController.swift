@@ -9,8 +9,9 @@ private import PhoneNumberKit
 private import SnapKit
 import UIKit
 
-protocol OtpCodeView: AnyObject, SnackDisplayable {
+protocol OtpCodeView: AnyObject {
     func displayResendButton(viewModel: OtpCodeModels.ResendButton.ViewModel)
+    func displayInvalidCodeState()
 }
 
 final class OtpCodeViewController: UIViewController {
@@ -28,7 +29,6 @@ final class OtpCodeViewController: UIViewController {
         field.cornerRadius = Constants.codeBoxCornerRadius
         field.spacing = Constants.codeBoxSpacingRatio * UIScreen.main.bounds.width
 
-        field.addTarget(self, action: #selector(codeChanged), for: .editingChanged)
         field.onCodeFilled = { [weak self] code in
             guard let self else { return }
             presenter?.checkOTP(code: code)
@@ -40,7 +40,7 @@ final class OtpCodeViewController: UIViewController {
     private lazy var enterCodeLabel: UILabel = {
         let label = UILabel()
         label.font = Fonts.Styles.caption
-        label.textColor = UIColor(asset: Colors.Text.primary)
+        label.textColor = Colors.Text.primary.color
         label.text = L10n.Otp.Verification.caption
         return label
     }()
@@ -148,9 +148,6 @@ final class OtpCodeViewController: UIViewController {
     }
 
     @objc
-    private func codeChanged() { }
-
-    @objc
     private func dismissKeyboard() {
         view.endEditing(true)
     }
@@ -166,6 +163,11 @@ extension OtpCodeViewController: OtpCodeView {
             resendCodeButton.setTitle(viewModel.resendButtonTitle, for: [])
             resendCodeButton.layoutIfNeeded()
         }
+    }
+
+    func displayInvalidCodeState() {
+        codeTextField.highlightRed()
+        codeTextField.shake()
     }
 }
 
