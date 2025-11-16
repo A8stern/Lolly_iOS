@@ -8,7 +8,7 @@
 import Foundation
 
 public enum UserRoleStatus: String, Codable, CaseIterable, Sendable {
-    case user
+    case user = "client"
     case notRegistered
     case admin
     case barista
