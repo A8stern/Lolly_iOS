@@ -22,6 +22,9 @@ public typealias AssetImageTypeAlias = ImageAsset.Image
 
 // swiftlint:disable identifier_name line_length nesting type_body_length type_name
 public enum Assets {
+  public enum Loading {
+    public static let transparentCircle = ImageAsset(name: "Loading/transparentCircle")
+  }
   public enum Authorization {
     public static let bottomShadow = ImageAsset(name: "authorization/bottomShadow")
     public static let promoBackground = ImageAsset(name: "authorization/promoBackground")

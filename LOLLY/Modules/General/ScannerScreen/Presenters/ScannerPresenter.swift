@@ -16,57 +16,106 @@ protocol ScannerPresenter: AnyObject {
 }
 
 final class ScannerViewPresenter {
-    private unowned let view: ScannerView
-    private let coordinator: GeneralCoordinator
+    private weak var view: ScannerView?
+    private weak var coordinator: GeneralCoordinator?
+    private let stickersService: StickersServiceInterface
     private let screenBrightnessManager: ScreenBrightnessManagerInterface
+
+    private var initialDataTask: Task<Void, Never>?
+    private var checkChangesTask: Task<Void, Never>?
+
+    private var changesStatus: ChangingCheckStatus = .error
+    private var hasStartedChecking = false
 
     init(
         view: ScannerView,
         coordinator: GeneralCoordinator,
+        stickersService: StickersServiceInterface,
         screenBrightnessManager: ScreenBrightnessManagerInterface
     ) {
         self.view = view
         self.coordinator = coordinator
+        self.stickersService = stickersService
         self.screenBrightnessManager = screenBrightnessManager
+    }
+
+    deinit {
+        initialDataTask?.cancel()
+        checkChangesTask?.cancel()
     }
 }
 
 extension ScannerViewPresenter: ScannerPresenter {
     func onViewDidLoad() {
-        let response = ScannerModels.InitialData.Response()
-        responseInitialData(response: response)
     }
 
     func onViewWillAppear() {
         screenBrightnessManager.set(to: .full)
+        let response = ScannerModels.InitialData.Response()
+        responseInitialData(response: response)
     }
 
     func onViewDidAppear() { }
 
     func onViewWillDisappear() {
         screenBrightnessManager.restore()
+        initialDataTask?.cancel()
+        initialDataTask = nil
+
+        checkChangesTask?.cancel()
+        checkChangesTask = nil
+        hasStartedChecking = false
     }
 
     func onCloseTap() {
-        coordinator.closeScanner()
+        initialDataTask?.cancel()
+        initialDataTask = nil
+
+        checkChangesTask?.cancel()
+        checkChangesTask = nil
+        hasStartedChecking = false
+
+        Task { @MainActor [weak self] in
+            guard let coordinator = self?.coordinator else { return }
+            coordinator.closeScanner()
+        }
     }
 }
 
 extension ScannerViewPresenter {
     fileprivate func responseInitialData(response _: ScannerModels.InitialData.Response) {
-        let viewModel = ScannerModels.InitialData.ViewModel(
-            QRSectionViewModel: makeQRSectionViewModel()
-        )
+        initialDataTask?.cancel()
+        initialDataTask = Task { [weak self] in
+            guard let self else { return }
+            do {
+                let hash = try await self.fetchHash()
 
-        view.displayInitialData(viewModel: viewModel)
+                let viewModel = ScannerModels.InitialData.ViewModel(
+                    QRSectionViewModel: self.makeQRSectionViewModel(hash: hash)
+                )
+                self.checkChanges()
+                await MainActor.run { [weak self] in
+                    guard let self, let view = self.view else { return }
+                    view.displayInitialData(viewModel: viewModel)
+                }
+            } catch is CancellationError {
+                return
+            } catch {
+                print("ERROR: \(error.localizedDescription)")
+            }
+        }
     }
 
-    fileprivate func makeQRSectionViewModel() -> QRSectionViewModel {
-        let fakeMockInternalUserId = "12345"
+    fileprivate func makeQRSectionViewModel(hash: String) -> QRSectionViewModel {
         return QRSectionViewModel(
-            qrImage: generateQRCode(from: fakeMockInternalUserId),
+            qrImage: generateQRCode(from: hash),
             text: L10n.Scanner.title
         )
+    }
+
+    fileprivate func fetchHash() async throws -> String {
+        let hash = try await stickersService.generateHash()
+        return hash
     }
 
     fileprivate func generateQRCode(from string: String) -> UIImage? {
@@ -90,6 +139,37 @@ extension ScannerViewPresenter {
         }
 
         return UIImage(cgImage: cgImage)
+    }
+
+    fileprivate func checkChanges() {
+        guard hasStartedChecking == false else { return }
+        hasStartedChecking = true
+
+        checkChangesTask?.cancel()
+        checkChangesTask = Task { [weak self] in
+            guard let self else { return }
+            while !Task.isCancelled, self.changesStatus == .error {
+                let status = await self.stickersService.changingCheck()
+                if Task.isCancelled {
+                    return
+                }
+                self.changesStatus = status
+
+                if status != .error {
+                    await MainActor.run { [weak self] in
+                        guard let self, let coordinator = self.coordinator else { return }
+                        coordinator.showLoading()
+                    }
+                    return
+                } else {
+                    do {
+                        try await Task.sleep(nanoseconds: 5_000_000_000)
+                    } catch {
+                        return
+                    }
+                }
+            }
+        }
     }
 }
 

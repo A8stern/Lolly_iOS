@@ -31,6 +31,15 @@ internal enum L10n {
     /// Gamification
     internal static let start = L10n.tr("Localizable", "Gamification.Start", fallback: "Начнём?")
   }
+  internal enum Loyalty {
+    internal enum Loading {
+      /// Произошла ошибка,
+      /// попробуйте позже
+      internal static let error = L10n.tr("Localizable", "Loyalty.Loading.Error", fallback: "Произошла ошибка,\nпопробуйте позже")
+      /// Loyalty
+      internal static let success = L10n.tr("Localizable", "Loyalty.Loading.Success", fallback: "Наклейка успешно\nдобавлена на карточку")
+    }
+  }
   internal enum Main {
     internal enum ContactsSection {
       /// Вебсайт

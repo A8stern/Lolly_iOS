@@ -9,6 +9,7 @@ internal import UIKit
 
 final class ScannerAssembly: Assembly {
     private lazy var managerAssembly: ManagerAssembly = self.context.assembly()
+    private lazy var serviceAssembly: ServiceAssembly = self.context.assembly()
 
     func assembleModule(coordinator: GeneralCoordinator) -> ScannerViewController {
         return define(scope: .prototype, init: ScannerViewController()) { view in
@@ -25,6 +26,7 @@ extension ScannerAssembly {
             init: ScannerViewPresenter(
                 view: view,
                 coordinator: coordinator,
+                stickersService: self.serviceAssembly.stickersService,
                 screenBrightnessManager: self.managerAssembly.screenBrightnessManager
             )
         )

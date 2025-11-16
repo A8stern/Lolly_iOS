@@ -55,6 +55,10 @@ public enum Colors {
     public static let text = ColorAsset(name: "Notification/text")
   }
   public static let secondaryColor = ColorAsset(name: "SecondaryColor")
+  public enum Status {
+    public static let error = ColorAsset(name: "Status/Error")
+    public static let success = ColorAsset(name: "Status/Success")
+  }
   public enum Text {
     public static let primary = ColorAsset(name: "Text/Primary")
     public static let secondary = ColorAsset(name: "Text/Secondary")

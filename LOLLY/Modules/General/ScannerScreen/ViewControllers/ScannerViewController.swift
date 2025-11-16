@@ -89,7 +89,7 @@ extension ScannerViewController {
     }
 
     fileprivate func setupViews() {
-        view.backgroundColor = Colors.Custom.inverted.color
+        view.backgroundColor = Colors.accentColor.color
         navigationController?.isNavigationBarHidden = true
     }
 }

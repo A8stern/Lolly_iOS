@@ -10,4 +10,7 @@ public enum PathControllerType: String {
     case organization
     case user
     case gamification
+    case profile
+    case loyalty
+    case barista
 }

@@ -47,3 +47,8 @@
 "Gamification.Congratulation" = "Поздравляем!";
 "Gamification.GameEnd" = "Опрос завершён";
 "Gamification.Error" = "Не удалось загрузить опрос. Попробуйте позже.";
+
+/* Loyalty */
+
+"Loyalty.Loading.Success" = "Наклейка успешно\nдобавлена на карточку";
+"Loyalty.Loading.Error" = "Произошла ошибка,\nпопробуйте позже";

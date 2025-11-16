@@ -62,6 +62,18 @@ final class GeneralCoordinator: BaseNavigationCoordinator, SystemBrowserRoute {
     func closeScanner() {
         navigationController.dismiss(animated: true)
     }
+    
+    func showLoading() {
+        let viewController = LoyaltyLoadingAssembly.instance().assembleModule(coordinator: self)
+        viewController.modalPresentationStyle = .fullScreen
+        
+        let presenter = topMostPresenter(from: navigationController)
+        presenter.present(viewController, animated: true)
+    }
+
+    func closeLoading() {
+        navigationController.dismiss(animated: true)
+    }
 
     func showProfile() {
         let coordinator = ProfileCoordinator(navigationController: navigationController)
@@ -70,5 +82,15 @@ final class GeneralCoordinator: BaseNavigationCoordinator, SystemBrowserRoute {
         coordinator.onCompleted = { [coordinator, weak self] in
             self?.remove(child: coordinator)
         }
+    }
+}
+
+private extension GeneralCoordinator {
+    func topMostPresenter(from base: UIViewController) -> UIViewController {
+        var top = base
+        while let presented = top.presentedViewController {
+            top = presented
+        }
+        return top
     }
 }

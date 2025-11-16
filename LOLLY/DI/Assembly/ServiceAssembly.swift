@@ -29,6 +29,16 @@ public final class ServiceAssembly: Assembly {
         )
     }
 
+    public var stickersService: StickersServiceInterface {
+        define(
+            scope: .lazySingleton,
+            init: StickersService(
+                networkService: self.networkService,
+                isMock: true
+            )
+        )
+    }
+
     public var gameSurveyService: GameSurveyServiceInterface {
         define(
             scope: .lazySingleton,
