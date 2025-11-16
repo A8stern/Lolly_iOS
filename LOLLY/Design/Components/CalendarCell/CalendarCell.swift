@@ -33,7 +33,7 @@ public final class CalendarCell: UICollectionViewCell, ViewModellable {
                 height: Constants.circleDiameter
             )
         )
-        view.layer.cornerRadius = view.frame.size.width / 2
+        view.layer.cornerRadius = Constants.circleDiameter / 2
         view.layer.masksToBounds = true
         view.backgroundColor = Colors.Constants.yellow.color
         return view
@@ -49,9 +49,6 @@ public final class CalendarCell: UICollectionViewCell, ViewModellable {
     public convenience init(viewModel: CalendarCellViewModel?) {
         self.init(frame: .zero)
         self.viewModel = viewModel
-        setupLayout()
-        setupUI()
-        setupBehaviour()
     }
 
     @available(*, unavailable)
@@ -70,15 +67,12 @@ public final class CalendarCell: UICollectionViewCell, ViewModellable {
 
 extension CalendarCell {
     public func setupLayout() {
-        snp.makeConstraints { make in
-            make.height.width.equalTo(CalendarCell.fixedSize)
-        }
-        addSubview(dateLabel)
+        contentView.addSubview(dateLabel)
         dateLabel.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
 
-        addSubview(circleView)
+        contentView.addSubview(circleView)
         circleView.snp.makeConstraints { make in
             make.height.width.equalTo(Constants.circleDiameter)
             make.top.right.equalToSuperview().inset(10)
@@ -86,9 +80,9 @@ extension CalendarCell {
     }
 
     public func setupUI() {
-        backgroundColor = Colors.accentColor.color
-        layer.cornerRadius = 18
-        layer.masksToBounds = true
+        contentView.backgroundColor = Colors.accentColor.color
+        contentView.layer.cornerRadius = 18
+        contentView.layer.masksToBounds = true
 
         updateUI()
     }
@@ -104,15 +98,15 @@ extension CalendarCell {
 
         switch viewModel.type {
             case .past:
-                backgroundColor = Colors.Controls.disabled.color.withAlphaComponent(0.5)
+                contentView.backgroundColor = Colors.Controls.disabled.color.withAlphaComponent(0.5)
                 dateLabel.textColor = Colors.Controls.secondary.color
 
             case .current:
-                backgroundColor = Colors.accentColor.color
+                contentView.backgroundColor = Colors.accentColor.color
                 dateLabel.textColor = Colors.Text.inverted.color
 
             case .future:
-                backgroundColor = Colors.Controls.disabled.color.withAlphaComponent(0.8)
+                contentView.backgroundColor = Colors.Controls.disabled.color.withAlphaComponent(0.8)
                 dateLabel.textColor = Colors.Text.secondary.color.withAlphaComponent(0.5)
         }
     }
