@@ -10,13 +10,19 @@ private import PhoneNumberKit
 
 public final class AuthorizationService: AuthorizationServiceInterface {
     private let networkService: NetworkService
+    private let sessionService: SessionServiceInterface
     private let phoneNumberKit = PhoneNumberUtility()
     private let isMock: Bool
 
     // MARK: Lifecycle
 
-    public init(networkService: NetworkService, isMock: Bool) {
+    public init(
+        networkService: NetworkService,
+        sessionService: SessionServiceInterface,
+        isMock: Bool
+    ) {
         self.networkService = networkService
+        self.sessionService = sessionService
         self.isMock = isMock
     }
 
@@ -103,9 +109,12 @@ public final class AuthorizationService: AuthorizationServiceInterface {
             headers: endpoint.headers
         )
 
-        // TODO: Persist tokens if required (e.g., Keychain)
-        _ = response.accessToken
-        _ = response.refreshToken
+        sessionService.storeUserCredential(
+            UserCredential(
+                accessToken: response.accessToken,
+                refreshToken: response.refreshToken
+            )
+        )
 
         return true
     }

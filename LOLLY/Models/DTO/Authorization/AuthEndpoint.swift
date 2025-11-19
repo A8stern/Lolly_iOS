@@ -12,6 +12,7 @@ public enum AuthEndpoint: Endpoint {
     case register
     case sendOTP
     case verifyOTP
+    case refreshToken
 
     public var path: String {
         switch self {
@@ -26,6 +27,9 @@ public enum AuthEndpoint: Endpoint {
 
             case .verifyOTP:
                 return "verify-otp"
+
+            case .refreshToken:
+                return "refresh-token"
         }
     }
 
@@ -35,6 +39,9 @@ public enum AuthEndpoint: Endpoint {
                 return .post
 
             case .register, .verifyOTP:
+                return .post
+
+            case .refreshToken:
                 return .post
         }
     }
@@ -48,6 +55,9 @@ public enum AuthEndpoint: Endpoint {
 
             case .register:
                 return .user
+
+            case .refreshToken:
+                return .authorize
         }
     }
 

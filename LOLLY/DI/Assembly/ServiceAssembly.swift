@@ -8,7 +8,21 @@
 import Foundation
 
 public final class ServiceAssembly: Assembly {
+    // MARK: - Private Properties
+
+    private lazy var repositoryAssembly = RepositoryAssembly.instance()
+
     // MARK: Public Properties
+
+    public var sessionService: SessionServiceInterface {
+        define(
+            scope: .lazySingleton,
+            init: SessionService(
+                networkService: self.networkService,
+                credentialRepository: self.repositoryAssembly.credentialsRepository
+            )
+        )
+    }
 
     public var networkService: NetworkService {
         define(
@@ -24,7 +38,8 @@ public final class ServiceAssembly: Assembly {
             scope: .lazySingleton,
             init: AuthorizationService(
                 networkService: self.networkService,
-                isMock: true
+                sessionService: self.sessionService,
+                isMock: false
             )
         )
     }
@@ -34,7 +49,7 @@ public final class ServiceAssembly: Assembly {
             scope: .lazySingleton,
             init: StickersService(
                 networkService: self.networkService,
-                isMock: true
+                isMock: false
             )
         )
     }

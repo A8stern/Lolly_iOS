@@ -10,6 +10,8 @@ import Foundation
 final class SplashAssembly: Assembly {
     // MARK: - Private Properties
 
+    private let useCaseAssembly = UseCaseAssembly.instance()
+
     // MARK: - Internal Methods
 
     func assembleModule(
@@ -30,7 +32,8 @@ extension SplashAssembly {
             scope: .prototype,
             init: SplashViewPresenter(
                 view: view,
-                coordinator: coordinator
+                coordinator: coordinator,
+                sessionUseCase: self.useCaseAssembly.sessionUseCase
             )
         )
     }

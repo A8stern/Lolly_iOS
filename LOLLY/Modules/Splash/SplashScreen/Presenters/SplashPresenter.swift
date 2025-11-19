@@ -8,6 +8,7 @@
 import Foundation
 
 protocol SplashPresenter: AnyObject {
+    @MainActor
     func onViewDidLoad()
 }
 
@@ -16,6 +17,7 @@ final class SplashViewPresenter {
 
     private unowned let view: SplashView
     private let coordinator: SplashCoordinator
+    private let sessionUseCase: SessionUseCaseInterface
 
     // TODO: Здесь должна быть проверка авторизован ли юзер
 //    private let profileUseCase: Domain.ProfileUseCase
@@ -24,48 +26,51 @@ final class SplashViewPresenter {
 
     init(
         view: SplashView,
-        coordinator: SplashCoordinator
+        coordinator: SplashCoordinator,
+        sessionUseCase: SessionUseCaseInterface
     ) {
         self.view = view
         self.coordinator = coordinator
+        self.sessionUseCase = sessionUseCase
     }
 }
 
 // MARK: - SplashPresenter
 
 extension SplashViewPresenter: SplashPresenter {
+    @MainActor
     func onViewDidLoad() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
-            guard let self else { return }
-            configureFlow()
+        guard sessionUseCase.isAuthorized || sessionUseCase.credentialsExist else {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+                guard let self else { return }
+                configureFlow()
+            }
+            return
         }
 
-// MARK: Что-то в духе:
-//        profileUseCase.fetchProfile { [weak self] result in
-//            switch result {
-//            case .success(let response):
-//                let isVerified = response.emailVerified
-//                self?.configureFlow(isEmailVerified: isVerified)
-//
-//            case .failure(let error):
-//                switch error {
-//                case .unknown:
-//                    // приходит, если пользователь не авторизован,
-//                    // значение должно апдейтнуться при логине/регистрации.
-//                    self?.configureFlow()
-//
-//                default:
-//                    // значит тут упала сеть
-//                    self?.configureFlow()
-//                }
-//            }
-//        }
+        Task { [weak self] in
+            guard let self else { return }
+
+            do {
+                _ = try await sessionUseCase.refreshUserCredential()
+                await MainActor.run { [weak self] in
+                    guard let self else { return }
+                    configureFlow()
+                }
+            } catch {
+                await MainActor.run { [weak self] in
+                    guard let self else { return }
+                    configureFlow()
+                }
+            }
+        }
     }
 }
 
 // MARK: - Private Methods
 
 extension SplashViewPresenter {
+    @MainActor
     fileprivate func configureFlow() {
         coordinator.close(animated: true)
     }

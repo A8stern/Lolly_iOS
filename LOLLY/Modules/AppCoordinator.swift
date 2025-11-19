@@ -14,13 +14,18 @@ public final class AppCoordinator: BaseCoordinator<UIWindow> {
         root as UIWindow
     }
 
+    public var sessionUseCase: SessionUseCaseInterface
+
     // MARK: - Private Properties
 
     private let serviceAssembly = ServiceAssembly.instance()
+    private let useCaseAssembly = UseCaseAssembly.instance()
 
     // MARK: - Lifecycle
 
     public init(window: UIWindow) {
+        sessionUseCase = useCaseAssembly.sessionUseCase
+
         super.init(root: window)
     }
 
@@ -73,9 +78,7 @@ public final class AppCoordinator: BaseCoordinator<UIWindow> {
     }
 
     public func setupFlow() {
-        // TODO: Вынести в UseCase / Manager
-        let isAuthorized = false
-
+        let isAuthorized = sessionUseCase.isAuthorized
         isAuthorized ? goToGeneralFlow() : goToAuthFlow()
     }
 
@@ -94,5 +97,18 @@ public final class AppCoordinator: BaseCoordinator<UIWindow> {
         )
         add(child: coordinator)
         coordinator.start()
+    }
+}
+
+// MARK: - SessionUseCaseDelegate
+
+extension AppCoordinator: SessionUseCaseDelegate {
+    public func sessionUseCaseDidSignOut() {
+        // Закрываем основной координатор авторизованной зоны
+        guard let coordinator = children.last as? GeneralCoordinator else {
+            return
+        }
+
+        coordinator.close(animated: true)
     }
 }

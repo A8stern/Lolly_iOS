@@ -10,9 +10,6 @@ import Foundation
 struct VerifyOTPResponseModel: ResponseModel {
     let accessToken: String
     let refreshToken: String
-
-    private enum CodingKeys: String, CodingKey {
-        case accessToken = "access-token"
-        case refreshToken = "refresh-token"
-    }
+    let accessTokenExpiresAt: Date
+    let userId: String
 }
