@@ -30,7 +30,7 @@ public final class CompletionScreenView: UIView {
         label.text = L10n.Gamification.congratulation
         label.textAlignment = .center
         label.numberOfLines = 0
-        label.font = Fonts.TTTravels.bold.font(size: 32)
+        label.font = Fonts.Styles.custom(weight: .bold, size: 32)
         label.textColor = Colors.Text.primary.color
         return label
     }()
@@ -40,7 +40,7 @@ public final class CompletionScreenView: UIView {
         label.text = L10n.Gamification.gameEnd
         label.textAlignment = .center
         label.numberOfLines = 0
-        label.font = Fonts.TTTravels.medium.font(size: 18)
+        label.font = Fonts.Styles.title2
         label.textColor = Colors.Text.secondary.color
         return label
     }()

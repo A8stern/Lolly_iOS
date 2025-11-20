@@ -39,7 +39,7 @@ public final class QuestionOptionButton: UIButton {
 extension QuestionOptionButton {
     fileprivate func setupUI(title: String) {
         setTitle(title, for: .normal)
-        titleLabel?.font = Fonts.TTTravels.medium.font(size: 16)
+        titleLabel?.font = Fonts.Styles.title3
         titleLabel?.numberOfLines = 0
 
         clipsToBounds = true
@@ -55,7 +55,7 @@ extension QuestionOptionButton {
         )
         config.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { incoming in
             var outgoing = incoming
-            outgoing.font = Fonts.TTTravels.medium.font(size: 16)
+            outgoing.font = Fonts.Styles.title3
             return outgoing
         }
 

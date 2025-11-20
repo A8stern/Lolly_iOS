@@ -1,0 +1,54 @@
+/* 
+  Localizable.strings
+  LOLLY
+
+  Created by Kovalev Gleb on 24.10.2025.
+  
+*/
+
+/* AuthMethods */
+
+"AuthMethods.Buttons.SignInWithPhone" = "Войти по номеру телефона";
+"AuthMethods.Buttons.SignInWithApple" = "Войти через Apple";
+"AuthMethods.Conditions" = "Продолжая, ты соглашаешься с Условиями использования сервиса,
+Политикой конфиденциальности";
+
+/* PhoneLogIn */
+
+"PhoneLogIn.Phone.Title" = "Номер телефона";
+"PhoneLogIn.Phone.Placeholder" = "+7 913 000-00-00";
+"PhoneLogIn.Name.Title" = "Имя";
+"PhoneLogIn.Name.Placeholder" = "Иван";
+"PhoneLogIn.Name.ValidationError" = "Имя должно быть длиннее 1 символа";
+"PhoneLogIn.Buttons.Continue" = "Продолжить";
+"PhoneLogIn.Buttons.Register" = "Зарегистрироваться";
+"PhoneLogIn.Terms.Text" = "Я принимаю условия договора оферты и политики конфиденциальности";
+"PhoneLogIn.Terms.Oferta" = "договора оферты";
+"PhoneLogIn.Terms.PrivacyPolicy" = "политики конфиденциальности";
+
+/* OTP */
+
+"OTP.Verification.ResendCode" = "Отправить код повторно";
+"OTP.Verification.Caption" = "Введите код из смс";
+"OTP.Verification.Telegram" = "Перейти в Telegram-бот для авторизации";
+
+/* Main */
+
+"Main.GameSection.Title" = "Нейросеть выберет\nнапиток за тебя";
+"Main.ContactsSection.Website" = "Вебсайт";
+
+/* Scanner */
+
+"Scanner.Title" = "Поднесите телефон к считывателю";
+
+/* Gamification */
+
+"Gamification.Start" = "Начнём?";
+"Gamification.Congratulation" = "Поздравляем!";
+"Gamification.GameEnd" = "Опрос завершён";
+"Gamification.Error" = "Не удалось загрузить опрос. Попробуйте позже.";
+
+/* Loyalty */
+
+"Loyalty.Loading.Success" = "Наклейка успешно\nдобавлена на карточку";
+"Loyalty.Loading.Error" = "Произошла ошибка,\nпопробуйте позже";

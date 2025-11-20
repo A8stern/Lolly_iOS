@@ -1,0 +1,146 @@
+// swiftlint:disable all
+// Generated using SwiftGen — https://github.com/SwiftGen/SwiftGen
+
+#if os(macOS)
+  import AppKit
+#elseif os(iOS)
+  import UIKit
+#elseif os(tvOS) || os(watchOS)
+  import UIKit
+#endif
+#if canImport(SwiftUI)
+  import SwiftUI
+#endif
+
+// Deprecated typealiases
+@available(*, deprecated, renamed: "ColorAsset.Color", message: "This typealias will be removed in SwiftGen 7.0")
+public typealias AssetColorTypeAlias = ColorAsset.Color
+
+// swiftlint:disable superfluous_disable_command file_length implicit_return
+
+// MARK: - Asset Catalogs
+
+// swiftlint:disable identifier_name line_length nesting type_body_length type_name
+public enum Colors {
+  public static let accentColor = ColorAsset(name: "AccentColor")
+  public enum Constants {
+    public static let black = ColorAsset(name: "Constants/Black")
+    public static let grey = ColorAsset(name: "Constants/Grey")
+    public static let ocher = ColorAsset(name: "Constants/Ocher")
+    public static let white = ColorAsset(name: "Constants/White")
+    public static let yellow = ColorAsset(name: "Constants/Yellow")
+    public static let clear = ColorAsset(name: "Constants/clear")
+  }
+  public enum Controls {
+    public static let active = ColorAsset(name: "Controls/active")
+    public static let activePressed = ColorAsset(name: "Controls/activePressed")
+    public static let disabled = ColorAsset(name: "Controls/disabled")
+    public static let inactive = ColorAsset(name: "Controls/inactive")
+    public static let primary = ColorAsset(name: "Controls/primary")
+    public static let primaryPressed = ColorAsset(name: "Controls/primaryPressed")
+    public static let secondary = ColorAsset(name: "Controls/secondary")
+    public static let secondaryBlack = ColorAsset(name: "Controls/secondaryBlack")
+    public static let secondaryBlackPressed = ColorAsset(name: "Controls/secondaryBlackPressed")
+    public static let secondaryPressed = ColorAsset(name: "Controls/secondaryPressed")
+  }
+  public enum Custom {
+    public static let appleSignIn = ColorAsset(name: "Custom/appleSignIn")
+    public static let inverted = ColorAsset(name: "Custom/inverted")
+    public static let textFieldBackground = ColorAsset(name: "Custom/textFieldBackground")
+  }
+  public enum Notification {
+    public static let background = ColorAsset(name: "Notification/background")
+    public static let error = ColorAsset(name: "Notification/error")
+    public static let success = ColorAsset(name: "Notification/success")
+    public static let text = ColorAsset(name: "Notification/text")
+  }
+  public static let secondaryColor = ColorAsset(name: "SecondaryColor")
+  public enum Status {
+    public static let error = ColorAsset(name: "Status/Error")
+    public static let success = ColorAsset(name: "Status/Success")
+  }
+  public enum Text {
+    public static let primary = ColorAsset(name: "Text/Primary")
+    public static let secondary = ColorAsset(name: "Text/Secondary")
+    public static let inverted = ColorAsset(name: "Text/inverted")
+  }
+}
+// swiftlint:enable identifier_name line_length nesting type_body_length type_name
+
+// MARK: - Implementation Details
+
+public final class ColorAsset {
+  public fileprivate(set) var name: String
+
+  #if os(macOS)
+  public typealias Color = NSColor
+  #elseif os(iOS) || os(tvOS) || os(watchOS)
+  public typealias Color = UIColor
+  #endif
+
+  @available(iOS 11.0, tvOS 11.0, watchOS 4.0, macOS 10.13, *)
+  public private(set) lazy var color: Color = {
+    guard let color = Color(asset: self) else {
+      fatalError("Unable to load color asset named \(name).")
+    }
+    return color
+  }()
+
+  #if os(iOS) || os(tvOS)
+  @available(iOS 11.0, tvOS 11.0, *)
+  public func color(compatibleWith traitCollection: UITraitCollection) -> Color {
+    let bundle = BundleToken.bundle
+    guard let color = Color(named: name, in: bundle, compatibleWith: traitCollection) else {
+      fatalError("Unable to load color asset named \(name).")
+    }
+    return color
+  }
+  #endif
+
+  #if canImport(SwiftUI)
+  @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
+  public private(set) lazy var swiftUIColor: SwiftUI.Color = {
+    SwiftUI.Color(asset: self)
+  }()
+  #endif
+
+  fileprivate init(name: String) {
+    self.name = name
+  }
+}
+
+public extension ColorAsset.Color {
+  @available(iOS 11.0, tvOS 11.0, watchOS 4.0, macOS 10.13, *)
+  convenience init?(asset: ColorAsset) {
+    let bundle = BundleToken.bundle
+    #if os(iOS) || os(tvOS)
+    self.init(named: asset.name, in: bundle, compatibleWith: nil)
+    #elseif os(macOS)
+    self.init(named: NSColor.Name(asset.name), bundle: bundle)
+    #elseif os(watchOS)
+    self.init(named: asset.name)
+    #endif
+  }
+}
+
+#if canImport(SwiftUI)
+@available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
+public extension SwiftUI.Color {
+  init(asset: ColorAsset) {
+    let bundle = BundleToken.bundle
+    self.init(asset.name, bundle: bundle)
+  }
+}
+#endif
+
+// swiftlint:disable convenience_type
+private final class BundleToken {
+  static let bundle: Bundle = {
+    #if SWIFT_PACKAGE
+    return Bundle.module
+    #else
+    return Bundle(for: BundleToken.self)
+    #endif
+  }()
+}
+// swiftlint:enable convenience_type

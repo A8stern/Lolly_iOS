@@ -1,47 +1,40 @@
+# swiftgen.yml
+
 strings:
-   inputs:
-     - Lolly/Design/Resources/Strings/ru.lproj
-   outputs:
-     - templateName: structured-swift5
-       output: Lolly/Design/Resources/Strings/Strings+Generated.swift
-       params:
-         enumName: L10n
+  - inputs:
+      - Lolly/Design/Resources/Brands/${TARGET_BRAND}/Strings/ru.lproj
+    outputs:
+      - templateName: structured-swift5
+        output: Lolly/Design/Resources/Brands/${TARGET_BRAND}/Strings/Strings+Generated.swift
+        params:
+          enumName: L10n
 
 xcassets:
   - inputs:
-      - LOLLY/Design/Resources/Assets/Assets.xcassets
+      - Lolly/Design/Resources/Brands/${TARGET_BRAND}/Assets/Assets.xcassets
     outputs:
       - templateName: swift5
-        output: Lolly/Design/Resources/Assets/XCAssets+Generated.swift
+        output: Lolly/Design/Resources/Brands/${TARGET_BRAND}/Assets/XCAssets+Generated.swift
         params:
           enumName: Assets
           publicAccess: 1
           forceProvidesNamespaces: true
 
   - inputs:
-      - LOLLY/Design/Resources/Colors/Colors.xcassets
+      - Lolly/Design/Resources/Brands/${TARGET_BRAND}/Colors/Colors.xcassets
     outputs:
       - templateName: swift5
-        output: Lolly/Design/Resources/Colors/Colors+Generated.swift
+        output: Lolly/Design/Resources/Brands/${TARGET_BRAND}/Colors/Colors+Generated.swift
         params:
           enumName: Colors
           publicAccess: 1
           forceProvidesNamespaces: true
-          
+
 fonts:
   - inputs:
-      - LOLLY/Design/Resources/Fonts/Origin
+      - Lolly/Design/Resources/Common/Fonts/Origin
     outputs:
       - templateName: swift5
-        output: Lolly/Design/Resources/Fonts/Generated/Fonts+Generated.swift
+        output: Lolly/Design/Resources/Common/Fonts/Generated/Fonts+Generated.swift
         params:
           enumName: Fonts
-
-## There are other parsers available for you to use depending on your needs, for example:
-##  - `fonts` (if you have custom ttf/ttc font files)
-##  - `coredata` (for CoreData models)
-##  - `json`, `yaml` and `plist` (to parse custom JSON/YAML/Plist files and generate code from their content)
-## …
-##
-## For more info, use `swiftgen config doc` to open the full documentation on GitHub.
-## https://github.com/SwiftGen/SwiftGen/tree/6.6.3/Documentation/

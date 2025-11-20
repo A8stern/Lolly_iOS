@@ -15,6 +15,8 @@ showHelp() {
 
   --generate          Только запустить XcodeGen без установки зависимостей
 
+  -s, --swiftgen      Запуск SwiftGen
+
 EOF
 }
 
@@ -72,8 +74,8 @@ else
    # Перебираем все переданные аргументы
    for i in "$@"; do
     case "$i" in
-        -s)
-            swiftgen config run
+        -s|--swiftgen)
+            sh swiftgen.sh
             ;;
         # Если пользователь запросил помощь
         -h|-help|--help)

@@ -39,7 +39,6 @@ settings:
     ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
     ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
     CODE_SIGN_STYLE: Automatic
-    DEVELOPMENT_ASSET_PATHS: "LOLLY/Design/Resources"
 
   debug:
     DEBUG_INFORMATION_FORMAT: dwarf
@@ -54,19 +53,45 @@ settings:
     MTL_ENABLE_DEBUG_INFO: NO
 
 targets:
-  LOLLY:
+  Harucha:
     type: application
     platform: iOS
     deploymentTarget: "16.0"
-    sources: ["LOLLY"]
+    sources:
+      - "./LOLLY/Application"
+      - "./LOLLY/Common"
+      - "./LOLLY/Design/Components"
+      - "./LOLLY/Design/Resources/Common"
+      - "./LOLLY/Design/Resources/Brands/Harucha"
+      - "./LOLLY/DI"
+      - "./LOLLY/Managers"
+      - "./LOLLY/Models"
+      - "./LOLLY/Modules"
+      - "./LOLLY/Repositories"
+      - "./LOLLY/Services"
+      - "./LOLLY/Storage"
+      - "./LOLLY/UseCases"
+    resources:
+      - "./LOLLY/Design/Resources/Brands/Harucha/**"
+      - "./LOLLY/Design/Resources/Common/**"
     dependencies:
       - package: SnapKit
       - package: SwiftMessages
       - package: PhoneNumberKit
       - package: Kingfisher
       - package: CryptoSwift
-    bundleId: com.kprokofyev.loyalty.LOLLY
+    bundleId: com.kprokofyev.LOLLY.Harucha
     prebuildScripts:
+      - name: SwiftGen
+        script: |
+          if [[ $(uname -m) == "arm64" ]]; then
+            export PATH="/opt/homebrew/bin:$PATH"
+          fi
+          
+          if [ "$CONFIGURATION" == "Debug" ]; then
+            ./swiftgen.sh "$TARGET_NAME"
+          fi
+        basedOnDependencyAnalysis: false
       - name: SwiftLint
         script: |
           if [[ $(uname -m) == "arm64" ]]; then
@@ -81,5 +106,81 @@ targets:
         basedOnDependencyAnalysis: false
     settings:
       base:
-        INFOPLIST_FILE: "LOLLY/Info.plist"
+        SWIFT_ACTIVE_COMPILATION_CONDITIONS: HARUCHA
+        INFOPLIST_FILE: "LOLLY/Settings/Harucha/Info.plist"
         TARGETED_DEVICE_FAMILY: "1"
+  Brewsell:
+    type: application
+    platform: iOS
+    deploymentTarget: "16.0"
+    sources: 
+      - "./LOLLY/Application"
+      - "./LOLLY/Common"
+      - "./LOLLY/Design/Components"
+      - "./LOLLY/Design/Resources/Common"
+      - "./LOLLY/Design/Resources/Brands/Brewsell"
+      - "./LOLLY/DI"
+      - "./LOLLY/Managers"
+      - "./LOLLY/Models"
+      - "./LOLLY/Modules"
+      - "./LOLLY/Repositories"
+      - "./LOLLY/Services"
+      - "./LOLLY/Storage"
+      - "./LOLLY/UseCases"
+    resources:
+      - "./LOLLY/Design/Resources/Brands/Brewsell/**"
+      - "./LOLLY/Design/Resources/Common/**"
+    dependencies:
+      - package: SnapKit
+      - package: SwiftMessages
+      - package: PhoneNumberKit
+      - package: Kingfisher
+      - package: CryptoSwift
+    bundleId: com.kprokofyev.LOLLY.Brewsell
+    prebuildScripts:
+      - name: SwiftGen
+        script: |
+          if [[ $(uname -m) == "arm64" ]]; then
+            export PATH="/opt/homebrew/bin:$PATH"
+          fi
+          
+          if [ "$CONFIGURATION" == "Debug" ]; then
+            ./swiftgen.sh "$TARGET_NAME"
+          fi
+        basedOnDependencyAnalysis: false
+      - name: SwiftLint
+        script: |
+          if [[ $(uname -m) == "arm64" ]]; then
+            export PATH="/opt/homebrew/bin:$PATH"
+          fi
+          if command -v swiftlint >/dev/null 2>&1; then
+            swiftlint
+          else
+            echo "warning: SwiftLint is not installed. Install it using: brew install swiftlint"
+            exit 1
+          fi
+        basedOnDependencyAnalysis: false
+    settings:
+      base:
+        SWIFT_ACTIVE_COMPILATION_CONDITIONS: BREWSELL
+        INFOPLIST_FILE: "LOLLY/Settings/Brewsell/Info.plist"
+        TARGETED_DEVICE_FAMILY: "1"
+
+schemes:
+  Harucha:
+    build:
+      targets:
+        Harucha: Debug
+    run:
+      config: Debug
+    archive:
+      config: Release
+
+  Brewsell:
+    build:
+      targets:
+        Brewsell: Debug
+    run:
+      config: Debug
+    archive:
+      config: Release
