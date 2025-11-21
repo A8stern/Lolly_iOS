@@ -13,5 +13,5 @@ public protocol GameSurveyServiceInterface: AnyObject {
         userInternalId: String,
         answers: [QuizAnswerRequestModel]
     ) async throws -> QuizResultResponse
-    func fetchOverview() async throws -> GamificationOverviewResponse
+    func fetchOverview() async throws -> GamificationOverviewResponseModel
 }

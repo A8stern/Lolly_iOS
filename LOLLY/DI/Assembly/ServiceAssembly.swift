@@ -11,6 +11,7 @@ public final class ServiceAssembly: Assembly {
     // MARK: - Private Properties
 
     private lazy var repositoryAssembly = RepositoryAssembly.instance()
+    private lazy var mapperAssembly = MapperAssembly.instance()
 
     // MARK: Public Properties
 
@@ -58,6 +59,19 @@ public final class ServiceAssembly: Assembly {
         define(
             scope: .lazySingleton,
             init: GameSurveyService(
+                networkService: self.networkService
+            )
+        )
+    }
+
+    public var mainService: MainServiceInterface {
+        define(
+            scope: .lazySingleton,
+            init: MainService(
+                calendarMapper: self.mapperAssembly.calendarMapper,
+                gamificationMapper: self.mapperAssembly.gamificationMapper,
+                loyaltyMapper: self.mapperAssembly.loyaltyMapper,
+                marketingMapper: self.mapperAssembly.marketingMapper,
                 networkService: self.networkService
             )
         )

@@ -34,9 +34,7 @@ final class GeneralCoordinator: BaseNavigationCoordinator, SystemBrowserRoute {
 
     func showMain() {
         let session = URLSession.shared
-        let networkService = NetworkService(session: session)
-        let service = MainService(networkService: networkService, isMock: false)
-        let viewController = MainAssembly.instance().assembleModule(coordinator: self, mainService: service)
+        let viewController = MainAssembly.instance().assembleModule(coordinator: self)
         navigationController.pushViewController(viewController, animated: true)
     }
 

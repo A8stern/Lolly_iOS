@@ -104,6 +104,8 @@ extension PromoSectionView {
     }
 
     fileprivate func setupUI() {
+        isSkeletonable = true
+
         clipsToBounds = true
         backgroundColor = Colors.Controls.inactive.color
         layer.cornerRadius = Constants.cornerRadius
@@ -122,6 +124,20 @@ extension PromoSectionView {
 
         guard let viewModel else { return }
 
+        if viewModel.isSkeletonable {
+            displaySkeleton()
+        } else {
+            dismissSkeleton()
+        }
+
         promoLabel.text = viewModel.text
     }
+}
+
+// MARK: - SkeletonCallable
+
+extension PromoSectionView: SkeletonCallable {
+    public func prepareForDisplaySkeleton() { }
+
+    public func prepareForDismissSkeleton() { }
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum ContactsEndPoint: Endpoint {
+public enum ContactsEndpoint: Endpoint {
     case getContactsData
 
     public var path: String {

@@ -160,12 +160,30 @@ extension StickerSectionView {
 
         guard let viewModel else { return }
 
+        if viewModel.isSkeletonable {
+            displaySkeleton()
+        } else {
+            dismissSkeleton()
+        }
+
         titleLabel.text = viewModel.title
-        signLabel.text = String(viewModel.sign)
+        if let sign = viewModel.sign {
+            signLabel.text = String(sign)
+        }
         getDrinkButton.viewModel = viewModel.buttonViewModel
-        backCountLabel.text = "\(viewModel.stickersCount)"
+        if let stickersCount = viewModel.stickersCount{
+            backCountLabel.text = "\(stickersCount)"
+        }
         newStickerImageView.image = viewModel.newStickerImage
     }
+}
+
+// MARK: - SkeletonCallable
+
+extension StickerSectionView: SkeletonCallable {
+    public func prepareForDisplaySkeleton() { }
+
+    public func prepareForDismissSkeleton() { }
 }
 
 extension StickerSectionView {

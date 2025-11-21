@@ -1,16 +1,19 @@
-private import SnapKit
-
 //
 //  MainView.swift
 //  LOLLY
 //
 //  Created by Kirill Prokofyev on 20.10.2025.
-//
 
+private import SnapKit
 internal import UIKit
 
 protocol MainView: AnyObject, SnackDisplayable {
     func displayInitialData(viewModel: MainModels.InitialData.ViewModel)
+    func displayStickerSection(viewModel: MainModels.Stickers.ViewModel)
+    func displayPromoSectionState(viewModel: MainModels.Promo.ViewModel)
+    func displayCalendarSectionState(viewModel: MainModels.Calendar.ViewModel)
+    func displayGameSectionState(viewModel: MainModels.Gamification.ViewModel)
+    func displayContactsSectionState(viewModel: MainModels.Contacts.ViewModel)
 }
 
 final class MainViewController: UIViewController {
@@ -26,8 +29,6 @@ final class MainViewController: UIViewController {
         let navigationBar = NavigationBar()
         navigationBar.isHiddenRightButton = true
         navigationBar.isBackButtonHidden = true
-        // TODO: Вставить имя приложения через презентер
-        navigationBar.title = "Вставить имя"
         return navigationBar
     }()
 
@@ -212,12 +213,32 @@ extension MainViewController {
 
 extension MainViewController: MainView {
     func displayInitialData(viewModel: MainModels.InitialData.ViewModel) {
+        navBar.title = viewModel.title
         profileButton.viewModel = viewModel.profileButtonViewModel
         stickerSection.viewModel = viewModel.stickerSectionViewModel
+        promoSection.viewModel = viewModel.promoSectionViewModel
         calendarSection.viewModel = viewModel.calendarSectionViewModel
         gameSection.viewModel = viewModel.gameSectionViewModel
         contactsSection.viewModel = viewModel.contactsSectionViewModel
+    }
+
+    func displayStickerSection(viewModel: MainModels.Stickers.ViewModel) {
+        stickerSection.viewModel = viewModel.stickerSectionViewModel
+    }
+
+    func displayPromoSectionState(viewModel: MainModels.Promo.ViewModel) {
         promoSection.viewModel = viewModel.promoSectionViewModel
+    }
+    func displayCalendarSectionState(viewModel: MainModels.Calendar.ViewModel) {
+        calendarSection.viewModel = viewModel.calendarSectionViewModel
+    }
+
+    func displayGameSectionState(viewModel: MainModels.Gamification.ViewModel) {
+        gameSection.viewModel = viewModel.gameSectionViewModel
+    }
+
+    func displayContactsSectionState(viewModel: MainModels.Contacts.ViewModel) {
+        contactsSection.viewModel = viewModel.contactsSectionViewModel
     }
 }
 

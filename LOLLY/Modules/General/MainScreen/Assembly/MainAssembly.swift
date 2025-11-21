@@ -10,14 +10,18 @@ internal import UIKit
 final class MainAssembly: Assembly {
     // MARK: - Private Properties
 
+    private lazy var serviceAssembly: ServiceAssembly = self.context.assembly()
+
     // MARK: - Internal Methods
 
     func assembleModule(
-        coordinator: GeneralCoordinator,
-        mainService: MainServiceInterface
+        coordinator: GeneralCoordinator
     ) -> MainViewController {
         return define(scope: .prototype, init: MainViewController()) { view in
-            view.presenter = self.assemblePresenter(view: view, coordinator: coordinator, mainService: mainService)
+            view.presenter = self.assemblePresenter(
+                view: view,
+                coordinator: coordinator
+            )
             return view
         }
     }
@@ -28,15 +32,14 @@ final class MainAssembly: Assembly {
 extension MainAssembly {
     fileprivate func assemblePresenter(
         view: MainView,
-        coordinator: GeneralCoordinator,
-        mainService: MainServiceInterface
+        coordinator: GeneralCoordinator
     ) -> MainPresenter {
         return define(
             scope: .prototype,
             init: MainViewPresenter(
                 view: view,
                 coordinator: coordinator,
-                mainService: mainService
+                mainService: self.serviceAssembly.mainService
             )
         )
     }

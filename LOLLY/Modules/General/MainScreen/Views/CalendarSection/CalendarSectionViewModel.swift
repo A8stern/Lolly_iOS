@@ -8,15 +8,18 @@
 import UIKit
 
 public struct CalendarSectionViewModel: Changeable {
-    public let month: String
+    public let isSkeletonable: Bool
+    public let month: String?
     public let days: [CalendarCellViewModel]
     public let event: EventViewModel?
 
     public init(
-        month: String,
-        days: [CalendarCellViewModel],
-        event: EventViewModel?
+        isSkeletonable: Bool = false,
+        month: String? = nil,
+        days: [CalendarCellViewModel] = [],
+        event: EventViewModel? = nil
     ) {
+        self.isSkeletonable = isSkeletonable
         self.month = month
         self.days = days
         self.event = event

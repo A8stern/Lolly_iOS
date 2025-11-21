@@ -90,7 +90,7 @@ public final class VideoView: UIView {
 
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(appDidBecomeActive),
+            selector: #selector(onAppDidBecomeActive),
             name: UIApplication.didBecomeActiveNotification,
             object: nil
         )
@@ -102,7 +102,7 @@ public final class VideoView: UIView {
     }
 
     @objc
-    private func appDidBecomeActive() {
+    private func onAppDidBecomeActive() {
         player?.play()
     }
 

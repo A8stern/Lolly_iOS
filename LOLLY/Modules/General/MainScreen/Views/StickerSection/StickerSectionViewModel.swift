@@ -8,19 +8,22 @@
 import UIKit
 
 public struct StickerSectionViewModel: Changeable {
-    public let title: String
-    public let sign: Character
-    public let stickersCount: Int
-    public let newStickerImage: UIImage
+    public let isSkeletonable: Bool
+    public let title: String?
+    public let sign: Character?
+    public let stickersCount: Int?
+    public let newStickerImage: UIImage?
     public let buttonViewModel: ButtonViewModel?
 
     public init(
-        title: String,
-        sign: Character,
-        stickersCount: Int,
-        newStickerImage: UIImage,
-        buttonViewModel: ButtonViewModel?
+        isSkeletonable: Bool = false,
+        title: String? = nil,
+        sign: Character? = nil,
+        stickersCount: Int? = nil,
+        newStickerImage: UIImage? = nil,
+        buttonViewModel: ButtonViewModel? = nil
     ) {
+        self.isSkeletonable = isSkeletonable
         self.title = title
         self.sign = sign
         self.stickersCount = stickersCount

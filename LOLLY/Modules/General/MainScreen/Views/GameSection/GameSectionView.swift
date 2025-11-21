@@ -86,9 +86,23 @@ extension GameSectionView {
 
         guard let viewModel else { return }
 
+        if viewModel.isSkeletonable {
+            displaySkeleton()
+        } else {
+            dismissSkeleton()
+        }
+
         titleLabel.text = viewModel.title
         waveformImageView.image = viewModel.waveformImage
     }
+}
+
+// MARK: - SkeletonCallable
+
+extension GameSectionView: SkeletonCallable {
+    public func prepareForDisplaySkeleton() { }
+
+    public func prepareForDismissSkeleton() { }
 }
 
 extension GameSectionView {

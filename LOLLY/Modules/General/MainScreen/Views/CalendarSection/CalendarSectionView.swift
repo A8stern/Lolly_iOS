@@ -59,6 +59,7 @@ public final class CalendarSectionView: UIView, ViewModellable {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.registerCellClass(CalendarCell.self)
+        collectionView.isHiddenWhenSkeletonIsActive = true
         return collectionView
     }()
 
@@ -129,10 +130,24 @@ extension CalendarSectionView {
 
         guard let viewModel else { return }
 
+        if viewModel.isSkeletonable {
+            displaySkeleton()
+        } else {
+            dismissSkeleton()
+        }
+
         monthLabel.text = viewModel.month
         calendarCells = viewModel.days
         eventView.viewModel = viewModel.event
     }
+}
+
+// MARK: - SkeletonCallable
+
+extension CalendarSectionView: SkeletonCallable {
+    public func prepareForDisplaySkeleton() { }
+
+    public func prepareForDismissSkeleton() { }
 }
 
 // MARK: - UICollectionViewDelegate

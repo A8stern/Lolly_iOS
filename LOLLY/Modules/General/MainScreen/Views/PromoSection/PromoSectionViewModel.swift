@@ -8,8 +8,14 @@
 import UIKit
 
 public struct PromoSectionViewModel: Changeable {
-    public let text: String
-    public init(text: String) {
+    public let isSkeletonable: Bool
+    public let text: String?
+
+    public init(
+        isSkeletonable: Bool = false,
+        text: String? = nil
+    ) {
+        self.isSkeletonable = isSkeletonable
         self.text = text
     }
 }

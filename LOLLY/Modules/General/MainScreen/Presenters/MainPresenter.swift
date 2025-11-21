@@ -44,12 +44,18 @@ final class MainViewPresenter {
 // MARK: - MainPresenter
 
 extension MainViewPresenter: MainPresenter {
-    func onViewDidLoad() {
-        let response = MainModels.InitialData.Response()
-        responseInitialData(response: response)
-    }
+    func onViewDidLoad() { }
 
-    func onViewWillAppear() { }
+    func onViewWillAppear() {
+        responseInitialData()
+
+        requestStickerStatus()
+        requestMarketingAfisha()
+        requestMarketingSlider()
+        requestCalendarOverview()
+        requestGamificationOverview()
+        requestOrganizationInformation()
+    }
 
     func onViewDidAppear() { }
 
@@ -61,19 +67,53 @@ extension MainViewPresenter: MainPresenter {
 // MARK: - Private Methods
 
 extension MainViewPresenter {
-    fileprivate func responseInitialData(response _: MainModels.InitialData.Response) {
+    fileprivate func requestStickerStatus() {
+        // TODO: Запрос в сервис
+        // view.displayStickerSection(viewModel: MainModels.Stickers.ViewModel)
+        // либо передать ...(viewModel: nil), чтобы скрыть секцию
+    }
+
+    fileprivate func requestMarketingSlider() { }
+
+    fileprivate func requestMarketingAfisha() {
+        // TODO: Запрос в сервис
+        // view.displayPromoSectionState(viewModel: MainModels.Promo.ViewModel)
+        // либо передать ...(viewModel: nil), чтобы скрыть секцию
+    }
+
+    fileprivate func requestCalendarOverview() {
+        // TODO: Запрос в сервис
+        // view.displayCalendarSectionState(viewModel: MainModels.Calendar.ViewModel)
+        // либо передать ...(viewModel: nil), чтобы скрыть секцию
+    }
+
+    fileprivate func requestGamificationOverview() {
+        // TODO: Запрос в сервис
+        // view.displayGameSectionState(viewModel: MainModels.Gamification.ViewModel)
+        // либо передать ...(viewModel: nil), чтобы скрыть секцию
+    }
+
+    fileprivate func requestOrganizationInformation() {
+        // TODO: Запрос в сервис
+        // view.displayContactsSectionState(viewModel: MainModels.Contacts.ViewModel)
+        // либо передать ...(viewModel: nil), чтобы скрыть секцию
+    }
+
+    fileprivate func responseInitialData() {
         let viewModel = MainModels.InitialData.ViewModel(
+            title: L10n.Main.title,
             profileButtonViewModel: makeProfileButtonViewModel(),
-            stickerSectionViewModel: makeStickerSectionViewModel(),
-            promoSectionViewModel: makePromoSectionViewModel(),
-            gameSectionViewModel: makeGameSectionViewModel(),
-            calendarSectionViewModel: makeCalendarSectionViewModel(),
-            contactsSectionViewModel: makeContactsSectionViewModel()
+            stickerSectionViewModel: StickerSectionViewModel(isSkeletonable: true),
+            promoSectionViewModel: PromoSectionViewModel(isSkeletonable: true),
+            gameSectionViewModel: GameSectionViewModel(isSkeletonable: true),
+            calendarSectionViewModel: CalendarSectionViewModel(isSkeletonable: true),
+            contactsSectionViewModel: ContactsSectionViewModel(isSkeletonable: true)
         )
 
         view.displayInitialData(viewModel: viewModel)
     }
 
+/*
     fileprivate func makeStickerSectionViewModel() -> StickerSectionViewModel? {
         StickerSectionViewModel(
             title: "Карточка заполнена",
@@ -174,6 +214,7 @@ extension MainViewPresenter {
             )
         )
     }
+*/
 
     fileprivate func makeProfileButtonViewModel() -> ProfileButtonViewModel {
         ProfileButtonViewModel(tapHandler: { [weak self] in

@@ -109,7 +109,7 @@ extension GameSurveyViewPresenter {
                 await MainActor.run {
                     let viewModel = GameSurveyModels.Start.ViewModel(
                         title: quizResponse.startText,
-                        subtitle: overview.message,
+                        subtitle: overview.text,
                         buttonIconURL: URL(string: quizResponse.startButtonIcon ?? ""),
                         backgroundImageURL: URL(string: overview.imageURL)
                     )

@@ -25,6 +25,9 @@ packages:
   CryptoSwift:
     url: https://github.com/krzyzanowskim/CryptoSwift.git
     from: 1.9.0
+  SkeletonView:
+    url: https://github.com/Juanpe/SkeletonView.git
+    from: 1.31.0
 settings:
   base:
     VERSIONING_SYSTEM: apple-generic
@@ -60,11 +63,12 @@ targets:
     sources:
       - "./LOLLY/Application"
       - "./LOLLY/Common"
-      - "./LOLLY/Design/Components"
-      - "./LOLLY/Design/Resources/Common"
-      - "./LOLLY/Design/Resources/Brands/Harucha"
       - "./LOLLY/DI"
+      - "./LOLLY/Design/Components"
+      - "./LOLLY/Design/Resources/Brands/Harucha"
+      - "./LOLLY/Design/Resources/Common"
       - "./LOLLY/Managers"
+      - "./LOLLY/Mappers"
       - "./LOLLY/Models"
       - "./LOLLY/Modules"
       - "./LOLLY/Repositories"
@@ -75,11 +79,12 @@ targets:
       - "./LOLLY/Design/Resources/Brands/Harucha/**"
       - "./LOLLY/Design/Resources/Common/**"
     dependencies:
+      - package: CryptoSwift
+      - package: Kingfisher
+      - package: PhoneNumberKit
+      - package: SkeletonView
       - package: SnapKit
       - package: SwiftMessages
-      - package: PhoneNumberKit
-      - package: Kingfisher
-      - package: CryptoSwift
     bundleId: com.kprokofyev.LOLLY.Harucha
     prebuildScripts:
       - name: SwiftGen
@@ -116,11 +121,12 @@ targets:
     sources: 
       - "./LOLLY/Application"
       - "./LOLLY/Common"
-      - "./LOLLY/Design/Components"
-      - "./LOLLY/Design/Resources/Common"
-      - "./LOLLY/Design/Resources/Brands/Brewsell"
       - "./LOLLY/DI"
+      - "./LOLLY/Design/Components"
+      - "./LOLLY/Design/Resources/Brands/Brewsell"
+      - "./LOLLY/Design/Resources/Common"
       - "./LOLLY/Managers"
+      - "./LOLLY/Mappers"
       - "./LOLLY/Models"
       - "./LOLLY/Modules"
       - "./LOLLY/Repositories"
@@ -131,11 +137,12 @@ targets:
       - "./LOLLY/Design/Resources/Brands/Brewsell/**"
       - "./LOLLY/Design/Resources/Common/**"
     dependencies:
+      - package: CryptoSwift
+      - package: Kingfisher
+      - package: PhoneNumberKit
+      - package: SkeletonView
       - package: SnapKit
       - package: SwiftMessages
-      - package: PhoneNumberKit
-      - package: Kingfisher
-      - package: CryptoSwift
     bundleId: com.kprokofyev.LOLLY.Brewsell
     prebuildScripts:
       - name: SwiftGen

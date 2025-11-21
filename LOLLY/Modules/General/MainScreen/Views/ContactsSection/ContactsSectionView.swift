@@ -163,6 +163,12 @@ extension ContactsSectionView {
 
         guard let viewModel else { return }
 
+        if viewModel.isSkeletonable {
+            displaySkeleton()
+        } else {
+            dismissSkeleton()
+        }
+
         backgroundImageView.image = viewModel.backgroundImage
         titleLabel.text = viewModel.title
         topSeparatorLineView.isHidden = viewModel.title == nil
@@ -193,6 +199,14 @@ extension ContactsSectionView {
             make.centerY.equalToSuperview()
         }
     }
+}
+
+// MARK: - SkeletonCallable
+
+extension ContactsSectionView: SkeletonCallable {
+    public func prepareForDisplaySkeleton() { }
+
+    public func prepareForDismissSkeleton() { }
 }
 
 // MARK: - Constants

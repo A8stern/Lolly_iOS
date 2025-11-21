@@ -51,3 +51,10 @@ extension UIView {
         tapActionHandler?()
     }
 }
+
+extension UIView {
+    public func lolly_layoutIfVisible() {
+        guard frame != .zero else { return }
+        layoutIfNeeded()
+    }
+}

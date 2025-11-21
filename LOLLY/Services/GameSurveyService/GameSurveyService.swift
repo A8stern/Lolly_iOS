@@ -39,7 +39,7 @@ public final class GameSurveyService: GameSurveyServiceInterface {
         )
     }
 
-    public func fetchOverview() async throws -> GamificationOverviewResponse {
+    public func fetchOverview() async throws -> GamificationOverviewResponseModel {
         try await networkService.request(
             endpoint: GamificationEndpoint.overview.endpoint,
             method: GamificationEndpoint.overview.method

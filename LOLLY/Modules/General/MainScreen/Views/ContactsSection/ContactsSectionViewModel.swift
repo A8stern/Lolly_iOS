@@ -8,19 +8,22 @@
 import UIKit
 
 public struct ContactsSectionViewModel: Changeable {
-    var title: String?
-    var backgroundImage: UIImage
-    var addresses: [AddressViewModel]
-    var socialButtonViewModels: [SocialCircleButtonViewModel]
-    var websiteButton: ButtonViewModel
+    public let isSkeletonable: Bool
+    public let  title: String?
+    public let  backgroundImage: UIImage?
+    public let  addresses: [AddressViewModel]
+    public let  socialButtonViewModels: [SocialCircleButtonViewModel]
+    public let  websiteButton: ButtonViewModel?
 
     public init(
-        title: String?,
-        backgroundImage: UIImage,
-        addresses: [AddressViewModel],
-        socialButtonViewModels: [SocialCircleButtonViewModel],
-        websiteButton: ButtonViewModel
+        isSkeletonable: Bool = false,
+        title: String? = nil,
+        backgroundImage: UIImage? = nil,
+        addresses: [AddressViewModel] = [],
+        socialButtonViewModels: [SocialCircleButtonViewModel] = [],
+        websiteButton: ButtonViewModel? = nil
     ) {
+        self.isSkeletonable = isSkeletonable
         self.title = title
         self.backgroundImage = backgroundImage
         self.addresses = addresses

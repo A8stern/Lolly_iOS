@@ -8,6 +8,6 @@
 import Foundation
 
 public struct Day {
-    let date: Date
-    let events: [Event]
+    public let date: Date
+    public let events: [Event]
 }

@@ -7,10 +7,11 @@
 
 import Foundation
 
-public enum StickersEndpoint: Endpoint {
+public enum LoyaltyEndpoint: Endpoint {
     case generateHash
     case changingCheck
     case baristaScan
+    case status
 
     public var path: String {
         switch self {
@@ -18,16 +19,19 @@ public enum StickersEndpoint: Endpoint {
                 return "qr"
 
             case .changingCheck:
-                return "/loyalty/changing-check"
+                return "changing-check"
 
             case .baristaScan:
-                return "/barista/scan"
+                return "scan"
+
+            case .status:
+                return "status"
         }
     }
 
     public var method: HTTPMethod {
         switch self {
-            case .generateHash, .changingCheck:
+            case .generateHash, .changingCheck, .status:
                 return .get
 
             case .baristaScan:
@@ -42,7 +46,7 @@ public enum StickersEndpoint: Endpoint {
             case .generateHash:
                 return .profile
 
-            case .changingCheck:
+            case .changingCheck, .status:
                 return .loyalty
 
             case .baristaScan:
@@ -55,6 +59,6 @@ public enum StickersEndpoint: Endpoint {
     }
 }
 
-extension StickersEndpoint {
+extension LoyaltyEndpoint {
     public var endpoint: String { path }
 }

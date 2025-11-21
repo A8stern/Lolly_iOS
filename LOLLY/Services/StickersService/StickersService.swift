@@ -26,7 +26,7 @@ public final class StickersService: StickersServiceInterface {
             return "HASH"
         }
 
-        let endpoint = StickersEndpoint.generateHash
+        let endpoint = LoyaltyEndpoint.generateHash
         let body = EmptyRequestModel()
 
         let response: GenerateHashResponseModel = try await networkService.request(
@@ -49,7 +49,7 @@ public final class StickersService: StickersServiceInterface {
             return .credited
         }
 
-        let endpoint = StickersEndpoint.changingCheck
+        let endpoint = LoyaltyEndpoint.changingCheck
         let body = EmptyRequestModel()
 
         do {
@@ -87,7 +87,7 @@ public final class StickersService: StickersServiceInterface {
             return true
         }
 
-        let endpoint = StickersEndpoint.baristaScan
+        let endpoint = LoyaltyEndpoint.baristaScan
         let body = BaristaScanRequestModel(hash: hash)
 
         let _: EmptyResponseModel = try await networkService.request(
