@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SocialMediaResponseModel: ResponseModel {
+public struct SocialMediaResponseModel: ResponseModel {
     let imageURL: String
     let link: String
 }

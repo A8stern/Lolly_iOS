@@ -4,14 +4,15 @@
 //
 //  Created by Nikita on 11.11.2025.
 //
+
 import UIKit
 
 public struct SocialCircleButtonViewModel: Changeable {
-    var iconURL: String
+    var iconURL: URL?
     var tapHandler: (() -> Void)?
 
     public init(
-        iconURL: String,
+        iconURL: URL?,
         tapHandler: (() -> Void)?
     ) {
         self.iconURL = iconURL

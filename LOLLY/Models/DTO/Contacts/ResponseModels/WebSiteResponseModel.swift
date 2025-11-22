@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct WebSiteResponseModel: ResponseModel {
+public struct WebSiteResponseModel: ResponseModel {
     let link: String
     let text: String
 }

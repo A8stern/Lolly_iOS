@@ -6,7 +6,7 @@
 //
 
 public protocol MainServiceInterface: AnyObject {
-    func getContactsData() async throws -> [String: Any]
+    func getContactsData() async throws -> ContactsInfo
     func getAfisha() async throws -> String
     func getSlider() async throws -> [SliderCard]
     func getGamifacitaionOverview() async throws -> GamificationOverview

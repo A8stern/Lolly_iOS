@@ -97,7 +97,7 @@ extension SocialCircleButton {
         isHidden = viewModel == nil
         guard let viewModel else { return }
         iconImageView.kf.setImage(
-            with: URL(string: viewModel.iconURL),
+            with: viewModel.iconURL,
             placeholder: UIImage(systemName: "link")
         )
     }

@@ -5,7 +5,6 @@
 //  Created by Kirill Prokofyev on 21.11.2025.
 //
 
-
 private import SkeletonView
 import UIKit
 
@@ -89,4 +88,3 @@ extension UIView {
             .forEach { $0.recursivePrepareForDismissSkeleton() }
     }
 }
-

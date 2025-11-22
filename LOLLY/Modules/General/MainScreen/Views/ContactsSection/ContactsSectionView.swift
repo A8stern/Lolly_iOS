@@ -74,9 +74,9 @@ public final class ContactsSectionView: UIView, ViewModellable {
         return stackView
     }()
 
-    private lazy var websiteButton: Button = {
-        let button = Button()
-        return button
+    private lazy var websiteButtonsStackView: StackView = {
+        let stackView = StackView(axis: .horizontal, space: 8)
+        return stackView
     }()
 
     // MARK: - Lifecycle
@@ -140,6 +140,12 @@ extension ContactsSectionView {
             make.height.equalTo(1)
             make.width.equalToSuperview()
         }
+
+        buttonsStackView.addArrangedSubviews(
+            websiteButtonsStackView,
+            UIView(),
+            socialButtonsStackView
+        )
     }
 
     public func setupUI() {
@@ -169,10 +175,9 @@ extension ContactsSectionView {
             dismissSkeleton()
         }
 
-        backgroundImageView.image = viewModel.backgroundImage
+        backgroundImageView.kf.setImage(with: viewModel.backgroundImageURL)
         titleLabel.text = viewModel.title
         topSeparatorLineView.isHidden = viewModel.title == nil
-        websiteButton.viewModel = viewModel.websiteButton
 
         addressesStackView.subviews.forEach { $0.removeFromSuperview() }
         for addressViewModel in viewModel.addresses {
@@ -181,22 +186,16 @@ extension ContactsSectionView {
         }
         bottomSeparatorLineView.isHidden = viewModel.addresses.isEmpty
 
-        buttonsStackView.addArrangedSubviews(websiteButton, UIView(), socialButtonsStackView)
-        for socialButtonModel in viewModel.socialButtonViewModels {
-            let button = SocialCircleButton()
-            button.viewModel = socialButtonModel
-
-            socialButtonsStackView.addArrangedSubview(button)
-            button.snp.makeConstraints { make in
-                make.width.equalTo(button.snp.height)
-            }
-            button.addTapActionHandler {
-                socialButtonModel.tapHandler?()
-            }
+        socialButtonsStackView.subviews.forEach { $0.removeFromSuperview() }
+        for socialButtonViewModel in viewModel.socialButtonViewModels {
+            let socialButton = SocialCircleButton(viewModel: socialButtonViewModel)
+            socialButtonsStackView.addArrangedSubview(socialButton)
         }
-        socialButtonsStackView.snp.makeConstraints { make in
-            make.trailing.equalToSuperview()
-            make.centerY.equalToSuperview()
+
+        websiteButtonsStackView.subviews.forEach { $0.removeFromSuperview() }
+        for websiteButtonViewModel in viewModel.buttons {
+            let websiteButton = Button(viewModel: websiteButtonViewModel)
+            websiteButtonsStackView.addArrangedSubview(websiteButton)
         }
     }
 }

@@ -94,9 +94,23 @@ extension MainViewPresenter {
     }
 
     fileprivate func requestOrganizationInformation() {
-        // TODO: Запрос в сервис
-        // view.displayContactsSectionState(viewModel: MainModels.Contacts.ViewModel)
-        // либо передать ...(viewModel: nil), чтобы скрыть секцию
+        Task {
+            do {
+                let contacts = try await mainService.getContactsData()
+                await MainActor.run {
+                    let contactsSectionViewModel = makeContactsSectionViewModel(from: contacts)
+                    let viewModel = MainModels.Contacts.ViewModel(
+                        contactsSectionViewModel: contactsSectionViewModel
+                    )
+                    view.displayContactsSectionState(viewModel: viewModel)
+                }
+            } catch {
+                await MainActor.run {
+                    let viewModel = MainModels.Contacts.ViewModel(contactsSectionViewModel: nil)
+                    view.displayContactsSectionState(viewModel: viewModel)
+                }
+            }
+        }
     }
 
     fileprivate func responseInitialData() {
@@ -165,56 +179,39 @@ extension MainViewPresenter {
             text: "Скидка -20% в день рождения"
         )
     }
+*/
 
-    fileprivate func makeContactsSectionViewModel() -> ContactsSectionViewModel? {
+    fileprivate func makeContactsSectionViewModel(from contacts: ContactsInfo) -> ContactsSectionViewModel {
         ContactsSectionViewModel(
-            title: "Ждём вас",
-            backgroundImage: Assets.Brand.Photos.contactsBackground.image,
-            addresses: [
-                AddressViewModel(address: "Ленина, 10", description: "11:00 - 22:00"),
-                AddressViewModel(address: "Пр. Карла Маркса, 47", description: "11:00 - 22:00"),
-                AddressViewModel(address: "Мичурина, 12", description: "11:00 - 22:00"),
-                AddressViewModel(address: "Ленина, 3", description: "12:00 - 22:00")
-            ],
-            socialButtonViewModels: [
-                SocialCircleButtonViewModel(
-                    iconURL: "https://i.yapx.ru/cGYdW.png",
+            title: contacts.title,
+            backgroundImageURL: contacts.imageURL,
+            addresses: contacts.places.map {
+                AddressViewModel(address: $0.location, description: $0.text)
+            },
+            socialButtonViewModels: contacts.socialMedias.compactMap { socialMedia in
+                guard let url = socialMedia.link else { return nil }
+                return SocialCircleButtonViewModel(
+                    iconURL: socialMedia.imageURL,
                     tapHandler: { [weak self] in
                         guard let self else { return }
-                        guard let url = URL(string: "https://facebook.com/") else { return }
-                        coordinator.openInSafari(url: url)
-                    }
-                ),
-                SocialCircleButtonViewModel(
-                    iconURL: "https://i.yapx.ru/cGYiz.png",
-                    tapHandler: { [weak self] in
-                        guard let self else { return }
-                        guard let url = URL(string: "https://vk.com/") else { return }
-                        coordinator.openInSafari(url: url)
-                    }
-                ),
-                SocialCircleButtonViewModel(
-                    iconURL: "https://i.yapx.ru/cGYjI.png",
-                    tapHandler: { [weak self] in
-                        guard let self else { return }
-                        guard let url = URL(string: "https://instagram.com/") else { return }
                         coordinator.openInSafari(url: url)
                     }
                 )
-            ],
-            websiteButton: ButtonViewModel(
-                title: L10n.Main.ContactsSection.website,
-                type: .primary(nil),
-                size: .large,
-                tapHandler: { [weak self] in
-                    guard let self else { return }
-                    guard let webSiteURL = URL(string: "https://harucha.ru") else { return }
-                    coordinator.openInSafari(url: webSiteURL)
-                }
-            )
+            },
+            buttons: contacts.website.compactMap { website in
+                guard let url = website.link else { return nil }
+                return ButtonViewModel(
+                    title: website.text,
+                    type: .primary(nil),
+                    size: .large,
+                    tapHandler: { [weak self] in
+                        guard let self else { return }
+                        coordinator.openInSafari(url: url)
+                    }
+                )
+            }
         )
     }
-*/
 
     fileprivate func makeProfileButtonViewModel() -> ProfileButtonViewModel {
         ProfileButtonViewModel(tapHandler: { [weak self] in

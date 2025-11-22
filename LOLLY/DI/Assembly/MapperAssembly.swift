@@ -35,4 +35,11 @@ public final class MapperAssembly: Assembly {
             init: MarketingMapper()
         )
     }
+
+    public var contactsMapper: ContactsMapperInterface {
+        define(
+            scope: .prototype,
+            init: ContactsMapper()
+        )
+    }
 }

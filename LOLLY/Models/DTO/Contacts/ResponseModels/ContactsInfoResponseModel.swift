@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ContactsInfoResponseModel: ResponseModel {
+public struct ContactsInfoResponseModel: ResponseModel {
     let image: String
     let text: String
     let places: [PlaceResponseModel]

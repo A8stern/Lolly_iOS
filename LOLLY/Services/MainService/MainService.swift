@@ -14,6 +14,7 @@ public final class MainService: MainServiceInterface {
     private let gamificationMapper: GamificationMapperInterface
     private let loyaltyMapper: LoyaltyMapperInterface
     private let marketingMapper: MarketingMapperInterface
+    private let contactsMapper: ContactsMapperInterface
 
     // MARK: Lifecycle
 
@@ -22,55 +23,29 @@ public final class MainService: MainServiceInterface {
         gamificationMapper: GamificationMapperInterface,
         loyaltyMapper: LoyaltyMapperInterface,
         marketingMapper: MarketingMapperInterface,
+        contactsMapper: ContactsMapperInterface,
         networkService: NetworkService
     ) {
         self.calendarMapper = calendarMapper
         self.gamificationMapper = gamificationMapper
         self.loyaltyMapper = loyaltyMapper
         self.marketingMapper = marketingMapper
+        self.contactsMapper = contactsMapper
         self.networkService = networkService
     }
 
     // MARK: Public Methods
 
-    public func getContactsData() async throws -> [String: Any] {
+    public func getContactsData() async throws -> ContactsInfo {
         let endpoint = ContactsEndpoint.getContactsData
-        let DTOData: ContactsInfoResponseModel = try await networkService.request(
+        let response: ContactsInfoResponseModel = try await networkService.request(
             endpoint: endpoint.endpoint,
             method: endpoint.method,
             headers: endpoint.headers
         )
 
-        let placesArray: [[String: Any]] = DTOData.places.map { place in
-            [
-                "location": place.location,
-                "text": place.text
-            ]
-        }
-
-        let websiteArray: [[String: Any]] = DTOData.website.map { site in
-            [
-                "link": site.link,
-                "text": site.text
-            ]
-        }
-
-        let socialMediasArray: [[String: Any]] = DTOData.socialMedias.map { social in
-            [
-                "imageURL": social.imageURL,
-                "link": social.link
-            ]
-        }
-
-        let jsonData: [String: Any] = [
-            "image": DTOData.image,
-            "text": DTOData.text,
-            "places": placesArray,
-            "website": websiteArray,
-            "socialMedias": socialMediasArray
-        ]
-
-        return jsonData
+        let result = contactsMapper.map(response)
+        return result
     }
 
     public func getAfisha() async throws -> String {

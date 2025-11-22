@@ -72,6 +72,7 @@ public final class ServiceAssembly: Assembly {
                 gamificationMapper: self.mapperAssembly.gamificationMapper,
                 loyaltyMapper: self.mapperAssembly.loyaltyMapper,
                 marketingMapper: self.mapperAssembly.marketingMapper,
+                contactsMapper: self.mapperAssembly.contactsMapper,
                 networkService: self.networkService
             )
         )

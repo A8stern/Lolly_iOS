@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PlaceResponseModel: ResponseModel {
+public struct PlaceResponseModel: ResponseModel {
     let location: String
     let text: String
 }
