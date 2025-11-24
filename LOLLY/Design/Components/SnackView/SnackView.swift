@@ -84,21 +84,21 @@ extension SnackView {
 
     fileprivate func configureMessage(props: SnackProps) {
         switch props {
-            case .error(let icon, let text):
+            case let .error(icon, text):
                 textLabel.text = text
                 let iconImage = icon ?? Assets.error.image
                 iconView.image = iconImage.withRenderingMode(.alwaysTemplate)
                 iconView.tintColor = Colors.Notification.error.color
                 contentView.backgroundColor = Colors.Notification.background.color
 
-            case .warning(let icon, let text):
+            case let .warning(icon, text):
                 textLabel.text = text
                 let iconImage = icon ?? Assets.error.image
                 iconView.image = iconImage.withRenderingMode(.alwaysTemplate)
                 iconView.tintColor = Colors.Notification.error.color
                 contentView.backgroundColor = Colors.Notification.background.color
 
-            case .success(let icon, let text):
+            case let .success(icon, text):
                 textLabel.text = text
                 let iconImage = icon ?? Assets.error.image
                 iconView.image = iconImage.withRenderingMode(.alwaysTemplate)

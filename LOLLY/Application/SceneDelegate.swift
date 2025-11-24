@@ -21,6 +21,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
         self.window = window
+
+        ThemeManager.shared.applyTheme(ThemeManager.shared.currentTheme)
+
         coordinator = AppCoordinator(window: window)
         coordinator?.start()
     }

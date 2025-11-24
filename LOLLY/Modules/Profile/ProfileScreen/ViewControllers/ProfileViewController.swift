@@ -10,6 +10,8 @@ import UIKit
 
 protocol ProfileView: AnyObject, SnackDisplayable {
     func displayInitialData(viewModel: ProfileModels.InitialData.ViewModel)
+    func displayProfileInfo(viewModel: ProfileModels.ProfileInfo.ViewModel)
+    func setLoading(_ isLoading: Bool)
 }
 
 final class ProfileViewController: UIViewController {
@@ -43,6 +45,46 @@ final class ProfileViewController: UIViewController {
         stackView.alignment = .fill
         stackView.distribution = .fill
         return stackView
+    }()
+
+    private lazy var nameTextField: TextField = {
+        let field = TextField()
+        field.title = "Твое имя"
+        field.placeholder = "Твое имя"
+        field.shouldDisplayTitleWhenNonEmpty = true
+        field.state = .disabled
+        return field
+    }()
+
+    private lazy var phoneTextField: TextField = {
+        let field = TextField()
+        field.title = "Номер телефона"
+        field.placeholder = "Номер телефона"
+        field.keyboardType = .phonePad
+        field.shouldDisplayTitleWhenNonEmpty = true
+        field.state = .disabled
+        return field
+    }()
+
+    private lazy var themeSelectorView: ThemeSelectorView = {
+        let view = ThemeSelectorView()
+        view.onThemeChanged = { [weak self] theme in
+            ThemeManager.shared.currentTheme = theme
+        }
+        return view
+    }()
+
+    private lazy var logoutButton: Button = {
+        let button = Button(viewModel: ButtonViewModel(
+            title: "Выйти",
+            type: .primary(nil),
+            style: .normal,
+            size: .large,
+            tapHandler: { [weak self] in
+                self?.presenter?.onLogoutTap()
+            }
+        ))
+        return button
     }()
 
     // MARK: - Lifecycle
@@ -98,6 +140,13 @@ final class ProfileViewController: UIViewController {
         }
         scrollView.addSubview(contentView)
         contentView.addSubview(sectionsStackView)
+        contentView.addSubview(logoutButton)
+
+        sectionsStackView.addArrangedSubviews(
+            nameTextField,
+            phoneTextField,
+            themeSelectorView
+        )
     }
 
     private func setupConstraints() {
@@ -128,7 +177,13 @@ final class ProfileViewController: UIViewController {
             make.leading.equalTo(contentView.layoutMarginsGuide.snp.leading)
             make.trailing.equalTo(contentView.layoutMarginsGuide.snp.trailing)
             make.top.equalTo(contentView.layoutMarginsGuide.snp.top)
-            make.bottom.equalTo(contentView.layoutMarginsGuide.snp.bottom)
+        }
+
+        logoutButton.snp.makeConstraints { make in
+            make.leading.equalTo(contentView.layoutMarginsGuide.snp.leading)
+            make.trailing.equalTo(contentView.layoutMarginsGuide.snp.trailing)
+            make.top.equalTo(sectionsStackView.snp.bottom).offset(Constants.logoutButtonTopOffset)
+            make.bottom.equalTo(contentView.layoutMarginsGuide.snp.bottom).inset(Constants.logoutButtonBottomInset)
         }
     }
 
@@ -143,6 +198,15 @@ final class ProfileViewController: UIViewController {
 extension ProfileViewController: ProfileView {
     func displayInitialData(viewModel: ProfileModels.InitialData.ViewModel) {
         navBar.title = viewModel.title
+    }
+
+    func displayProfileInfo(viewModel: ProfileModels.ProfileInfo.ViewModel) {
+        nameTextField.text = viewModel.name
+        phoneTextField.text = viewModel.phone
+    }
+
+    func setLoading(_ isLoading: Bool) {
+        // TODO: Реализовать индикатор загрузки при необходимости
     }
 }
 
@@ -160,6 +224,8 @@ extension ProfileViewController {
     fileprivate enum Constants {
         static let horizontalSpacing: CGFloat = 16
         static let innerMargins: UIEdgeInsets = .zero
-        static let contentMargins: UIEdgeInsets = .zero
+        static let contentMargins: UIEdgeInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+        static let logoutButtonTopOffset: CGFloat = 24
+        static let logoutButtonBottomInset: CGFloat = 16
     }
 }

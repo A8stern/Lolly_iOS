@@ -77,4 +77,13 @@ public final class ServiceAssembly: Assembly {
             )
         )
     }
+
+    public var profileService: ProfileServiceInterface {
+        define(
+            scope: .lazySingleton,
+            init: ProfileService(
+                networkService: self.networkService
+            )
+        )
+    }
 }
