@@ -78,7 +78,7 @@ public final class AppCoordinator: BaseCoordinator<UIWindow> {
     }
 
     public func setupFlow() {
-        let isAuthorized = true
+        let isAuthorized = sessionUseCase.isAuthorized
         isAuthorized ? goToGeneralFlow() : goToAuthFlow()
     }
 

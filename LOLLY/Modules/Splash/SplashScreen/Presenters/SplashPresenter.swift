@@ -19,9 +19,6 @@ final class SplashViewPresenter {
     private let coordinator: SplashCoordinator
     private let sessionUseCase: SessionUseCaseInterface
 
-    // TODO: Здесь должна быть проверка авторизован ли юзер
-//    private let profileUseCase: Domain.ProfileUseCase
-
     // MARK: - Lifecycle
 
     init(

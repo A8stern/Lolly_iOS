@@ -34,7 +34,7 @@ final class OtpCodeViewPresenter {
     private let verificationUseCase: VerificationUseCaseInterface
     private let authorizationService: AuthorizationServiceInterface
     private let phone: String
-    private let telegramUrl: URL? = URL(string: "https://t.me/kprokofyev")
+    private let telegramUrl: URL? = URL(string: "https://t.me/lolly_app_bot")
 
     /// Текущий таймер
     private var runningTimer: Timer?
