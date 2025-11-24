@@ -59,6 +59,20 @@ public enum Assets {
       public static let apple = ImageAsset(name: "icons24/social/apple")
     }
   }
+  public enum Icons29 {
+    public enum Adminpanel {
+      public static let administrator = ImageAsset(name: "icons29/adminpanel/administrator")
+      public static let aigame = ImageAsset(name: "icons29/adminpanel/aigame")
+      public static let events = ImageAsset(name: "icons29/adminpanel/events")
+      public static let link = ImageAsset(name: "icons29/adminpanel/link")
+      public static let loyaltycard = ImageAsset(name: "icons29/adminpanel/loyaltycard")
+      public static let popup = ImageAsset(name: "icons29/adminpanel/popup")
+      public static let push = ImageAsset(name: "icons29/adminpanel/push")
+      public static let qr = ImageAsset(name: "icons29/adminpanel/qr")
+      public static let textslider = ImageAsset(name: "icons29/adminpanel/textslider")
+      public static let user = ImageAsset(name: "icons29/adminpanel/user")
+    }
+  }
   public static let spinner = ImageAsset(name: "spinner")
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name

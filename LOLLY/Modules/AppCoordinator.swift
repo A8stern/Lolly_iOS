@@ -98,6 +98,16 @@ public final class AppCoordinator: BaseCoordinator<UIWindow> {
         add(child: coordinator)
         coordinator.start()
     }
+
+    public func goToAdminFlow() {
+        let navigationController = UINavigationController()
+        let coordinator = AdminCoordinator(
+            navigationController: navigationController,
+            serviceAssembly: serviceAssembly
+        )
+        add(child: coordinator)
+        coordinator.start()
+    }
 }
 
 // MARK: - SessionUseCaseDelegate
