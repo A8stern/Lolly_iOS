@@ -73,10 +73,10 @@ extension PushNotifySectionView {
             make.edges.equalToSuperview()
         }
         generalStack.addArrangedSubviews(titleTextView, mainTextView, confirmButton)
-        titleTextView.snp.makeConstraints{make in
+        titleTextView.snp.makeConstraints { make in
             make.width.equalToSuperview()
         }
-        mainTextView.snp.makeConstraints{make in
+        mainTextView.snp.makeConstraints { make in
             make.width.equalToSuperview()
         }
         confirmButton.snp.makeConstraints { make in

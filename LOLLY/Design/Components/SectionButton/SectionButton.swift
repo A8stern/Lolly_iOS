@@ -122,7 +122,7 @@ extension SectionButton {
     public func setupBehaviour() {
         addTapActionHandler { [weak self] in
             guard let self else { return }
-            self.viewModel?.tapHandler?()
+            viewModel?.tapHandler?()
         }
     }
 

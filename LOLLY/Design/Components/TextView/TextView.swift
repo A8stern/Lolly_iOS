@@ -200,10 +200,7 @@ extension TextView {
     }
 
     fileprivate func updateTitleVisibilityIfNeeded() {
-        guard shouldDisplayTitleWhenNonEmpty,
-            titleLabel.isHidden,
-            isEmpty == false
-        else {
+        guard shouldDisplayTitleWhenNonEmpty, titleLabel.isHidden, isEmpty == false else {
             return
         }
 
@@ -225,9 +222,9 @@ extension TextView {
             let currentLength = text.count
             maxLengthLabel.text = "\(currentLength)/\(maxLength)"
 
-            if isExceedingMaxLength && state != .invalid {
+            if isExceedingMaxLength, state != .invalid {
                 state = .invalid
-            } else if !isExceedingMaxLength && state == .invalid {
+            } else if !isExceedingMaxLength, state == .invalid {
                 state = .empty
             }
         }
@@ -262,7 +259,8 @@ extension TextView {
             make.leading.equalToSuperview().offset(Constants.horizontalInset)
             make.trailing.equalToSuperview().inset(Constants.horizontalInset)
             make.bottom.equalToSuperview().inset(Constants.verticalInset)
-            textViewHeightConstraint = make.height.greaterThanOrEqualTo(Constants.minTextViewHeight).constraint
+            textViewHeightConstraint =
+                make.height.greaterThanOrEqualTo(Constants.minTextViewHeight).constraint
         }
 
         placeholderLabel.snp.makeConstraints { make in
@@ -272,7 +270,8 @@ extension TextView {
         }
 
         maxLengthLabel.snp.makeConstraints { make in
-            maxLengthTopConstraint = make.top.equalTo(viewContainerView.snp.bottom)
+            maxLengthTopConstraint =
+                make.top.equalTo(viewContainerView.snp.bottom)
                 .offset(maxLength > 0 ? Constants.maxLengthTopOffset : 0).constraint
             make.trailing.equalToSuperview()
             make.leading.greaterThanOrEqualToSuperview()
@@ -303,26 +302,37 @@ extension TextView {
     }
 
     fileprivate func updateTextViewHeight() {
-        let fixedWidth = textView.frame.width - textView.textContainerInset.left - textView.textContainerInset.right
-        let sizeThatFits = textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
+        let fixedWidth =
+            textView.frame.width - textView.textContainerInset.left - textView.textContainerInset.right
+        let sizeThatFits = textView.sizeThatFits(
+            CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude)
+        )
 
         var newHeight = max(sizeThatFits.height, Constants.minTextViewHeight)
 
         if maxLines > 0 {
             let maxHeight = textView.font?.lineHeight ?? Constants.minTextViewHeight * CGFloat(maxLines)
-            let calculatedMaxHeight = maxHeight * CGFloat(maxLines) + textView.textContainerInset.top + textView.textContainerInset.bottom
+            let calculatedMaxHeight =
+                maxHeight * CGFloat(maxLines) + textView.textContainerInset.top
+                    + textView
+                    .textContainerInset.bottom
             newHeight = min(newHeight, calculatedMaxHeight)
         }
 
-        newHeight = min(newHeight, maxHeight - Constants.verticalInset * 2 - Constants.textViewTopOffset)
+        newHeight = min(
+            newHeight, maxHeight - Constants.verticalInset * 2 - Constants.textViewTopOffset
+        )
 
         textViewHeightConstraint?.update(offset: newHeight)
 
         viewContainerView.snp.updateConstraints { make in
-            make.height.greaterThanOrEqualTo(newHeight + Constants.verticalInset * 2 + Constants.textViewTopOffset)
+            make.height.greaterThanOrEqualTo(
+                newHeight + Constants.verticalInset * 2 + Constants.textViewTopOffset
+            )
         }
 
-        textView.isScrollEnabled = newHeight >= maxHeight - Constants.verticalInset * 2 - Constants.textViewTopOffset
+        textView.isScrollEnabled =
+            newHeight >= maxHeight - Constants.verticalInset * 2 - Constants.textViewTopOffset
 
         UIView.animate(withDuration: Constants.animationDuration) {
             self.layoutIfNeeded()
@@ -358,12 +368,12 @@ extension TextView {
 // MARK: - UITextViewDelegate
 
 extension TextView: UITextViewDelegate {
-    public func textViewDidBeginEditing(_ textView: UITextView) {
+    public func textViewDidBeginEditing(_: UITextView) {
         animateFocus()
         delegate?.textViewDidBeginEditing?(self)
     }
 
-    public func textViewDidEndEditing(_ textView: UITextView) {
+    public func textViewDidEndEditing(_: UITextView) {
         animateUnfocus()
         delegate?.textViewDidEndEditing?(self)
     }
@@ -382,7 +392,9 @@ extension TextView: UITextViewDelegate {
                     let remainingLength = maxLength - currentText.count + range.length
                     if remainingLength > 0 {
                         let allowedText = String(text.prefix(remainingLength))
-                        textView.text = (currentText as NSString).replacingCharacters(in: range, with: allowedText)
+                        textView.text = (currentText as NSString).replacingCharacters(
+                            in: range, with: allowedText
+                        )
                         updateMaxLengthLabel()
                         updateTextViewHeight()
                         delegate?.textViewDidChange?(self)
@@ -399,7 +411,7 @@ extension TextView: UITextViewDelegate {
         ) ?? true
     }
 
-    public func textViewDidChange(_ textView: UITextView) {
+    public func textViewDidChange(_: UITextView) {
         updatePlaceholder()
         updateTextViewHeight()
         updateMaxLengthLabel()
@@ -418,7 +430,9 @@ extension TextView {
         textView.endOfDocument
     }
 
-    public func textRange(from fromPosition: UITextPosition, to toPosition: UITextPosition) -> UITextRange? {
+    public func textRange(from fromPosition: UITextPosition, to toPosition: UITextPosition)
+        -> UITextRange?
+    {
         return textView.textRange(from: fromPosition, to: toPosition)
     }
 

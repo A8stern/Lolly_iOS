@@ -127,7 +127,7 @@ extension PushNotifyViewController {
         }
 
         sectionsStackView.addArrangedSubviews(
-            pushNotifySection,
+            pushNotifySection
         )
     }
 
@@ -167,7 +167,7 @@ extension PushNotifyViewController: PushNotifyView {
 // MARK: - NavigationBarDelegate
 
 extension PushNotifyViewController: NavigationBarDelegate {
-    func didReceiveBackAction(_ navigationBar: NavigationBar) {
+    func didReceiveBackAction(_: NavigationBar) {
         presenter?.closePush()
     }
 }

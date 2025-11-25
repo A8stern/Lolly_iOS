@@ -15,7 +15,7 @@ final class PushNotifyAssembly: Assembly {
     // MARK: - Internal Methods
 
     func assembleModule(
-        coordinator: AdminCoordinator,
+        coordinator: AdminCoordinator
     ) -> PushNotifyViewController {
         return define(scope: .prototype, init: PushNotifyViewController()) { view in
             view.presenter = self.assemblePresenter(view: view, coordinator: coordinator)
@@ -29,14 +29,14 @@ final class PushNotifyAssembly: Assembly {
 extension PushNotifyAssembly {
     fileprivate func assemblePresenter(
         view: PushNotifyView,
-        coordinator: AdminCoordinator,
+        coordinator: AdminCoordinator
     ) -> PushNotifyPresenter {
         return define(
             scope: .prototype,
             init: PushNotifyViewPresenter(
                 view: view,
                 coordinator: coordinator,
-                authorizationService: self.serviceAssembly.authorizationService
+                authorizationService: serviceAssembly.authorizationService
             )
         )
     }

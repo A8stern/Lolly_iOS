@@ -126,7 +126,7 @@ extension AdminViewController {
         }
 
         sectionsStackView.addArrangedSubviews(
-            functionalSection,
+            functionalSection
         )
     }
 

@@ -5,8 +5,6 @@
 //  Created by Nikita on 22.11.2025.
 //
 
-internal import UIKit
-
 protocol AdminPresenter: AnyObject {
     /// Обработка входа на экран.
     func onViewDidLoad()
@@ -27,6 +25,7 @@ final class AdminViewPresenter {
     private unowned let view: AdminView
     private let coordinator: AdminCoordinator
     private let authorizationService: AuthorizationServiceInterface
+
     // MARK: - Initialization
 
     init(
@@ -50,7 +49,7 @@ extension AdminViewPresenter: AdminPresenter {
 
     func onViewDidAppear() { }
 
-    func getUserRole(phone: String) -> UserRoleStatus{
+    func getUserRole(phone: String) -> UserRoleStatus {
         let isMock = true
         if isMock {
             return .admin
@@ -65,7 +64,7 @@ extension AdminViewPresenter: AdminPresenter {
                 print(error)
             }
         }
-        guard let role else {return UserRoleStatus.unknown}
+        guard let role else { return UserRoleStatus.unknown }
         return role
     }
 }
@@ -76,83 +75,29 @@ extension AdminViewPresenter {
     fileprivate func responseInitialData(response _: AdminModels.InitialData.Response) {
         let viewModel = AdminModels.InitialData.ViewModel(
             title: L10n.Main.title,
-            functionalSectionViewModel: makeFunctionalSectionViewModel(),
+            functionalSectionViewModel: makeFunctionalSectionViewModel()
         )
 
         view.displayInitialData(viewModel: viewModel)
     }
+
     fileprivate func getSectionsByRole() -> [[SectionButtonViewModel]] {
         let userRole = UserRoleStatus.admin // let userRole = getUserRole(phone: "")
 
-        var sSections: [SectionButtonViewModel] = []
-        var fSections: [SectionButtonViewModel] = []
+        var contentSectionViewModels: [SectionButtonViewModel] = []
+        var functionalSectionViewModels: [SectionButtonViewModel] = []
 
         switch userRole {
             case .unknown, .user, .notRegistered:
-                sSections = []
-                fSections = []
+                contentSectionViewModels = []
+                functionalSectionViewModels = []
 
             case .admin:
-                sSections = [
-                    SectionButtonViewModel(
-                        iconAsset: Assets.Icons29.Adminpanel.loyaltycard,
-                        text: L10n.AdminPanel.Section.loyaltyCard,
-                        tapHandler: nil
-                    ),
-                    SectionButtonViewModel(
-                        iconAsset: Assets.Icons29.Adminpanel.popup,
-                        text: L10n.AdminPanel.Section.popUp,
-                        tapHandler: nil
-                    ),
-                    SectionButtonViewModel(
-                        iconAsset: Assets.Icons29.Adminpanel.textslider,
-                        text: L10n.AdminPanel.Section.textSlider,
-                        tapHandler: nil
-                    ),
-                    SectionButtonViewModel(
-                        iconAsset: Assets.Icons29.Adminpanel.aigame,
-                        text: L10n.AdminPanel.Section.ai,
-                        tapHandler: nil
-                    ),
-                    SectionButtonViewModel(
-                        iconAsset: Assets.Icons29.Adminpanel.events,
-                        text: L10n.AdminPanel.Section.events,
-                        tapHandler: nil
-                    ),
-                    SectionButtonViewModel(
-                        iconAsset: Assets.Icons29.Adminpanel.link,
-                        text: L10n.AdminPanel.Section.links,
-                        tapHandler: nil
-                    )
-                ]
-                fSections = [
-                    SectionButtonViewModel(
-                        iconAsset: Assets.Icons29.Adminpanel.qr,
-                        text: L10n.AdminPanel.Section.qr,
-                        tapHandler: nil
-                    ),
-                    SectionButtonViewModel(
-                        iconAsset: Assets.Icons29.Adminpanel.push,
-                        text: L10n.AdminPanel.Section.push,
-                        tapHandler: { [weak self] in
-                            guard let self else { return }
-                            coordinator.showPush()
-                        }
-                    ),
-                    SectionButtonViewModel(
-                        iconAsset: Assets.Icons29.Adminpanel.user,
-                        text: L10n.AdminPanel.Section.users,
-                        tapHandler: nil
-                    ),
-                    SectionButtonViewModel(
-                        iconAsset: Assets.Icons29.Adminpanel.administrator,
-                        text: L10n.AdminPanel.Section.administrators,
-                        tapHandler: nil
-                    )
-                ]
+                contentSectionViewModels = makeContentSectionViewModelsForAdministrator()
+                functionalSectionViewModels = makeFunctionalSectionViewModelsForAdministrator()
 
             case .barista:
-                fSections = [
+                functionalSectionViewModels = [
                     SectionButtonViewModel(
                         iconAsset: Assets.Icons29.Adminpanel.qr,
                         text: L10n.AdminPanel.Section.qr,
@@ -160,8 +105,72 @@ extension AdminViewPresenter {
                     )
                 ]
         }
-        return [sSections, fSections]
+        return [contentSectionViewModels, functionalSectionViewModels]
     }
+
+    fileprivate func makeContentSectionViewModelsForAdministrator() -> [SectionButtonViewModel] {
+        [
+            SectionButtonViewModel(
+                iconAsset: Assets.Icons29.Adminpanel.loyaltycard,
+                text: L10n.AdminPanel.Section.loyaltyCard,
+                tapHandler: nil
+            ),
+            SectionButtonViewModel(
+                iconAsset: Assets.Icons29.Adminpanel.popup,
+                text: L10n.AdminPanel.Section.popUp,
+                tapHandler: nil
+            ),
+            SectionButtonViewModel(
+                iconAsset: Assets.Icons29.Adminpanel.textslider,
+                text: L10n.AdminPanel.Section.textSlider,
+                tapHandler: nil
+            ),
+            SectionButtonViewModel(
+                iconAsset: Assets.Icons29.Adminpanel.aigame,
+                text: L10n.AdminPanel.Section.ai,
+                tapHandler: nil
+            ),
+            SectionButtonViewModel(
+                iconAsset: Assets.Icons29.Adminpanel.events,
+                text: L10n.AdminPanel.Section.events,
+                tapHandler: nil
+            ),
+            SectionButtonViewModel(
+                iconAsset: Assets.Icons29.Adminpanel.link,
+                text: L10n.AdminPanel.Section.links,
+                tapHandler: nil
+            )
+        ]
+    }
+
+    fileprivate func makeFunctionalSectionViewModelsForAdministrator() -> [SectionButtonViewModel] {
+        [
+            SectionButtonViewModel(
+                iconAsset: Assets.Icons29.Adminpanel.qr,
+                text: L10n.AdminPanel.Section.qr,
+                tapHandler: nil
+            ),
+            SectionButtonViewModel(
+                iconAsset: Assets.Icons29.Adminpanel.push,
+                text: L10n.AdminPanel.Section.push,
+                tapHandler: { [weak self] in
+                    guard let self else { return }
+                    coordinator.showPush()
+                }
+            ),
+            SectionButtonViewModel(
+                iconAsset: Assets.Icons29.Adminpanel.user,
+                text: L10n.AdminPanel.Section.users,
+                tapHandler: nil
+            ),
+            SectionButtonViewModel(
+                iconAsset: Assets.Icons29.Adminpanel.administrator,
+                text: L10n.AdminPanel.Section.administrators,
+                tapHandler: nil
+            )
+        ]
+    }
+
     fileprivate func makeFunctionalSectionViewModel() -> FuncSectionViewModel? {
         let sections = getSectionsByRole()
 

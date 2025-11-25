@@ -24,27 +24,27 @@ public final class FuncSectionView: UIView, ViewModellable {
         return view
     }()
 
-    private lazy var fSectionsStack: StackView = {
+    private lazy var functionalSectionsStack: StackView = {
         let view = StackView(axis: .vertical, space: 6)
         return view
     }()
 
-    private lazy var sSectionsStack: StackView = {
+    private lazy var contentSectionsStack: StackView = {
         let view = StackView(axis: .vertical, space: 6)
         return view
     }()
 
-    private lazy var fSectionList: StackView = {
+    private lazy var functionalSectionList: StackView = {
         let view = StackView(axis: .vertical)
         return view
     }()
 
-    private lazy var sSectionList: StackView = {
+    private lazy var contentSectionList: StackView = {
         let view = StackView(axis: .vertical)
         return view
     }()
 
-    private lazy var fSectionLabel: UILabel = {
+    private lazy var functionalSectionLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
         label.numberOfLines = 0
@@ -53,7 +53,7 @@ public final class FuncSectionView: UIView, ViewModellable {
         return label
     }()
 
-    private lazy var sSectionLabel: UILabel = {
+    private lazy var contentSectionLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
         label.numberOfLines = 0
@@ -62,7 +62,7 @@ public final class FuncSectionView: UIView, ViewModellable {
         return label
     }()
 
-    private lazy var fSectionButton: Button = {
+    private lazy var functionalSectionButton: Button = {
         let button = Button()
         return button
     }()
@@ -94,19 +94,19 @@ extension FuncSectionView {
             make.edges.equalToSuperview()
         }
 
-        generalStack.addArrangedSubview(fSectionsStack)
-        fSectionsStack.snp.makeConstraints { make in
+        generalStack.addArrangedSubview(functionalSectionsStack)
+        functionalSectionsStack.snp.makeConstraints { make in
             make.width.equalToSuperview()
         }
 
-        fSectionsStack.addArrangedSubviews(fSectionLabel, fSectionList)
+        functionalSectionsStack.addArrangedSubviews(functionalSectionLabel, functionalSectionList)
 
-        generalStack.addArrangedSubview(sSectionsStack)
-        sSectionsStack.snp.makeConstraints { make in
+        generalStack.addArrangedSubview(contentSectionsStack)
+        contentSectionsStack.snp.makeConstraints { make in
             make.width.equalToSuperview()
         }
 
-        sSectionsStack.addArrangedSubviews(sSectionLabel, sSectionList)
+        contentSectionsStack.addArrangedSubviews(contentSectionLabel, contentSectionList)
     }
 
     public func setupUI() {
@@ -119,24 +119,24 @@ extension FuncSectionView {
         isHidden = viewModel == nil
 
         func clearStack(_ stack: UIStackView) {
-            stack.arrangedSubviews.forEach { view in
+            for view in stack.arrangedSubviews {
                 stack.removeArrangedSubview(view)
                 view.removeFromSuperview()
             }
         }
-        clearStack(fSectionList)
-        clearStack(sSectionList)
+        clearStack(functionalSectionList)
+        clearStack(contentSectionList)
 
         guard let viewModel else { return }
-        fSectionLabel.text = viewModel.fSections.isEmpty ? "" : viewModel.fTitle
-        sSectionLabel.text = viewModel.sSections.isEmpty ? "" : viewModel.sTitle
+        functionalSectionLabel.text = viewModel.fSections.isEmpty ? "" : viewModel.fTitle
+        contentSectionLabel.text = viewModel.sSections.isEmpty ? "" : viewModel.sTitle
         for sectionButtonModel in viewModel.fSections {
             let button = SectionButton(viewModel: sectionButtonModel)
-            fSectionList.addArrangedSubview(button)
+            functionalSectionList.addArrangedSubview(button)
         }
         for sectionButtonModel in viewModel.sSections {
             let button = SectionButton(viewModel: sectionButtonModel)
-            sSectionList.addArrangedSubview(button)
+            contentSectionList.addArrangedSubview(button)
         }
     }
 }

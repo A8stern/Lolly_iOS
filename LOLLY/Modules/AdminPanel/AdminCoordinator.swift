@@ -13,6 +13,7 @@ final class AdminCoordinator: BaseNavigationCoordinator, SystemBrowserRoute {
     private let serviceAssembly: ServiceAssembly
 
     // MARK: - Lifecycle
+
     init(
         navigationController: UINavigationController,
         serviceAssembly: ServiceAssembly
@@ -30,8 +31,6 @@ final class AdminCoordinator: BaseNavigationCoordinator, SystemBrowserRoute {
     }
 
     func showAdminPanel() {
-        let session = URLSession.shared
-        let networkService = NetworkService(session: session)
         let viewController = MainAdminAssembly.instance().assembleModule(coordinator: self)
         navigationController.pushViewController(viewController, animated: true)
     }

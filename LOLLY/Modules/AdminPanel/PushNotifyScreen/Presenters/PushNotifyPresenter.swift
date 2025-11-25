@@ -58,7 +58,7 @@ extension PushNotifyViewPresenter: PushNotifyPresenter {
         coordinator.closePush()
     }
 
-    func getUserRole(phone: String) -> UserRoleStatus{
+    func getUserRole(phone: String) -> UserRoleStatus {
         let isMock = true
         if isMock {
             return .admin
@@ -69,12 +69,12 @@ extension PushNotifyViewPresenter: PushNotifyPresenter {
             do {
                 let status: UserRoleStatus = try await authorizationService.fetchUserStatus(phone: phone)
                 role = status
-            } catch{
+            } catch {
                 // TODO: - Обработчик ошибок
                 print("PushNotifyPresenter userRole error")
             }
         }
-        guard let role else {return UserRoleStatus.unknown}
+        guard let role else { return UserRoleStatus.unknown }
         return role
     }
 }
@@ -90,6 +90,7 @@ extension PushNotifyViewPresenter {
 
         view.displayInitialData(viewModel: viewModel)
     }
+
     fileprivate func makePushNotifyViewModel() -> PushNotifySectionViewModel? {
         PushNotifySectionViewModel(
             titleInputViewModel: TextFieldInputViewModel(
@@ -106,15 +107,17 @@ extension PushNotifyViewPresenter {
             ),
             confirmButtonViewModel: ButtonViewModel(
                 title: L10n.AdminPanel.PushNotify.confirmationButton,
-                type: .custom(ButtonViewModel.Config(
-                    icon: nil,
-                    imageTintColor: Colors.Constants.black,
-                    contentColor: Colors.Constants.black,
-                    enabledColor: Colors.Constants.yellow,
-                    pressedColor: Colors.Constants.yellow,
-                    disabledColor: Colors.Controls.disabled,
-                    needImageTint: false
-                )),
+                type: .custom(
+                    ButtonViewModel.Config(
+                        icon: nil,
+                        imageTintColor: Colors.Constants.black,
+                        contentColor: Colors.Constants.black,
+                        enabledColor: Colors.Constants.yellow,
+                        pressedColor: Colors.Constants.yellow,
+                        disabledColor: Colors.Controls.disabled,
+                        needImageTint: false
+                    )
+                ),
                 size: .medium,
                 tapHandler: nil // TODO: - Логика отправки push
             )
