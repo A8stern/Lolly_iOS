@@ -11,6 +11,7 @@ final class MainAssembly: Assembly {
     // MARK: - Private Properties
 
     private lazy var serviceAssembly: ServiceAssembly = self.context.assembly()
+    private lazy var formatterAssembly: FormatterAssembly = self.context.assembly()
 
     // MARK: - Internal Methods
 
@@ -39,7 +40,8 @@ extension MainAssembly {
             init: MainViewPresenter(
                 view: view,
                 coordinator: coordinator,
-                mainService: self.serviceAssembly.mainService
+                mainService: self.serviceAssembly.mainService,
+                calendarFormatter: self.formatterAssembly.calendarFormatter
             )
         )
     }

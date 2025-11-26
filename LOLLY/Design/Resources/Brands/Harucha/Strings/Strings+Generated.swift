@@ -52,6 +52,20 @@ internal enum L10n {
       /// напиток за тебя
       internal static let title = L10n.tr("Localizable", "Main.GameSection.Title", fallback: "Нейросеть выберет\nнапиток за тебя")
     }
+    internal enum StickerSection {
+      /// Добавить наклейку
+      internal static let addSticker = L10n.tr("Localizable", "Main.StickerSection.AddSticker", fallback: "Добавить наклейку")
+      /// Карточка заполнена
+      internal static let cardIsFull = L10n.tr("Localizable", "Main.StickerSection.CardIsFull", fallback: "Карточка заполнена")
+      /// Получить напиток
+      internal static let getDrink = L10n.tr("Localizable", "Main.StickerSection.GetDrink", fallback: "Получить напиток")
+      internal enum Sign {
+        /// =
+        internal static let equal = L10n.tr("Localizable", "Main.StickerSection.Sign.Equal", fallback: "=")
+        /// +
+        internal static let plus = L10n.tr("Localizable", "Main.StickerSection.Sign.Plus", fallback: "+")
+      }
+    }
   }
   internal enum Otp {
     internal enum Verification {

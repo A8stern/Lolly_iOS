@@ -37,6 +37,11 @@
 "Main.Title" = "Brewsell";
 "Main.GameSection.Title" = "Нейросеть выберет\nнапиток за тебя";
 "Main.ContactsSection.Website" = "Вебсайт";
+"Main.StickerSection.CardIsFull" = "Карточка заполнена";
+"Main.StickerSection.AddSticker" = "Добавить наклейку";
+"Main.StickerSection.GetDrink" = "Получить напиток";
+"Main.StickerSection.Sign.Plus" = "+";
+"Main.StickerSection.Sign.Equal" = "=";
 
 /* Scanner */
 

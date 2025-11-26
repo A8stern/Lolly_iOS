@@ -154,7 +154,8 @@ extension CalendarSectionView: SkeletonCallable {
 
 extension CalendarSectionView: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // TODO: Обработка нажатия на ячейку даты
+        let calendarCellViewModel = calendarCells[indexPath.item]
+        viewModel?.onDayTap?(calendarCellViewModel.rawDate)
     }
 }
 

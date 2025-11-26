@@ -27,17 +27,22 @@ final class MainViewPresenter {
     private unowned let view: MainView
     private let coordinator: GeneralCoordinator
     private let mainService: MainServiceInterface
+    private let calendarFormatter: CalendarFormatterInterface
+
+    private var calendarDays: [Day] = []
 
     // MARK: - Initialization
 
     init(
         view: MainView,
         coordinator: GeneralCoordinator,
-        mainService: MainServiceInterface
+        mainService: MainServiceInterface,
+        calendarFormatter: CalendarFormatterInterface
     ) {
         self.view = view
         self.coordinator = coordinator
         self.mainService = mainService
+        self.calendarFormatter = calendarFormatter
     }
 }
 
@@ -68,29 +73,82 @@ extension MainViewPresenter: MainPresenter {
 
 extension MainViewPresenter {
     fileprivate func requestStickerStatus() {
-        // TODO: Запрос в сервис
-        // view.displayStickerSection(viewModel: MainModels.Stickers.ViewModel)
-        // либо передать ...(viewModel: nil), чтобы скрыть секцию
+        Task {
+            do {
+                let loyaltyStatus = try await mainService.getLoyaltyStatus()
+                await MainActor.run {
+                    let promoSectionViewModel = makeStickerSectionViewModel(from: loyaltyStatus)
+                    let viewModel = MainModels.Stickers.ViewModel(
+                        stickerSectionViewModel: promoSectionViewModel
+                    )
+                    view.displayStickerSection(viewModel: viewModel)
+                }
+            } catch {
+                await MainActor.run {
+                    let viewModel = MainModels.Stickers.ViewModel(stickerSectionViewModel: nil)
+                    view.displayStickerSection(viewModel: viewModel)
+                }
+            }
+        }
     }
 
     fileprivate func requestMarketingSlider() { }
 
     fileprivate func requestMarketingAfisha() {
-        // TODO: Запрос в сервис
-        // view.displayPromoSectionState(viewModel: MainModels.Promo.ViewModel)
-        // либо передать ...(viewModel: nil), чтобы скрыть секцию
+        Task {
+            do {
+                let text = try await mainService.getAfisha()
+                await MainActor.run {
+                    let promoSectionViewModel = makePromoSectionViewModel(from: text)
+                    let viewModel = MainModels.Promo.ViewModel(
+                        promoSectionViewModel: promoSectionViewModel
+                    )
+                    view.displayPromoSectionState(viewModel: viewModel)
+                }
+            } catch {
+                await MainActor.run {
+                    let viewModel = MainModels.Promo.ViewModel(promoSectionViewModel: nil)
+                    view.displayPromoSectionState(viewModel: viewModel)
+                }
+            }
+        }
     }
 
     fileprivate func requestCalendarOverview() {
-        // TODO: Запрос в сервис
-        // view.displayCalendarSectionState(viewModel: MainModels.Calendar.ViewModel)
-        // либо передать ...(viewModel: nil), чтобы скрыть секцию
+        Task {
+            do {
+                let days = try await mainService.getCalendarOverview()
+                await MainActor.run {
+                    calendarDays = days
+                    requestCalendarDaysUpdate()
+                }
+            } catch {
+                await MainActor.run {
+                    let viewModel = MainModels.Calendar.ViewModel(calendarSectionViewModel: nil)
+                    view.displayCalendarSectionState(viewModel: viewModel)
+                }
+            }
+        }
     }
 
     fileprivate func requestGamificationOverview() {
-        // TODO: Запрос в сервис
-        // view.displayGameSectionState(viewModel: MainModels.Gamification.ViewModel)
-        // либо передать ...(viewModel: nil), чтобы скрыть секцию
+        Task {
+            do {
+                let overview = try await mainService.getGamifacitaionOverview()
+                await MainActor.run {
+                    let gameSectionViewModel = makeGameSectionViewModel(from: overview)
+                    let viewModel = MainModels.Gamification.ViewModel(
+                        gameSectionViewModel: gameSectionViewModel
+                    )
+                    view.displayGameSectionState(viewModel: viewModel)
+                }
+            } catch {
+                await MainActor.run {
+                    let viewModel = MainModels.Gamification.ViewModel(gameSectionViewModel: nil)
+                    view.displayGameSectionState(viewModel: viewModel)
+                }
+            }
+        }
     }
 
     fileprivate func requestOrganizationInformation() {
@@ -127,15 +185,18 @@ extension MainViewPresenter {
         view.displayInitialData(viewModel: viewModel)
     }
 
-/*
-    fileprivate func makeStickerSectionViewModel() -> StickerSectionViewModel? {
+    fileprivate func makeStickerSectionViewModel(from status: LoyaltyStatus) -> StickerSectionViewModel? {
         StickerSectionViewModel(
-            title: "Карточка заполнена",
-            sign: "=",
-            stickersCount: 6,
+            title: status.count == status.total ?
+                L10n.Main.StickerSection.cardIsFull
+                : L10n.Main.StickerSection.addSticker,
+            sign: status.count == status.total ?
+                Character(L10n.Main.StickerSection.Sign.equal)
+                : Character(L10n.Main.StickerSection.Sign.plus),
+            stickersCount: status.count,
             newStickerImage: Assets.Brand.Stickers.stickerLarge.image,
             buttonViewModel: ButtonViewModel(
-                title: "Получить напиток",
+                title: L10n.Main.StickerSection.getDrink,
                 type: .custom(.yellow),
                 size: .medium,
                 tapHandler: { [weak self] in
@@ -146,40 +207,79 @@ extension MainViewPresenter {
         )
     }
 
-    fileprivate func makeCalendarSectionViewModel() -> CalendarSectionViewModel? {
-        CalendarSectionViewModel(
-            month: "Май",
-            days: [
-                CalendarCellViewModel(date: 24, type: .past),
-                CalendarCellViewModel(date: 25, type: .past),
-                CalendarCellViewModel(date: 26, type: .current),
-                CalendarCellViewModel(date: 27, type: .future),
-                CalendarCellViewModel(date: 28, type: .future),
-                CalendarCellViewModel(date: 29, type: .future),
-                CalendarCellViewModel(date: 30, type: .future),
-                CalendarCellViewModel(date: 31, type: .future)
-            ],
-            event: EventViewModel(
-                title: "Воскресенье, 13:00",
-                subtitle: "Harucha BDay Party",
+    fileprivate func makeCalendarSectionViewModel(from days: [Day], selected selectedDay: Day? = nil) -> CalendarSectionViewModel? {
+        guard !days.isEmpty else { return nil }
+        guard let firstDate = days.first?.date else { return nil }
+
+        let month = calendarFormatter.getFormattedString(
+            from: firstDate,
+            format: .month
+        ).capitalized
+
+        let cellViewModels = days.map { day in
+            let type = calendarFormatter.getDayType(from: day.date)
+            let formattedDay = calendarFormatter.getFormattedString(from: day.date, format: .day)
+
+            return CalendarCellViewModel(
+                rawDate: day.date,
+                date: formattedDay,
+                type: type,
+                isSelected: day == selectedDay
+            )
+        }
+
+        let eventViewModel: EventViewModel? = {
+            let currentDay = days.first { day in
+                let type = calendarFormatter.getDayType(from: day.date)
+                return type == .current
+            }
+            guard let dayOfEvent: Day = selectedDay ?? currentDay else { return nil }
+            guard let firstEvent = dayOfEvent.events.first else { return nil }
+
+            let eventTitle = calendarFormatter.getFormattedString(
+                from: dayOfEvent.date,
+                format: .weekHourMinutes
+            )
+
+            return EventViewModel(
+                title: eventTitle,
+                subtitle: firstEvent.name,
                 onTap: nil
             )
+        }()
+
+        return CalendarSectionViewModel(
+            month: month,
+            days: cellViewModels,
+            event: eventViewModel,
+            onDayTap: { [weak self] date in
+                guard let self else { return }
+                guard let selectedDay = days.first(where: { $0.date == date }) else { return }
+                requestCalendarDaysUpdate(selectedDay: selectedDay)
+            }
         )
     }
 
-    fileprivate func makeGameSectionViewModel() -> GameSectionViewModel? {
+    fileprivate func requestCalendarDaysUpdate(selectedDay: Day? = nil) {
+        let calendarSectionViewModel = makeCalendarSectionViewModel(from: calendarDays, selected: selectedDay)
+        let viewModel = MainModels.Calendar.ViewModel(
+            calendarSectionViewModel: calendarSectionViewModel
+        )
+        view.displayCalendarSectionState(viewModel: viewModel)
+    }
+
+    fileprivate func makeGameSectionViewModel(from overview: GamificationOverview) -> GameSectionViewModel? {
         return GameSectionViewModel(
-            title: L10n.Main.GameSection.title,
+            title: overview.text,
             waveformImage: Assets.Brand.Gamification.waveform.image
         )
     }
 
-    fileprivate func makePromoSectionViewModel() -> PromoSectionViewModel? {
+    fileprivate func makePromoSectionViewModel(from text: String) -> PromoSectionViewModel? {
         return PromoSectionViewModel(
-            text: "Скидка -20% в день рождения"
+            text: text
         )
     }
-*/
 
     fileprivate func makeContactsSectionViewModel(from contacts: ContactsInfo) -> ContactsSectionViewModel {
         ContactsSectionViewModel(

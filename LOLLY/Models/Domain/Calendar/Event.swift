@@ -11,3 +11,9 @@ public struct Event {
     let time: TimeInterval
     let name: String
 }
+
+extension Event: Equatable {
+    public static func == (lhs: Event, rhs: Event) -> Bool {
+        return lhs.time == rhs.time && lhs.name == rhs.name
+    }
+}

@@ -12,16 +12,19 @@ public struct CalendarSectionViewModel: Changeable {
     public let month: String?
     public let days: [CalendarCellViewModel]
     public let event: EventViewModel?
+    public let onDayTap: ((Date) -> Void)?
 
     public init(
         isSkeletonable: Bool = false,
         month: String? = nil,
         days: [CalendarCellViewModel] = [],
-        event: EventViewModel? = nil
+        event: EventViewModel? = nil,
+        onDayTap: ((Date) -> Void)? = nil
     ) {
         self.isSkeletonable = isSkeletonable
         self.month = month
         self.days = days
         self.event = event
+        self.onDayTap = onDayTap
     }
 }
