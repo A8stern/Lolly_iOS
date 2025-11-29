@@ -38,7 +38,7 @@ public actor NetworkService {
                 try JSONEncoder().encode(body)
             }.value
             if let jsonString = String(data: encodedBody, encoding: .utf8) {
-                print("REQUEST BODY JSON:", jsonString)
+                print("REQUEST \(endpoint) BODY JSON:", jsonString)
             }
             request.httpBody = encodedBody
         } catch {
