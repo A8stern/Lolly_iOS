@@ -206,7 +206,11 @@ extension MainViewPresenter {
                         coordinator.showScanner()
                     }
                 )
-            }()
+            }(),
+            onTap: { [weak self] in
+                guard let self else { return }
+                coordinator.showScanner()
+            }
         )
     }
 
