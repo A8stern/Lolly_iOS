@@ -73,7 +73,8 @@ public final class ServiceAssembly: Assembly {
                 loyaltyMapper: self.mapperAssembly.loyaltyMapper,
                 marketingMapper: self.mapperAssembly.marketingMapper,
                 contactsMapper: self.mapperAssembly.contactsMapper,
-                networkService: self.networkService
+                networkService: self.networkService,
+                sessionService: self.sessionService
             )
         )
     }
