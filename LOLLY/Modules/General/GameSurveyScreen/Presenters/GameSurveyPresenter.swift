@@ -13,6 +13,7 @@ protocol GameSurveyPresenter: AnyObject {
     func onCloseTap()
     func onStartTap()
     func onOptionSelected(_ optionIndex: Int)
+    func onRestartTap()
 }
 
 final class GameSurveyViewPresenter {
@@ -89,6 +90,12 @@ extension GameSurveyViewPresenter: GameSurveyPresenter {
         } else {
             submitResults()
         }
+    }
+
+    func onRestartTap() {
+        currentQuestionIndex = 0
+        selectedAnswers.removeAll()
+        loadInitialData()
     }
 }
 

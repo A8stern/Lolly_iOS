@@ -77,13 +77,11 @@ public final class MainService: MainServiceInterface {
     }
 
     public func getGamifacitaionOverview() async throws -> GamificationOverview {
-        let body = EmptyRequestModel()
         let endpoint = GamificationEndpoint.overview
 
         let response: GamificationOverviewResponseModel = try await networkService.request(
             endpoint: endpoint.endpoint,
             method: endpoint.method,
-            body: body,
             headers: endpoint.headers
         )
 

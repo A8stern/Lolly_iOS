@@ -19,6 +19,8 @@ protocol ProfilePresenter: AnyObject {
     func leave()
 
     func onLogoutTap()
+    func onDeleteAccountTap()
+    func onPushToggleChanged(isOn: Bool)
 }
 
 final class ProfileViewPresenter {
@@ -60,6 +62,14 @@ extension ProfileViewPresenter: ProfilePresenter {
 
     func onLogoutTap() {
         coordinator.logout()
+    }
+
+    func onDeleteAccountTap() {
+        view.showSnack(with: .warning(text: "Функция будет доступна позже"))
+    }
+
+    func onPushToggleChanged(isOn _: Bool) {
+        view.showSnack(with: .warning(text: "Настройка push уведомлений появится позже"))
     }
 }
 

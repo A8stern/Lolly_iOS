@@ -281,6 +281,14 @@ extension MainViewPresenter {
         )
     }
 
+    fileprivate func makeGameSectionViewModel(from overview: GamificationOverview) -> GameSectionViewModel {
+        GameSectionViewModel(
+            isSkeletonable: false,
+            title: overview.text,
+            waveformImage: Assets.Brand.Gamification.waveform.image
+        )
+    }
+
     fileprivate func makeContactsSectionViewModel(from contacts: ContactsInfo) -> ContactsSectionViewModel {
         ContactsSectionViewModel(
             title: contacts.title,
