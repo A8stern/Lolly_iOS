@@ -171,10 +171,18 @@ extension StickerSectionView {
             signLabel.text = String(sign)
         }
         getDrinkButton.viewModel = viewModel.buttonViewModel
-        if let stickersCount = viewModel.stickersCount{
+        if let stickersCount = viewModel.stickersCount {
             backCountLabel.text = "\(stickersCount)"
         }
         newStickerImageView.image = viewModel.newStickerImage
+        if let stickersCount = viewModel.stickersCount,
+            let stickersTotal = viewModel.stickersTotal {
+            cardView.viewModel = StickerCardViewModel(
+                totalStickers: stickersTotal,
+                stickerCount: stickersCount,
+                stickersImages: viewModel.cardStickerImages
+            )
+        }
     }
 }
 
