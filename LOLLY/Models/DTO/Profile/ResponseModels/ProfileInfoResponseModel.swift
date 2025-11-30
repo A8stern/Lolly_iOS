@@ -16,4 +16,3 @@ public struct ProfileInfoResponseModel: ResponseModel, Codable {
         self.phone = phone
     }
 }
-

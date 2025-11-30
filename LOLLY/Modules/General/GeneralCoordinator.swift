@@ -33,7 +33,7 @@ final class GeneralCoordinator: BaseNavigationCoordinator, SystemBrowserRoute {
     // MARK: - Screens
 
     func showMain() {
-        let session = URLSession.shared
+        _ = URLSession.shared
         let viewController = MainAssembly.instance().assembleModule(coordinator: self)
         navigationController.pushViewController(viewController, animated: true)
     }
@@ -83,10 +83,7 @@ final class GeneralCoordinator: BaseNavigationCoordinator, SystemBrowserRoute {
         coordinator.onCompleted = { [coordinator, weak self] in
             self?.remove(child: coordinator)
         }
-        coordinator.onLogout = { [weak self] in
-            // SessionService.signOut() уже вызван в ProfileCoordinator
-            // Делегат автоматически закроет GeneralCoordinator через AppCoordinator
-        }
+        coordinator.onLogout = {}
     }
 }
 

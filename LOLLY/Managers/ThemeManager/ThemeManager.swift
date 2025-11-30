@@ -45,4 +45,3 @@ extension ThemeManager: ThemeManagerInterface {
         window.overrideUserInterfaceStyle = theme.userInterfaceStyle
     }
 }
-

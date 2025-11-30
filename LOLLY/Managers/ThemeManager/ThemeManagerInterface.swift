@@ -10,4 +10,3 @@ public protocol ThemeManagerInterface {
 
     func applyTheme(_ theme: AppTheme)
 }
-

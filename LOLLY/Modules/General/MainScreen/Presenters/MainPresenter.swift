@@ -268,13 +268,6 @@ extension MainViewPresenter {
         view.displayCalendarSectionState(viewModel: viewModel)
     }
 
-    fileprivate func makeGameSectionViewModel(from overview: GamificationOverview) -> GameSectionViewModel? {
-        return GameSectionViewModel(
-            title: overview.text,
-            waveformImage: Assets.Brand.Gamification.waveform.image
-        )
-    }
-
     fileprivate func makePromoSectionViewModel(from text: String) -> PromoSectionViewModel? {
         return PromoSectionViewModel(
             text: text

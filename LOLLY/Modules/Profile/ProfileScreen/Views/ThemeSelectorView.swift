@@ -29,7 +29,7 @@ public final class ThemeSelectorView: UIView {
 
     private lazy var containerView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(red: 0xE0 / 255.0, green: 0xE0 / 255.0, blue: 0xE0 / 255.0, alpha: 1.0)
+        view.backgroundColor = Colors.Notification.background.color
         view.layer.cornerRadius = ThemeSelectorViewConstants.containerCornerRadius
         return view
     }()
@@ -180,7 +180,7 @@ private final class ThemeOptionButton: UIButton {
     }
 
     @available(*, unavailable)
-    override required init?(coder: NSCoder) {
+    required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 

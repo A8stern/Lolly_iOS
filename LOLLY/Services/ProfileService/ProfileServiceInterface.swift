@@ -10,4 +10,3 @@ import Foundation
 public protocol ProfileServiceInterface {
     func getProfileInfo() async throws -> ProfileInfoResponseModel
 }
-

@@ -38,4 +38,3 @@ public enum AppTheme: Int, CaseIterable {
         }
     }
 }
-

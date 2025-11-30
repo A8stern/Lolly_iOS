@@ -210,4 +210,3 @@ extension CompletionScreenView {
         static let drinkImageRotationAngle: CGFloat = -15 * .pi / 180 // -15 градусов в радианах
     }
 }
-
