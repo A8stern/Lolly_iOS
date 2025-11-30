@@ -13,4 +13,16 @@ enum ProfileModels {
             let title: String
         }
     }
+
+    enum ProfileInfo {
+        struct Response {
+            let name: String
+            let phone: String
+        }
+
+        struct ViewModel {
+            let name: String
+            let phone: String
+        }
+    }
 }

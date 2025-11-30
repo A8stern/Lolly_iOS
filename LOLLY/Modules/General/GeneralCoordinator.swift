@@ -76,12 +76,16 @@ final class GeneralCoordinator: BaseNavigationCoordinator, SystemBrowserRoute {
     }
 
     func showProfile() {
-        let coordinator = ProfileCoordinator(navigationController: navigationController)
+        let coordinator = ProfileCoordinator(
+            navigationController: navigationController,
+            sessionService: serviceAssembly.sessionService
+        )
         add(child: coordinator)
         coordinator.start()
         coordinator.onCompleted = { [coordinator, weak self] in
             self?.remove(child: coordinator)
         }
+        coordinator.onLogout = {}
     }
 }
 

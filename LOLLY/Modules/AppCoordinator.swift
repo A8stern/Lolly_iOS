@@ -25,13 +25,13 @@ public final class AppCoordinator: BaseCoordinator<UIWindow> {
 
     public init(window: UIWindow) {
         sessionUseCase = useCaseAssembly.sessionUseCase
-
         super.init(root: window)
     }
 
     // MARK: - Public Methods
 
     override public func start() {
+        sessionUseCase.delegate = self
         showSplashScreen()
     }
 

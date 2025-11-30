@@ -10,7 +10,23 @@ private import SnapKit
 import UIKit
 
 public final class CompletionScreenView: UIView {
+    // MARK: - Public Properties
+
+    public var onRestartTap: (() -> Void)?
+
     // MARK: - Private Properties
+
+    private lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.showsHorizontalScrollIndicator = false
+        return scrollView
+    }()
+
+    private lazy var contentView: UIView = {
+        let view = UIView()
+        return view
+    }()
 
     private lazy var circleBackgroundView: UIView = {
         let view = UIView()
@@ -20,17 +36,22 @@ public final class CompletionScreenView: UIView {
 
     private lazy var drinkImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFit
+        imageView.clipsToBounds = false
+        imageView.layer.shadowColor = UIColor.black.cgColor
+        imageView.layer.shadowOpacity = 0.08
+        imageView.layer.shadowRadius = 10
+        imageView.layer.shadowOffset = .zero
         return imageView
     }()
 
     private lazy var congratulationsLabel: UILabel = {
         let label = UILabel()
         label.text = L10n.Gamification.congratulation
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        label.font = Fonts.Styles.custom(weight: .bold, size: 32)
+        label.textAlignment = .left
+        label.numberOfLines = 2
+        label.lineBreakMode = .byWordWrapping
+        label.font = Fonts.Styles.custom(weight: .bold, size: 24)
         label.textColor = Colors.Text.primary.color
         return label
     }()
@@ -38,11 +59,22 @@ public final class CompletionScreenView: UIView {
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.text = L10n.Gamification.gameEnd
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        label.font = Fonts.Styles.title2
+        label.textAlignment = .left
+        label.numberOfLines = 3
+        label.lineBreakMode = .byWordWrapping
+        label.font = Fonts.Styles.body
         label.textColor = Colors.Text.secondary.color
         return label
+    }()
+
+    private lazy var restartButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.backgroundColor = Colors.Controls.primary.color
+        button.layer.cornerRadius = Constants.buttonSize / 2
+        button.setImage(UIImage(systemName: "arrow.clockwise"), for: .normal)
+        button.tintColor = Colors.Constants.white.color
+        button.addTarget(self, action: #selector(restartButtonTapped), for: .touchUpInside)
+        return button
     }()
 
     // MARK: - Initialization
@@ -64,7 +96,19 @@ public final class CompletionScreenView: UIView {
     public func configure(title: String, description: String, imageURL: URL?) {
         congratulationsLabel.text = title
         descriptionLabel.text = description
-        drinkImageView.kf.setImage(with: imageURL)
+
+        if let imageURL = imageURL {
+            drinkImageView.kf.setImage(
+                with: imageURL,
+                placeholder: nil,
+                options: [
+                    .transition(.fade(0.2)),
+                    .cacheMemoryOnly
+                ]
+            )
+        } else {
+            drinkImageView.image = nil
+        }
     }
 }
 
@@ -72,29 +116,58 @@ public final class CompletionScreenView: UIView {
 
 extension CompletionScreenView {
     fileprivate func setupLayout() {
-        addSubview(circleBackgroundView)
-        circleBackgroundView.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-            make.width.height.equalTo(Constants.circleSize)
-        }
-
-        circleBackgroundView.addSubview(drinkImageView)
-        drinkImageView.snp.makeConstraints { make in
+        addSubview(scrollView)
+        scrollView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
 
-        circleBackgroundView.addSubview(congratulationsLabel)
-        congratulationsLabel.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview().offset(Constants.congratulationsOffsetFromCenter)
-            make.leading.trailing.equalToSuperview().inset(Constants.horizontalInset)
+        scrollView.addSubview(contentView)
+        contentView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+            make.width.equalToSuperview()
         }
 
-        circleBackgroundView.addSubview(descriptionLabel)
-        descriptionLabel.snp.makeConstraints { make in
+        // Круг с изображением (ниже центра экрана)
+        contentView.addSubview(circleBackgroundView)
+        circleBackgroundView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview().offset(Constants.circleCenterOffset)
+            make.width.height.equalTo(Constants.circleSize)
+            make.top.greaterThanOrEqualToSuperview().offset(Constants.minTopInset)
+            make.bottom.lessThanOrEqualToSuperview().inset(Constants.minBottomInset)
+        }
+
+        // Изображение напитка поверх круга (может выходить за границы)
+        contentView.addSubview(drinkImageView)
+        drinkImageView.snp.makeConstraints { make in
+            make.centerY.equalTo(circleBackgroundView.snp.centerY).offset(Constants.drinkImageVerticalOffset)
+            make.leading.equalTo(circleBackgroundView.snp.leading).offset(Constants.drinkImageLeadingOffset)
+            make.width.equalTo(circleBackgroundView.snp.width).multipliedBy(Constants.drinkImageWidthMultiplier)
+            make.height.equalTo(circleBackgroundView.snp.height).multipliedBy(Constants.drinkImageHeightMultiplier)
+        }
+
+        // Заголовок справа от круга, наложен поверх
+        contentView.addSubview(congratulationsLabel)
+        congratulationsLabel.snp.makeConstraints { make in
+            make.leading.equalTo(circleBackgroundView.snp.centerX).offset(Constants.textHorizontalInset)
+            make.trailing.equalToSuperview().inset(Constants.horizontalInset)
+            make.top.equalTo(circleBackgroundView.snp.top).offset(Constants.textTopOffset)
+        }
+
+        // Описание справа от круга, наложен поверх
+        contentView.addSubview(descriptionLabel)
+        descriptionLabel.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(congratulationsLabel)
             make.top.equalTo(congratulationsLabel.snp.bottom).offset(Constants.descriptionTopOffset)
-            make.leading.trailing.equalToSuperview().inset(Constants.horizontalInset)
+            make.bottom.lessThanOrEqualTo(circleBackgroundView.snp.bottom).inset(Constants.descriptionBottomInset)
+        }
+
+        // Круглая кнопка повтора внутри круга
+        circleBackgroundView.addSubview(restartButton)
+        restartButton.snp.makeConstraints { make in
+            make.centerX.equalTo(circleBackgroundView.snp.centerX).offset(Constants.buttonHorizontalOffset)
+            make.bottom.equalToSuperview().inset(Constants.buttonBottomInset)
+            make.width.height.equalTo(Constants.buttonSize)
         }
     }
 
@@ -102,7 +175,15 @@ extension CompletionScreenView {
         backgroundColor = Colors.Custom.inverted.color
 
         circleBackgroundView.layer.cornerRadius = Constants.circleSize / 2
-        circleBackgroundView.clipsToBounds = true
+        circleBackgroundView.clipsToBounds = false
+
+        // Поворот изображения под небольшим углом
+        drinkImageView.transform = CGAffineTransform(rotationAngle: Constants.drinkImageRotationAngle)
+    }
+
+    @objc
+    fileprivate func restartButtonTapped() {
+        onRestartTap?()
     }
 }
 
@@ -110,9 +191,22 @@ extension CompletionScreenView {
 
 extension CompletionScreenView {
     fileprivate enum Constants {
-        static let circleSize: CGFloat = 300
-        static let congratulationsOffsetFromCenter: CGFloat = -20
-        static let descriptionTopOffset: CGFloat = 16
+        static let circleSize: CGFloat = 280
+        static let circleCenterOffset: CGFloat = 90
+        static let minTopInset: CGFloat = 20
+        static let minBottomInset: CGFloat = 20
+        static let textHorizontalInset: CGFloat = 12
+        static let textTopOffset: CGFloat = 32
+        static let descriptionTopOffset: CGFloat = 8
+        static let descriptionBottomInset: CGFloat = 40
+        static let buttonSize: CGFloat = 52
+        static let buttonHorizontalOffset: CGFloat = 55
+        static let buttonBottomInset: CGFloat = 45
         static let horizontalInset: CGFloat = 24
+        static let drinkImageWidthMultiplier: CGFloat = 0.85
+        static let drinkImageHeightMultiplier: CGFloat = 1.4
+        static let drinkImageLeadingOffset: CGFloat = -45
+        static let drinkImageVerticalOffset: CGFloat = -20
+        static let drinkImageRotationAngle: CGFloat = -15 * .pi / 180 // -15 градусов в радианах
     }
 }

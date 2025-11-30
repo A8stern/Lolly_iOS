@@ -82,7 +82,7 @@ opt_in_rules:
   - nsobject_prefer_isequal
   - object_literal
   - operator_usage_whitespace
-  - operator_whitespace
+  - function_name_whitespace
   - pattern_matching_keywords
   - prefixed_toplevel_constant
   - private_action
@@ -99,7 +99,7 @@ opt_in_rules:
   - redundant_discardable_let
   - redundant_nil_coalescing
   - redundant_objc_attribute
-  - redundant_optional_initialization
+  - implicit_optional_initialization
   - redundant_set_access_control
   - redundant_string_enum_value
   - redundant_void_return
@@ -155,6 +155,8 @@ warning_threshold: 15
 excluded:
   - LOLLY/Design/Resources/Strings/Strings+Generated.swift
   - LOLLY/Design/Resources/Assets/XCAssets+Generated.swift
+  - LOLLY/Design/Resources/Brands/*/Assets/XCAssets+Generated.swift
+  - LOLLY/Design/Resources/Brands/*/Strings/Strings+Generated.swift
 
 analyzer_rules:
   - explicit_self

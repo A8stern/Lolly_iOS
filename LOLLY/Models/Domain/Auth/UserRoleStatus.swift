@@ -7,6 +7,7 @@
 
 import Foundation
 
+// swiftlint:disable:next raw_value_for_camel_cased_codable_enum
 public enum UserRoleStatus: String, Codable, CaseIterable, Sendable {
     case user = "client"
     case notRegistered
