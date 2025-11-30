@@ -288,7 +288,7 @@ extension MainViewPresenter {
         GameSectionViewModel(
             isSkeletonable: false,
             title: overview.text,
-            waveformImage: Assets.Brand.Gamification.waveform.image
+            waveformImageUrl: overview.imageUrl
         )
     }
 

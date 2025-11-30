@@ -10,15 +10,15 @@ import UIKit
 public struct GameSectionViewModel: Changeable {
     public let isSkeletonable: Bool
     public let title: String?
-    public let waveformImage: UIImage?
+    public let waveformImageUrl: URL?
 
     public init(
         isSkeletonable: Bool = false,
         title: String? = nil,
-        waveformImage: UIImage? = nil
+        waveformImageUrl: URL? = nil
     ) {
         self.isSkeletonable = isSkeletonable
         self.title = title
-        self.waveformImage = waveformImage
+        self.waveformImageUrl = waveformImageUrl
     }
 }

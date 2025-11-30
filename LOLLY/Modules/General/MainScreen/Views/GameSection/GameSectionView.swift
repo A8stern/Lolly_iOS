@@ -5,6 +5,7 @@
 //  Created by Егор on 29.10.2025.
 //
 
+import Kingfisher
 private import SnapKit
 import UIKit
 
@@ -22,13 +23,14 @@ public final class GameSectionView: UIView, ViewModellable {
         label.textAlignment = .center
         label.numberOfLines = 2
         label.font = Fonts.Styles.title2
-        label.textColor = Colors.Text.primary.color
+        label.textColor = Colors.Text.inverted.color
         return label
     }()
 
     private lazy var waveformImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
+        imageView.tintColor = Colors.Text.inverted.color
         return imageView
     }()
 
@@ -93,7 +95,24 @@ extension GameSectionView {
         }
 
         titleLabel.text = viewModel.title
-        waveformImageView.image = viewModel.waveformImage
+
+        guard let url = viewModel.waveformImageUrl else {
+            return
+        }
+
+        let downloader = ImageDownloader.default
+        downloader.downloadImage(with: url) { [weak self] result in
+            guard let self else { return }
+
+            switch result {
+                case .success(let value):
+                    let image = value.image.withRenderingMode(.alwaysTemplate)
+                    waveformImageView.image = image
+
+                case .failure:
+                    waveformImageView.image = nil
+            }
+        }
     }
 }
 

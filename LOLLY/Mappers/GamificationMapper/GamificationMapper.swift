@@ -17,7 +17,7 @@ extension GamificationMapper: GamificationMapperInterface {
     public func map(_ response: GamificationOverviewResponseModel) -> GamificationOverview {
         GamificationOverview(
             text: response.text,
-            imageUrl: response.imageURL
+            imageUrl: URL(string: response.imageURL)
         )
     }
 }

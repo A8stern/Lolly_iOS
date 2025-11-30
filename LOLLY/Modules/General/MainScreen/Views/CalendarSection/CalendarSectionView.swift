@@ -60,6 +60,7 @@ public final class CalendarSectionView: UIView, ViewModellable {
         collectionView.dataSource = self
         collectionView.registerCellClass(CalendarCell.self)
         collectionView.isHiddenWhenSkeletonIsActive = true
+        collectionView.backgroundColor = Colors.Text.inverted.color
         return collectionView
     }()
 
