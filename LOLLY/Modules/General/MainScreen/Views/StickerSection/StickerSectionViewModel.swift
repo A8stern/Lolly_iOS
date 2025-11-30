@@ -16,6 +16,7 @@ public struct StickerSectionViewModel: Changeable {
     public let newStickerImage: UIImage?
     public let cardStickerImages: [UIImage?]
     public let buttonViewModel: ButtonViewModel?
+    public let onTap: (() -> Void)?
 
     public init(
         isSkeletonable: Bool = false,
@@ -25,7 +26,8 @@ public struct StickerSectionViewModel: Changeable {
         stickersTotal: Int? = nil,
         newStickerImage: UIImage? = nil,
         cardStickerImages: [UIImage?] = [],
-        buttonViewModel: ButtonViewModel? = nil
+        buttonViewModel: ButtonViewModel? = nil,
+        onTap: (() -> Void)? = nil
     ) {
         self.isSkeletonable = isSkeletonable
         self.title = title
@@ -35,5 +37,6 @@ public struct StickerSectionViewModel: Changeable {
         self.newStickerImage = newStickerImage
         self.cardStickerImages = cardStickerImages
         self.buttonViewModel = buttonViewModel
+        self.onTap = onTap
     }
 }

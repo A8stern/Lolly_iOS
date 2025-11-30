@@ -50,7 +50,7 @@ public final class ServiceAssembly: Assembly {
             scope: .lazySingleton,
             init: StickersService(
                 networkService: self.networkService,
-                isMock: false
+                sessionService: self.sessionService
             )
         )
     }
@@ -73,6 +73,16 @@ public final class ServiceAssembly: Assembly {
                 loyaltyMapper: self.mapperAssembly.loyaltyMapper,
                 marketingMapper: self.mapperAssembly.marketingMapper,
                 contactsMapper: self.mapperAssembly.contactsMapper,
+                networkService: self.networkService,
+                sessionService: self.sessionService
+            )
+        )
+    }
+
+    public var profileService: ProfileServiceInterface {
+        define(
+            scope: .lazySingleton,
+            init: ProfileService(
                 networkService: self.networkService
             )
         )

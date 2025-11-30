@@ -11,20 +11,25 @@ final class LoyaltyLoadingAssembly: Assembly {
     private lazy var managerAssembly: ManagerAssembly = self.context.assembly()
     private lazy var serviceAssembly: ServiceAssembly = self.context.assembly()
 
-    func assembleModule(coordinator: GeneralCoordinator) -> LoyaltyLoadingViewController {
+    func assembleModule(input: LoyaltyLoadingInput, coordinator: GeneralCoordinator) -> LoyaltyLoadingViewController {
         return define(scope: .prototype, init: LoyaltyLoadingViewController()) { view in
-            view.presenter = self.assemblePresenter(view: view, coordinator: coordinator)
+            view.presenter = self.assemblePresenter(view: view, coordinator: coordinator, input: input)
             return view
         }
     }
 }
 
 extension LoyaltyLoadingAssembly {
-    fileprivate func assemblePresenter(view: LoyaltyLoadingView, coordinator: GeneralCoordinator) -> LoyaltyLoadingPresenter {
+    fileprivate func assemblePresenter(
+        view: LoyaltyLoadingView,
+        coordinator: GeneralCoordinator,
+        input: LoyaltyLoadingInput
+    ) -> LoyaltyLoadingPresenter {
         return define(
             scope: .prototype,
             init: LoyaltyLoadingViewPresenter(
                 view: view,
+                input: input,
                 coordinator: coordinator,
                 service: self.serviceAssembly.stickersService
             )

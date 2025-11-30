@@ -34,7 +34,8 @@ extension ProfileAssembly {
             scope: .prototype,
             init: ProfileViewPresenter(
                 view: view,
-                coordinator: coordinator
+                coordinator: coordinator,
+                profileService: self.serviceAssembly.profileService
             )
         )
     }

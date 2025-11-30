@@ -11,8 +11,21 @@ final class ProfileCoordinator: BaseNavigationCoordinator, SystemBrowserRoute {
     // MARK: - Properties
 
     var onCompleted: (() -> Void)?
+    var onLogout: (() -> Void)?
+
+    // MARK: - Private Properties
+
+    private let sessionService: SessionServiceInterface
 
     // MARK: - Lifecycle
+
+    init(
+        navigationController: UINavigationController,
+        sessionService: SessionServiceInterface
+    ) {
+        self.sessionService = sessionService
+        super.init(navigationController: navigationController)
+    }
 
     override func start() {
         openProfile()
@@ -28,5 +41,10 @@ final class ProfileCoordinator: BaseNavigationCoordinator, SystemBrowserRoute {
     func openProfile() {
         let viewController = ProfileAssembly.instance().assembleModule(coordinator: self)
         navigationController.pushViewController(viewController, animated: true)
+    }
+
+    func logout() {
+        sessionService.signOut()
+        onLogout?()
     }
 }

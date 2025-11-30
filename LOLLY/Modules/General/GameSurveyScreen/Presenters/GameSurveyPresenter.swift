@@ -13,6 +13,7 @@ protocol GameSurveyPresenter: AnyObject {
     func onCloseTap()
     func onStartTap()
     func onOptionSelected(_ optionIndex: Int)
+    func onRestartTap()
 }
 
 final class GameSurveyViewPresenter {
@@ -90,6 +91,12 @@ extension GameSurveyViewPresenter: GameSurveyPresenter {
             submitResults()
         }
     }
+
+    func onRestartTap() {
+        currentQuestionIndex = 0
+        selectedAnswers.removeAll()
+        loadInitialData()
+    }
 }
 
 // MARK: - Private Methods
@@ -118,7 +125,7 @@ extension GameSurveyViewPresenter {
                 }
             } catch {
                 await MainActor.run {
-                    view.showSnack(with: .error(text: error.localizedDescription))
+                    view.showSnack(with: .error(text: error.readableDescription))
                     view.showStartScreen()
                 }
             }
@@ -169,7 +176,7 @@ extension GameSurveyViewPresenter {
                 }
             } catch {
                 await MainActor.run {
-                    view.showSnack(with: .error(text: error.localizedDescription))
+                    view.showSnack(with: .error(text: error.readableDescription))
                     view.showStartScreen()
                 }
             }

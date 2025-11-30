@@ -12,4 +12,11 @@ struct VerifyOTPResponseModel: ResponseModel {
     let refreshToken: String
     let accessTokenExpiresAt: Date
     let userId: String
+
+    enum CodingKeys: String, CodingKey {
+        case accessToken = "access-token"
+        case refreshToken = "refresh-token"
+        case accessTokenExpiresAt
+        case userId
+    }
 }

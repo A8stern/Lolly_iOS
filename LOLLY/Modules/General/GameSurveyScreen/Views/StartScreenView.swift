@@ -22,13 +22,6 @@ public final class StartScreenView: UIView {
         return view
     }()
 
-    private lazy var backgroundImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
-        return imageView
-    }()
-
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
@@ -77,7 +70,7 @@ public final class StartScreenView: UIView {
         title: String,
         subtitle: String?,
         buttonIconURL: URL?,
-        backgroundImageURL: URL?
+        backgroundImageURL _: URL?
     ) {
         titleLabel.text = title
         if let subtitle, subtitle.isEmpty == false {
@@ -92,8 +85,6 @@ public final class StartScreenView: UIView {
             for: [],
             placeholder: Assets.Controls.playButton.image
         )
-
-        backgroundImageView.kf.setImage(with: backgroundImageURL)
     }
 }
 
@@ -105,11 +96,6 @@ extension StartScreenView {
         circleBackgroundView.snp.makeConstraints { make in
             make.center.equalToSuperview()
             make.width.height.equalTo(Constants.circleSize)
-        }
-
-        circleBackgroundView.addSubview(backgroundImageView)
-        backgroundImageView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
         }
 
         circleBackgroundView.addSubview(titleLabel)

@@ -56,6 +56,9 @@ final class GameSurveyViewController: UIViewController {
 
     private lazy var completionScreenView: CompletionScreenView = {
         let view = CompletionScreenView()
+        view.onRestartTap = { [weak self] in
+            self?.presenter?.onRestartTap()
+        }
         view.isHidden = true
         return view
     }()

@@ -10,6 +10,46 @@ import Foundation
 // swiftlint:disable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:disable nesting type_body_length type_name vertical_whitespace_opening_braces
 internal enum L10n {
+  internal enum AdminPanel {
+    internal enum PushNotify {
+      /// Отправить
+      internal static let confirmationButton = L10n.tr("Localizable", "AdminPanel.PushNotify.ConfirmationButton", fallback: "Отправить")
+      /// Основной текст
+      internal static let inputText = L10n.tr("Localizable", "AdminPanel.PushNotify.InputText", fallback: "Основной текст")
+      /// Заголовок
+      internal static let inputTitle = L10n.tr("Localizable", "AdminPanel.PushNotify.InputTitle", fallback: "Заголовок")
+      /// Новое пуш-уведомление
+      internal static let title = L10n.tr("Localizable", "AdminPanel.PushNotify.Title", fallback: "Новое пуш-уведомление")
+    }
+    internal enum Section {
+      /// Администраторы
+      internal static let administrators = L10n.tr("Localizable", "AdminPanel.Section.Administrators", fallback: "Администраторы")
+      /// AI-игра
+      internal static let ai = L10n.tr("Localizable", "AdminPanel.Section.AI", fallback: "AI-игра")
+      /// Мероприятия
+      internal static let events = L10n.tr("Localizable", "AdminPanel.Section.Events", fallback: "Мероприятия")
+      /// Адреса и ссылки
+      internal static let links = L10n.tr("Localizable", "AdminPanel.Section.Links", fallback: "Адреса и ссылки")
+      /// Карта лояльности
+      internal static let loyaltyCard = L10n.tr("Localizable", "AdminPanel.Section.LoyaltyCard", fallback: "Карта лояльности")
+      /// Информационный pop-up
+      internal static let popUp = L10n.tr("Localizable", "AdminPanel.Section.PopUp", fallback: "Информационный pop-up")
+      /// Отправить пуш-уведомление
+      internal static let push = L10n.tr("Localizable", "AdminPanel.Section.Push", fallback: "Отправить пуш-уведомление")
+      /// Сканировать QR
+      internal static let qr = L10n.tr("Localizable", "AdminPanel.Section.QR", fallback: "Сканировать QR")
+      /// Текстовый слайдер
+      internal static let textSlider = L10n.tr("Localizable", "AdminPanel.Section.TextSlider", fallback: "Текстовый слайдер")
+      /// Пользователи
+      internal static let users = L10n.tr("Localizable", "AdminPanel.Section.Users", fallback: "Пользователи")
+    }
+    internal enum Title {
+      /// AdminPanel
+      internal static let functions = L10n.tr("Localizable", "AdminPanel.Title.Functions", fallback: "ФУНКЦИОНАЛ")
+      /// СЕКЦИИ
+      internal static let sections = L10n.tr("Localizable", "AdminPanel.Title.Sections", fallback: "СЕКЦИИ")
+    }
+  }
   internal enum AuthMethods {
     /// Продолжая, ты соглашаешься с Условиями использования сервиса,
     /// Политикой конфиденциальности
@@ -107,9 +147,13 @@ internal enum L10n {
       internal static let text = L10n.tr("Localizable", "PhoneLogIn.Terms.Text", fallback: "Я принимаю условия договора оферты и политики конфиденциальности")
     }
   }
-  internal enum Scanner {
-    /// Scanner
-    internal static let title = L10n.tr("Localizable", "Scanner.Title", fallback: "Поднесите телефон к считывателю")
+  internal enum QRcode {
+    internal enum Caption {
+      /// QRcode
+      internal static let loading = L10n.tr("Localizable", "QRcode.Caption.Loading", fallback: "Загружаем QR-код...")
+      /// Поднесите телефон к считывателю
+      internal static let success = L10n.tr("Localizable", "QRcode.Caption.Success", fallback: "Поднесите телефон к считывателю")
+    }
   }
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length

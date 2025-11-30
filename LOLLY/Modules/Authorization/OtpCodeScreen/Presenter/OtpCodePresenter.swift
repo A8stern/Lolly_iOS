@@ -107,16 +107,21 @@ extension OtpCodeViewPresenter: OtpCodePresenter {
         Task {
             do {
                 if try await authorizationService.otpVerify(phone: phone, otp: code) {
-                    await MainActor.run {
+                    await MainActor.run { [weak self] in
+                        guard let self else { return }
                         coordinator.close(animated: true)
                     }
                 } else {
-                    await MainActor.run {
+                    await MainActor.run { [weak self] in
+                        guard let self else { return }
                         view.displayInvalidCodeState()
                     }
                 }
             } catch {
-                print("ERROR: \(error.localizedDescription)")
+                await MainActor.run { [weak self] in
+                    guard let self else { return }
+                    view.showSnack(with: .error(text: error.readableDescription))
+                }
             }
         }
     }

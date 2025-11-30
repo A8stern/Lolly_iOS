@@ -33,7 +33,6 @@ final class GeneralCoordinator: BaseNavigationCoordinator, SystemBrowserRoute {
     // MARK: - Screens
 
     func showMain() {
-        let session = URLSession.shared
         let viewController = MainAssembly.instance().assembleModule(coordinator: self)
         navigationController.pushViewController(viewController, animated: true)
     }
@@ -51,18 +50,21 @@ final class GeneralCoordinator: BaseNavigationCoordinator, SystemBrowserRoute {
         navigationController.dismiss(animated: true)
     }
 
-    func showScanner() {
-        let viewController = ScannerAssembly.instance().assembleModule(coordinator: self)
+    func showQRcode() {
+        let viewController = QRcodeAssembly.instance().assembleModule(coordinator: self)
         viewController.modalPresentationStyle = .fullScreen
         navigationController.present(viewController, animated: true)
     }
 
-    func closeScanner() {
+    func closeQRcode() {
         navigationController.dismiss(animated: true)
     }
 
-    func showLoading() {
-        let viewController = LoyaltyLoadingAssembly.instance().assembleModule(coordinator: self)
+    func showLoading(status: ChangingCheckStatus) {
+        let viewController = LoyaltyLoadingAssembly.instance().assembleModule(
+            input: LoyaltyLoadingInput(status: status),
+            coordinator: self
+        )
         viewController.modalPresentationStyle = .fullScreen
 
         let presenter = topMostPresenter(from: navigationController)
@@ -74,12 +76,16 @@ final class GeneralCoordinator: BaseNavigationCoordinator, SystemBrowserRoute {
     }
 
     func showProfile() {
-        let coordinator = ProfileCoordinator(navigationController: navigationController)
+        let coordinator = ProfileCoordinator(
+            navigationController: navigationController,
+            sessionService: serviceAssembly.sessionService
+        )
         add(child: coordinator)
         coordinator.start()
         coordinator.onCompleted = { [coordinator, weak self] in
             self?.remove(child: coordinator)
         }
+        coordinator.onLogout = {}
     }
 }
 

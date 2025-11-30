@@ -1,5 +1,5 @@
 //
-//  Website.swift
+//  WebSite.swift
 //  LOLLY
 //
 //  Created by Kirill Prokofyev on 22.11.2025.

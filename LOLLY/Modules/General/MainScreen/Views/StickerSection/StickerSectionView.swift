@@ -153,7 +153,12 @@ extension StickerSectionView {
         updateUI()
     }
 
-    public func setupBehaviour() { }
+    public func setupBehaviour() {
+        addTapActionHandler { [weak self] in
+            guard let self else { return }
+            viewModel?.onTap?()
+        }
+    }
 
     public func updateUI() {
         isHidden = viewModel == nil
