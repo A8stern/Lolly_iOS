@@ -1,15 +1,5 @@
 import Foundation
 
-public enum NetworkClientError: Error {
-    case invalidURL
-    case httpError(statusCode: Int, data: Data?)
-    case encodingError(Error)
-    case decodingError(Error)
-    case transportError(Error)
-    case missingData
-    case emptyBodyExpectedNonEmptyResponse
-}
-
 public actor NetworkService {
     public let baseURL: URL? = URL(string: "https://lolly-project.ru")
     private let session: URLSession
@@ -38,7 +28,7 @@ public actor NetworkService {
                 try JSONEncoder().encode(body)
             }.value
             if let jsonString = String(data: encodedBody, encoding: .utf8) {
-                print("REQUEST BODY JSON:", jsonString)
+                print("REQUEST \(endpoint) BODY JSON:", jsonString)
             }
             request.httpBody = encodedBody
         } catch {

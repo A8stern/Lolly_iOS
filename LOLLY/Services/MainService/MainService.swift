@@ -9,6 +9,7 @@ import Foundation
 
 public final class MainService: MainServiceInterface {
     private let networkService: NetworkService
+    private let sessionService: SessionServiceInterface
 
     private let calendarMapper: CalendarMapperInterface
     private let gamificationMapper: GamificationMapperInterface
@@ -24,7 +25,8 @@ public final class MainService: MainServiceInterface {
         loyaltyMapper: LoyaltyMapperInterface,
         marketingMapper: MarketingMapperInterface,
         contactsMapper: ContactsMapperInterface,
-        networkService: NetworkService
+        networkService: NetworkService,
+        sessionService: SessionServiceInterface
     ) {
         self.calendarMapper = calendarMapper
         self.gamificationMapper = gamificationMapper
@@ -32,6 +34,7 @@ public final class MainService: MainServiceInterface {
         self.marketingMapper = marketingMapper
         self.contactsMapper = contactsMapper
         self.networkService = networkService
+        self.sessionService = sessionService
     }
 
     // MARK: Public Methods
@@ -49,26 +52,22 @@ public final class MainService: MainServiceInterface {
     }
 
     public func getAfisha() async throws -> String {
-        let body = EmptyRequestModel()
         let endpoint = MarketingEndpoint.afisha
 
         let response: AfishaResponseModel = try await networkService.request(
             endpoint: endpoint.endpoint,
             method: endpoint.method,
-            body: body,
             headers: endpoint.headers
         )
         return response.text
     }
 
     public func getSlider() async throws -> [SliderCard] {
-        let body = EmptyRequestModel()
         let endpoint = MarketingEndpoint.slider
 
         let response: SliderResponseModel = try await networkService.request(
             endpoint: endpoint.endpoint,
             method: endpoint.method,
-            body: body,
             headers: endpoint.headers
         )
 
@@ -90,13 +89,11 @@ public final class MainService: MainServiceInterface {
     }
 
     public func getCalendarOverview() async throws -> [Day] {
-        let body = EmptyRequestModel()
         let endpoint = CalendarEndpoint.overview
 
         let response: CalendarOverviewResponseModel = try await networkService.request(
             endpoint: endpoint.endpoint,
             method: endpoint.method,
-            body: body,
             headers: endpoint.headers
         )
 
@@ -105,14 +102,12 @@ public final class MainService: MainServiceInterface {
     }
 
     public func getLoyaltyStatus() async throws -> LoyaltyStatus {
-        let body = EmptyRequestModel()
         let endpoint = LoyaltyEndpoint.status
 
         let response: LoyaltyStatusResponseModel = try await networkService.request(
             endpoint: endpoint.endpoint,
             method: endpoint.method,
-            body: body,
-            headers: endpoint.headers
+            headers: ["Authorization": sessionService.userCredential?.accessToken ?? ""]
         )
 
         let result = loyaltyMapper.map(response)

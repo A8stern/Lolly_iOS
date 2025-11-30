@@ -58,7 +58,3 @@ public enum LoyaltyEndpoint: Endpoint {
         return [:]
     }
 }
-
-extension LoyaltyEndpoint {
-    public var endpoint: String { path }
-}

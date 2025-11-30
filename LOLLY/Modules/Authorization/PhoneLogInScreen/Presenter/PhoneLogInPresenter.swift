@@ -242,7 +242,7 @@ extension PhoneLogInViewPresenter {
                 await MainActor.run {
                     isLoading = false
                     updateContinueButton()
-                    view.showSnack(with: .error(text: error.localizedDescription))
+                    view.showSnack(with: .error(text: error.readableDescription))
                 }
             }
         }
@@ -282,7 +282,7 @@ extension PhoneLogInViewPresenter {
                 await MainActor.run {
                     isLoading = false
                     updateContinueButton()
-                    view.showSnack(with: .error(text: error.localizedDescription))
+                    view.showSnack(with: .error(text: error.readableDescription))
                 }
             }
         }

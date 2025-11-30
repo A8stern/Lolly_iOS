@@ -33,7 +33,6 @@ final class GeneralCoordinator: BaseNavigationCoordinator, SystemBrowserRoute {
     // MARK: - Screens
 
     func showMain() {
-        _ = URLSession.shared
         let viewController = MainAssembly.instance().assembleModule(coordinator: self)
         navigationController.pushViewController(viewController, animated: true)
     }
@@ -51,18 +50,21 @@ final class GeneralCoordinator: BaseNavigationCoordinator, SystemBrowserRoute {
         navigationController.dismiss(animated: true)
     }
 
-    func showScanner() {
-        let viewController = ScannerAssembly.instance().assembleModule(coordinator: self)
+    func showQRcode() {
+        let viewController = QRcodeAssembly.instance().assembleModule(coordinator: self)
         viewController.modalPresentationStyle = .fullScreen
         navigationController.present(viewController, animated: true)
     }
 
-    func closeScanner() {
+    func closeQRcode() {
         navigationController.dismiss(animated: true)
     }
 
-    func showLoading() {
-        let viewController = LoyaltyLoadingAssembly.instance().assembleModule(coordinator: self)
+    func showLoading(status: ChangingCheckStatus) {
+        let viewController = LoyaltyLoadingAssembly.instance().assembleModule(
+            input: LoyaltyLoadingInput(status: status),
+            coordinator: self
+        )
         viewController.modalPresentationStyle = .fullScreen
 
         let presenter = topMostPresenter(from: navigationController)

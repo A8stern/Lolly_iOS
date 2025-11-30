@@ -138,6 +138,7 @@ extension CalendarSectionView {
 
         monthLabel.text = viewModel.month
         calendarCells = viewModel.days
+        calendarCollectionView.reloadData()
         eventView.viewModel = viewModel.event
     }
 }

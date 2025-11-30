@@ -18,8 +18,13 @@ extension LoyaltyMapper: LoyaltyMapperInterface {
         LoyaltyStatus(
             count: response.count,
             total: response.total,
-            largeStickerURL: response.largeStickerURL,
-            smallStickerURL: response.smallStickerURL,
+            largeStickerURL: {
+                guard let urlString = response.largeStickersUrl else { return nil }
+                return URL(string: urlString)
+            }(),
+            smallStickersURL: response.smallStickersUrl.compactMap { urlString in
+                return URL(string: urlString)
+            },
             userInternalId: response.userInternalId
         )
     }

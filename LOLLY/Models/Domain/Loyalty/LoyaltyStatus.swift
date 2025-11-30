@@ -10,15 +10,21 @@ import Foundation
 public struct LoyaltyStatus {
     let count: Int
     let total: Int
-    let largeStickerURL: [String]
-    let smallStickerURL: [String]
+    let largeStickerURL: URL?
+    let smallStickersURL: [URL]
     let userInternalId: String
 
-    public init(count: Int, total: Int, largeStickerURL: [String], smallStickerURL: [String], userInternalId: String) {
+    public init(
+        count: Int,
+        total: Int,
+        largeStickerURL: URL?,
+        smallStickersURL: [URL],
+        userInternalId: String
+    ) {
         self.count = count
         self.total = total
         self.largeStickerURL = largeStickerURL
-        self.smallStickerURL = smallStickerURL
+        self.smallStickersURL = smallStickersURL
         self.userInternalId = userInternalId
     }
 }

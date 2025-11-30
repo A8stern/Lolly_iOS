@@ -10,7 +10,7 @@ import Foundation
 public struct LoyaltyStatusResponseModel: ResponseModel {
     let count: Int
     let total: Int
-    let largeStickerURL: [String]
-    let smallStickerURL: [String]
+    let largeStickersUrl: String?
+    let smallStickersUrl: [String]
     let userInternalId: String
 }

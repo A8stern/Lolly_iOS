@@ -125,7 +125,7 @@ extension GameSurveyViewPresenter {
                 }
             } catch {
                 await MainActor.run {
-                    view.showSnack(with: .error(text: error.localizedDescription))
+                    view.showSnack(with: .error(text: error.readableDescription))
                     view.showStartScreen()
                 }
             }
@@ -176,7 +176,7 @@ extension GameSurveyViewPresenter {
                 }
             } catch {
                 await MainActor.run {
-                    view.showSnack(with: .error(text: error.localizedDescription))
+                    view.showSnack(with: .error(text: error.readableDescription))
                     view.showStartScreen()
                 }
             }

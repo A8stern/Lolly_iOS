@@ -49,17 +49,18 @@ final class MainViewPresenter {
 // MARK: - MainPresenter
 
 extension MainViewPresenter: MainPresenter {
-    func onViewDidLoad() { }
-
-    func onViewWillAppear() {
+    func onViewDidLoad() {
         responseInitialData()
 
-        requestStickerStatus()
         requestMarketingAfisha()
         requestMarketingSlider()
         requestCalendarOverview()
         requestGamificationOverview()
         requestOrganizationInformation()
+    }
+
+    func onViewWillAppear() {
+        requestStickerStatus()
     }
 
     func onViewDidAppear() { }
@@ -186,24 +187,31 @@ extension MainViewPresenter {
     }
 
     fileprivate func makeStickerSectionViewModel(from status: LoyaltyStatus) -> StickerSectionViewModel? {
-        StickerSectionViewModel(
-            title: status.count == status.total ?
-                L10n.Main.StickerSection.cardIsFull
-                : L10n.Main.StickerSection.addSticker,
-            sign: status.count == status.total ?
-                Character(L10n.Main.StickerSection.Sign.equal)
-                : Character(L10n.Main.StickerSection.Sign.plus),
+        let isCardFull = status.count == status.total
+        return StickerSectionViewModel(
+            title: isCardFull ? L10n.Main.StickerSection.cardIsFull : L10n.Main.StickerSection.addSticker,
+            sign: {
+                let sign = isCardFull ? L10n.Main.StickerSection.Sign.equal : L10n.Main.StickerSection.Sign.plus
+                return Character(sign)
+            }(),
             stickersCount: status.count,
             newStickerImage: Assets.Brand.Stickers.stickerLarge.image,
-            buttonViewModel: ButtonViewModel(
-                title: L10n.Main.StickerSection.getDrink,
-                type: .custom(.yellow),
-                size: .medium,
-                tapHandler: { [weak self] in
-                    guard let self else { return }
-                    coordinator.showScanner()
-                }
-            )
+            buttonViewModel: {
+                guard isCardFull else { return nil }
+                return ButtonViewModel(
+                    title: L10n.Main.StickerSection.getDrink,
+                    type: .custom(.yellow),
+                    size: .medium,
+                    tapHandler: { [weak self] in
+                        guard let self else { return }
+                        coordinator.showQRcode()
+                    }
+                )
+            }(),
+            onTap: { [weak self] in
+                guard let self else { return }
+                coordinator.showQRcode()
+            }
         )
     }
 

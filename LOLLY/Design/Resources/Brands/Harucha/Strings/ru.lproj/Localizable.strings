@@ -43,9 +43,10 @@
 "Main.StickerSection.Sign.Plus" = "+";
 "Main.StickerSection.Sign.Equal" = "=";
 
-/* Scanner */
+/* QRcode */
 
-"Scanner.Title" = "Поднесите телефон к считывателю";
+"QRcode.Caption.Loading" = "Загружаем QR-код...";
+"QRcode.Caption.Success" = "Поднесите телефон к считывателю";
 
 /* Gamification */
 
