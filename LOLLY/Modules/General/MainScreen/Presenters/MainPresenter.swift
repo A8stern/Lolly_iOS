@@ -195,7 +195,9 @@ extension MainViewPresenter {
                 return Character(sign)
             }(),
             stickersCount: status.count,
+            stickersTotal: status.total,
             newStickerImage: Assets.Brand.Stickers.stickerLarge.image,
+            cardStickerImages: [Assets.Brand.Stickers.stickerLarge.image, Assets.Brand.Stickers.stickerLarge.image],
             buttonViewModel: {
                 guard isCardFull else { return nil }
                 return ButtonViewModel(
