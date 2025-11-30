@@ -107,9 +107,13 @@ internal enum L10n {
       internal static let text = L10n.tr("Localizable", "PhoneLogIn.Terms.Text", fallback: "Я принимаю условия договора оферты и политики конфиденциальности")
     }
   }
-  internal enum Scanner {
-    /// Scanner
-    internal static let title = L10n.tr("Localizable", "Scanner.Title", fallback: "Поднесите телефон к считывателю")
+  internal enum QRcode {
+    internal enum Caption {
+      /// QRcode
+      internal static let loading = L10n.tr("Localizable", "QRcode.Caption.Loading", fallback: "Загружаем QR-код...")
+      /// Поднесите телефон к считывателю
+      internal static let success = L10n.tr("Localizable", "QRcode.Caption.Success", fallback: "Поднесите телефон к считывателю")
+    }
   }
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length

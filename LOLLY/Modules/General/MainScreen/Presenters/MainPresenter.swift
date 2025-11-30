@@ -49,17 +49,18 @@ final class MainViewPresenter {
 // MARK: - MainPresenter
 
 extension MainViewPresenter: MainPresenter {
-    func onViewDidLoad() { }
-
-    func onViewWillAppear() {
+    func onViewDidLoad() {
         responseInitialData()
 
-        requestStickerStatus()
         requestMarketingAfisha()
         requestMarketingSlider()
         requestCalendarOverview()
         requestGamificationOverview()
         requestOrganizationInformation()
+    }
+
+    func onViewWillAppear() {
+        requestStickerStatus()
     }
 
     func onViewDidAppear() { }
@@ -203,13 +204,13 @@ extension MainViewPresenter {
                     size: .medium,
                     tapHandler: { [weak self] in
                         guard let self else { return }
-                        coordinator.showScanner()
+                        coordinator.showQRcode()
                     }
                 )
             }(),
             onTap: { [weak self] in
                 guard let self else { return }
-                coordinator.showScanner()
+                coordinator.showQRcode()
             }
         )
     }

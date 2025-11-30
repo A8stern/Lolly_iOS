@@ -9,6 +9,6 @@ import Foundation
 
 public protocol StickersServiceInterface: AnyObject {
     func generateHash() async throws -> String
-    func changingCheck() async -> ChangingCheckStatus
+    func changingCheck() async throws -> ChangingCheckStatus
     func baristaScan(hash: String) async throws -> Bool
 }

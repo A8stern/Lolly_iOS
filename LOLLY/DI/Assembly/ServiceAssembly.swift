@@ -50,7 +50,7 @@ public final class ServiceAssembly: Assembly {
             scope: .lazySingleton,
             init: StickersService(
                 networkService: self.networkService,
-                isMock: false
+                sessionService: self.sessionService
             )
         )
     }

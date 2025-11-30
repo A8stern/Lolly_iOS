@@ -1,7 +1,7 @@
 private import SnapKit
 
 //
-//  MainViewController.swift
+//  QRcodeViewController.swift
 //  LOLLY
 //
 //  Created by Nikita on 04.11.2025.
@@ -9,22 +9,33 @@ private import SnapKit
 
 internal import UIKit
 
-protocol ScannerView: AnyObject, SnackDisplayable {
-    func displayInitialData(viewModel: ScannerModels.InitialData.ViewModel)
+protocol QRcodeView: AnyObject, SnackDisplayable {
+    func displayInitialData(viewModel: QRcodeModels.InitialData.ViewModel)
+    func displayQRcode(viewModel: QRcodeModels.QRcode.ViewModel)
 }
 
-final class ScannerViewController: UIViewController {
+final class QRcodeViewController: UIViewController {
     // MARK: - Internal properties
 
-    var presenter: ScannerPresenter?
+    var presenter: QRcodePresenter?
 
     // MARK: - Private properties
 
     // MARK: - Views
 
-    private lazy var QRSection: QRSectionView = {
-        let section = QRSectionView()
-        return section
+    private lazy var qrView: QRView = {
+        let view = QRView()
+        return view
+    }()
+
+    private lazy var descriptionLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        label.font = Fonts.Styles.body
+        label.textColor = Colors.Text.inverted.color
+        label.isSkeletonable = false
+        return label
     }()
 
     private lazy var closeButton: UIButton = {
@@ -64,20 +75,27 @@ final class ScannerViewController: UIViewController {
     }
 }
 
-extension ScannerViewController {
+extension QRcodeViewController {
     @objc
     fileprivate func onCloseTap() {
         presenter?.onCloseTap()
     }
 
     fileprivate func addSubviews() {
-        view.addSubview(QRSection)
+        view.addSubview(qrView)
+        view.addSubview(descriptionLabel)
         view.addSubview(closeButton)
     }
 
     fileprivate func setupConstraints() {
-        QRSection.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+        qrView.snp.makeConstraints { make in
+            make.left.right.equalToSuperview().inset(Constants.inset)
+            make.center.equalToSuperview()
+        }
+
+        descriptionLabel.snp.makeConstraints { make in
+            make.top.equalTo(qrView.snp.bottom).offset(Constants.inset)
+            make.left.right.equalToSuperview().inset(Constants.inset)
         }
 
         closeButton.snp.makeConstraints { make in
@@ -96,20 +114,22 @@ extension ScannerViewController {
 
 // MARK: - MainView
 
-extension ScannerViewController: ScannerView {
-    func displayInitialData(viewModel: ScannerModels.InitialData.ViewModel) {
-        QRSection.viewModel = viewModel.QRSectionViewModel
+extension QRcodeViewController: QRcodeView {
+    func displayInitialData(viewModel: QRcodeModels.InitialData.ViewModel) {
+        qrView.viewModel = viewModel.qrViewModel
+        descriptionLabel.text = viewModel.caption
+    }
+
+    func displayQRcode(viewModel: QRcodeModels.QRcode.ViewModel) {
+        qrView.viewModel = viewModel.qrViewModel
+        descriptionLabel.text = viewModel.caption
     }
 }
 
-// MARK: - NavigationBarDelegate
-
 // MARK: - Constants
 
-extension ScannerViewController {
+extension QRcodeViewController {
     fileprivate enum Constants {
-        static let innerMargins: UIEdgeInsets = .zero
-        static let contentMargins: UIEdgeInsets = .zero
-        static let qrSize: CGFloat = 325.0
+        static let inset: CGFloat = 24.0
     }
 }
