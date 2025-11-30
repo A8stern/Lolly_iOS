@@ -57,7 +57,7 @@ public final class AppCoordinator: BaseCoordinator<UIWindow> {
             case is AuthCoordinator:
                 goToGeneralFlow()
 
-            case is GeneralCoordinator:
+            case is GeneralCoordinator, is AdminCoordinator:
                 goToAuthFlow()
 
             case is SplashCoordinator:
@@ -92,6 +92,16 @@ public final class AppCoordinator: BaseCoordinator<UIWindow> {
     public func goToGeneralFlow() {
         let navigationController = UINavigationController()
         let coordinator = GeneralCoordinator(
+            navigationController: navigationController,
+            serviceAssembly: serviceAssembly
+        )
+        add(child: coordinator)
+        coordinator.start()
+    }
+
+    public func goToAdminFlow() {
+        let navigationController = UINavigationController()
+        let coordinator = AdminCoordinator(
             navigationController: navigationController,
             serviceAssembly: serviceAssembly
         )

@@ -10,7 +10,7 @@
 public protocol SessionUseCaseInterface: AnyObject {
     var delegate: SessionUseCaseDelegate? { get set }
     var isAuthorized: Bool { get }
-    var credentialsExist: Bool  { get }
+    var credentialsExist: Bool { get }
 
     func refreshUserCredential() async throws -> UserCredential
 }

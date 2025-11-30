@@ -59,3 +59,22 @@
 
 "Loyalty.Loading.Success" = "Наклейка успешно\nдобавлена на карточку";
 "Loyalty.Loading.Error" = "Произошла ошибка,\nпопробуйте позже";
+
+/* AdminPanel */
+
+"AdminPanel.Title.Functions" = "ФУНКЦИОНАЛ";
+"AdminPanel.Title.Sections" = "СЕКЦИИ";
+"AdminPanel.Section.QR" = "Сканировать QR";
+"AdminPanel.Section.Push" = "Отправить пуш-уведомление";
+"AdminPanel.Section.Users" = "Пользователи";
+"AdminPanel.Section.Administrators" = "Администраторы";
+"AdminPanel.Section.LoyaltyCard" = "Карта лояльности";
+"AdminPanel.Section.PopUp" = "Информационный pop-up";
+"AdminPanel.Section.TextSlider" = "Текстовый слайдер";
+"AdminPanel.Section.AI" = "AI-игра";
+"AdminPanel.Section.Events" = "Мероприятия";
+"AdminPanel.Section.Links" = "Адреса и ссылки";
+"AdminPanel.PushNotify.Title" = "Новое пуш-уведомление";
+"AdminPanel.PushNotify.InputTitle" = "Заголовок";
+"AdminPanel.PushNotify.InputText" = "Основной текст";
+"AdminPanel.PushNotify.ConfirmationButton" = "Отправить";
