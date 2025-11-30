@@ -36,7 +36,7 @@ extension PushNotifyAssembly {
             init: PushNotifyViewPresenter(
                 view: view,
                 coordinator: coordinator,
-                authorizationService: serviceAssembly.authorizationService
+                authorizationService: self.serviceAssembly.authorizationService
             )
         )
     }

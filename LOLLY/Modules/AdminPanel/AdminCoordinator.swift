@@ -5,7 +5,7 @@
 //  Created by Nikita on 22.11.2025.
 //
 
-internal import UIKit
+import UIKit
 
 final class AdminCoordinator: BaseNavigationCoordinator, SystemBrowserRoute {
     // MARK: - Private Properties

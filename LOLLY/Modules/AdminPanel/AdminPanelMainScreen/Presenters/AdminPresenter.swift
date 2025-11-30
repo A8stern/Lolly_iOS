@@ -55,17 +55,16 @@ extension AdminViewPresenter: AdminPresenter {
             return .admin
         }
 
-        var role = nil as UserRoleStatus?
         Task {
             do {
                 let status: UserRoleStatus = try await authorizationService.fetchUserStatus(phone: phone)
-                role = status
+                return status
             } catch {
                 print(error)
+                return UserRoleStatus.unknown
             }
         }
-        guard let role else { return UserRoleStatus.unknown }
-        return role
+        return UserRoleStatus.unknown
     }
 }
 

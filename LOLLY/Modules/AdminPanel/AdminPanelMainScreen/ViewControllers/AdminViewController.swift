@@ -6,7 +6,7 @@
 //
 
 private import SnapKit
-internal import UIKit
+import UIKit
 
 protocol AdminView: AnyObject, SnackDisplayable {
     func displayInitialData(viewModel: AdminModels.InitialData.ViewModel)

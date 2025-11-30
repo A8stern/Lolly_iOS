@@ -6,7 +6,7 @@
 //
 
 private import SnapKit
-internal import UIKit
+import UIKit
 
 protocol PushNotifyView: AnyObject, SnackDisplayable {
     func displayInitialData(viewModel: PushNotifyModels.InitialData.ViewModel)

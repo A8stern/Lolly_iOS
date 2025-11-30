@@ -33,7 +33,6 @@ final class GeneralCoordinator: BaseNavigationCoordinator, SystemBrowserRoute {
     // MARK: - Screens
 
     func showMain() {
-        let session = URLSession.shared
         let viewController = MainAssembly.instance().assembleModule(coordinator: self)
         navigationController.pushViewController(viewController, animated: true)
     }

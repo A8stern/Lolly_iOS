@@ -64,18 +64,16 @@ extension PushNotifyViewPresenter: PushNotifyPresenter {
             return .admin
         }
 
-        var role = nil as UserRoleStatus?
         Task {
             do {
                 let status: UserRoleStatus = try await authorizationService.fetchUserStatus(phone: phone)
-                role = status
+                return status
             } catch {
-                // TODO: - Обработчик ошибок
-                print("PushNotifyPresenter userRole error")
+                print(error)
+                return UserRoleStatus.unknown
             }
         }
-        guard let role else { return UserRoleStatus.unknown }
-        return role
+        return UserRoleStatus.unknown
     }
 }
 

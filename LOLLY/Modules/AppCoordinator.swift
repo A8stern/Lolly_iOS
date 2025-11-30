@@ -57,7 +57,7 @@ public final class AppCoordinator: BaseCoordinator<UIWindow> {
             case is AuthCoordinator:
                 goToGeneralFlow()
 
-            case is GeneralCoordinator:
+            case is GeneralCoordinator, is AdminCoordinator:
                 goToAuthFlow()
 
             case is SplashCoordinator:
