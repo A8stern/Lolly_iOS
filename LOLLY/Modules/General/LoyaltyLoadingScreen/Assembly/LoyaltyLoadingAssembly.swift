@@ -17,9 +17,29 @@ final class LoyaltyLoadingAssembly: Assembly {
             return view
         }
     }
+
+    func assembleAdminModule(coordinator: AdminCoordinator) -> LoyaltyLoadingViewController {
+        return define(scope: .prototype, init: LoyaltyLoadingViewController()) { view in
+            view.presenter = self.assembleAdminPresenter(view: view, coordinator: coordinator)
+            return view
+        }
+    }
 }
 
 extension LoyaltyLoadingAssembly {
+    fileprivate func assembleAdminPresenter(
+        view: LoyaltyLoadingView,
+        coordinator: AdminCoordinator
+    ) -> LoyaltyLoadingPresenter {
+        return define(
+            scope: .prototype,
+            init: AdminLoyaltyLoadingViewPresenter(
+                view: view,
+                coordinator: coordinator
+            )
+        )
+    }
+
     fileprivate func assemblePresenter(
         view: LoyaltyLoadingView,
         coordinator: GeneralCoordinator,

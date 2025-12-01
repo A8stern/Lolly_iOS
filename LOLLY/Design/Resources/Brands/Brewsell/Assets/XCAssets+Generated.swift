@@ -73,6 +73,9 @@ public enum Assets {
       public static let user = ImageAsset(name: "icons29/adminpanel/user")
     }
   }
+  public enum Permission {
+    public static let cameraPermission = ImageAsset(name: "permission/cameraPermission")
+  }
   public static let spinner = ImageAsset(name: "spinner")
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name

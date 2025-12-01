@@ -41,6 +41,24 @@ final class AdminCoordinator: BaseNavigationCoordinator, SystemBrowserRoute {
         navigationController.present(viewController, animated: true)
     }
 
+    func showQRCodeScanner() {
+        let viewController = QRScanAssembly.instance().assembleModule(
+            coordinator: self,
+            serviceAssembly: serviceAssembly
+        )
+        navigationController.pushViewController(viewController, animated: true)
+    }
+
+    func showPhotoPermission() {
+        let viewController = PhotoPermissionAssembly.instance().assembleModule(coordinator: self)
+        navigationController.pushViewController(viewController, animated: true)
+    }
+
+    func showAdminLoading() {
+        let viewController = LoyaltyLoadingAssembly.instance().assembleAdminModule(coordinator: self)
+        navigationController.pushViewController(viewController, animated: true)
+    }
+
     func closePush() {
         navigationController.dismiss(animated: true)
     }

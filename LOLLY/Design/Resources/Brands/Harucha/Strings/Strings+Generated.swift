@@ -117,6 +117,19 @@ internal enum L10n {
       internal static let telegram = L10n.tr("Localizable", "OTP.Verification.Telegram", fallback: "Перейти в Telegram-бот для авторизации")
     }
   }
+  internal enum Permission {
+    internal enum Camera {
+      /// Чтобы сканировать QR код, предоставьте
+      /// приложению Спортмастер доступ к
+      /// камере в настройках.
+      internal static let body = L10n.tr("Localizable", "Permission.Camera.Body", fallback: "Чтобы сканировать QR код, предоставьте\nприложению Спортмастер доступ к\nкамере в настройках.")
+      /// Permission
+      internal static let buttonLabel = L10n.tr("Localizable", "Permission.Camera.ButtonLabel", fallback: "К настройкам")
+      /// Приложению нужен
+      /// доступ к камере
+      internal static let title = L10n.tr("Localizable", "Permission.Camera.Title", fallback: "Приложению нужен\nдоступ к камере")
+    }
+  }
   internal enum PhoneLogIn {
     internal enum Buttons {
       /// Продолжить
@@ -145,6 +158,18 @@ internal enum L10n {
       internal static let privacyPolicy = L10n.tr("Localizable", "PhoneLogIn.Terms.PrivacyPolicy", fallback: "политики конфиденциальности")
       /// Я принимаю условия договора оферты и политики конфиденциальности
       internal static let text = L10n.tr("Localizable", "PhoneLogIn.Terms.Text", fallback: "Я принимаю условия договора оферты и политики конфиденциальности")
+    }
+  }
+  internal enum Qr {
+    internal enum Error {
+      /// Ошибка сканирования
+      internal static let `internal` = L10n.tr("Localizable", "QR.Error.Internal", fallback: "Ошибка сканирования")
+      /// Неудачная попытка сканирования
+      internal static let response = L10n.tr("Localizable", "QR.Error.Response", fallback: "Неудачная попытка сканирования")
+    }
+    internal enum Scan {
+      /// QR
+      internal static let label = L10n.tr("Localizable", "QR.Scan.Label", fallback: "Поместите штрихкод в рамку, чтобы\nнайти его в каталоге")
     }
   }
   internal enum QRcode {

@@ -60,6 +60,17 @@
 "Loyalty.Loading.Success" = "Наклейка успешно\nдобавлена на карточку";
 "Loyalty.Loading.Error" = "Произошла ошибка,\nпопробуйте позже";
 
+/* QR */
+
+"QR.Scan.Label" = "Поместите штрихкод в рамку, чтобы\nнайти его в каталоге";
+"QR.Error.Response" = "Неудачная попытка сканирования";
+"QR.Error.Internal" = "Ошибка сканирования";
+
+/* Permission */
+
+"Permission.Camera.ButtonLabel" = "К настройкам";
+"Permission.Camera.Title" = "Приложению нужен\nдоступ к камере";
+"Permission.Camera.Body" = "Чтобы сканировать QR код, предоставьте\nприложению Спортмастер доступ к\nкамере в настройках.";
 /* AdminPanel */
 
 "AdminPanel.Title.Functions" = "ФУНКЦИОНАЛ";

@@ -2,7 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<!-- Основные параметры приложения -->
 	<key>NSCalendarsUsageDescription</key>
 	<string>Приложению нужен доступ к календарю для добавления событий</string>
 	<key>CFBundleIdentifier</key>
@@ -15,16 +14,10 @@
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
-
-	<!-- Приложение полноэкранное и адаптировано под современные устройства -->
 	<key>UIRequiresFullScreen</key>
 	<true/>
-
-	<!-- Новый способ объявления launch screen (без storyboard) -->
 	<key>UILaunchScreen</key>
 	<dict/>
-
-	<!-- Поддержка сцен (SceneDelegate) -->
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -42,12 +35,8 @@
 			</array>
 		</dict>
 	</dict>
-
-	<!-- Обязательно для iOS -->
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-
-	<!-- Ориентации экрана (можно изменить при необходимости) -->
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
@@ -57,5 +46,7 @@
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>Приложению нужен доступ к камере для сканирования QR кодов</string>
 </dict>
 </plist>

@@ -100,7 +100,10 @@ extension AdminViewPresenter {
                     SectionButtonViewModel(
                         iconAsset: Assets.Icons29.Adminpanel.qr,
                         text: L10n.AdminPanel.Section.qr,
-                        tapHandler: nil
+                        tapHandler: { [weak self] in
+                            guard let self else {return}
+                            self.coordinator.showQRCodeScanner()
+                        }
                     )
                 ]
         }

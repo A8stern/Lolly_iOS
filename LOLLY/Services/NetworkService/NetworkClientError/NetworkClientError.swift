@@ -49,7 +49,7 @@ extension NetworkClientError: LocalizedError {
         guard let data = data else { return nil }
 
         if let jsonObject = try? JSONSerialization.jsonObject(with: data, options: []),
-           let json = jsonObject as? [String: Any] {
+            let json = jsonObject as? [String: Any] {
             // Попытка извлечь разные варианты ключа
             if let message = json["message"] as? String {
                 return message
