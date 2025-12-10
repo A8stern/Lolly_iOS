@@ -5,6 +5,7 @@
 //  Created by Kovalev Gleb on 26.11.2025.
 //
 
+import Kingfisher
 private import SnapKit
 import UIKit
 
@@ -58,7 +59,7 @@ final class StickerCircleCell: UICollectionViewCell {
         imageView.image = nil
     }
 
-    func configure(image: UIImage?) {
-        imageView.image = image
+    func configure(link: URL?) {
+        imageView.kf.setImage(with: link)
     }
 }

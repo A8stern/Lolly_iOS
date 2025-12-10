@@ -22,7 +22,7 @@ final class StickerCirclesView: UIView {
         }
     }
 
-    var images: [UIImage?] = [] {
+    var images: [URL] = [] {
         didSet {
             collectionView.reloadData()
             collectionView.layoutIfNeeded()
@@ -72,9 +72,9 @@ extension StickerCirclesView: UICollectionViewDataSource, UICollectionViewDelega
             return UICollectionViewCell()
         }
         if indexPath.item < images.count {
-            cell.configure(image: images[indexPath.item])
+            cell.configure(link: images[indexPath.item])
         } else {
-            cell.configure(image: nil)
+            cell.configure(link: nil)
         }
         return cell
     }

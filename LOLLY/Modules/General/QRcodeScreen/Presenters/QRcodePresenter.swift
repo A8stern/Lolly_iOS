@@ -86,7 +86,6 @@ extension QRcodeViewPresenter {
         Task {
             do {
                 let hash = try await stickersService.generateHash()
-
                 await MainActor.run { [weak self] in
                     guard let self else { return }
                     let viewModel = QRcodeModels.QRcode.ViewModel(
@@ -94,9 +93,9 @@ extension QRcodeViewPresenter {
                         caption: L10n.QRcode.Caption.success
                     )
                     view?.displayQRcode(viewModel: viewModel)
+                    
+                    checkChanges()
                 }
-
-                checkChanges()
             } catch {
                 await MainActor.run { [weak self] in
                     guard let self else { return }
@@ -167,6 +166,7 @@ extension QRcodeViewPresenter {
                 let status = try await self.stickersService.changingCheck()
                 await handle(status: status)
             } catch {
+                print("LALALA: \(error)")
                 await MainActor.run { [weak self] in
                     guard let self else { return }
                     view?.showSnack(with: .error(text: error.readableDescription))

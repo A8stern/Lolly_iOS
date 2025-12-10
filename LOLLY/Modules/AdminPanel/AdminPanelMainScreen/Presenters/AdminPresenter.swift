@@ -16,7 +16,7 @@ protocol AdminPresenter: AnyObject {
     func onViewDidAppear()
 
     /// Получить роль пользователя
-    func getUserRole(phone: String) -> UserRoleStatus
+    func getUserRole() async throws -> UserRoleStatus
 }
 
 final class AdminViewPresenter {
@@ -25,89 +25,94 @@ final class AdminViewPresenter {
     private unowned let view: AdminView
     private let coordinator: AdminCoordinator
     private let authorizationService: AuthorizationServiceInterface
+    private let phone: String
 
     // MARK: - Initialization
 
     init(
         view: AdminView,
         coordinator: AdminCoordinator,
-        authorizationService: AuthorizationServiceInterface
+        authorizationService: AuthorizationServiceInterface,
+        phone: String
     ) {
         self.view = view
         self.coordinator = coordinator
         self.authorizationService = authorizationService
+        self.phone = phone
     }
 }
 
 extension AdminViewPresenter: AdminPresenter {
     func onViewDidLoad() {
-        let response = AdminModels.InitialData.Response()
-        responseInitialData(response: response)
+        Task { [weak self] in
+            guard let self else { return }
+            let response = AdminModels.InitialData.Response()
+            await self.responseInitialData(response: response)
+        }
     }
 
     func onViewWillAppear() { }
 
     func onViewDidAppear() { }
 
-    func getUserRole(phone: String) -> UserRoleStatus {
-        let isMock = true
-        if isMock {
-            return .admin
-        }
-
-        Task {
-            do {
-                let status: UserRoleStatus = try await authorizationService.fetchUserStatus(phone: phone)
-                return status
-            } catch {
-                print(error)
-                return UserRoleStatus.unknown
-            }
-        }
-        return UserRoleStatus.unknown
+    func getUserRole() async throws -> UserRoleStatus {
+        let status: UserRoleStatus = try await authorizationService.fetchUserStatus(phone: phone)
+        return status
     }
 }
 
 // MARK: - Private Methods
 
 extension AdminViewPresenter {
-    fileprivate func responseInitialData(response _: AdminModels.InitialData.Response) {
-        let viewModel = AdminModels.InitialData.ViewModel(
-            title: L10n.Main.title,
-            functionalSectionViewModel: makeFunctionalSectionViewModel()
-        )
-
+    @MainActor
+    fileprivate func displayInitialDataOnMain(_ viewModel: AdminModels.InitialData.ViewModel) {
         view.displayInitialData(viewModel: viewModel)
     }
 
-    fileprivate func getSectionsByRole() -> [[SectionButtonViewModel]] {
-        let userRole = UserRoleStatus.admin // let userRole = getUserRole(phone: "")
-
-        var contentSectionViewModels: [SectionButtonViewModel] = []
-        var functionalSectionViewModels: [SectionButtonViewModel] = []
-
-        switch userRole {
-            case .unknown, .user, .notRegistered:
-                contentSectionViewModels = []
-                functionalSectionViewModels = []
-
-            case .admin:
-                contentSectionViewModels = makeContentSectionViewModelsForAdministrator()
-                functionalSectionViewModels = makeFunctionalSectionViewModelsForAdministrator()
-
-            case .barista:
-                functionalSectionViewModels = [
-                    SectionButtonViewModel(
-                        iconAsset: Assets.Icons29.Adminpanel.qr,
-                        text: L10n.AdminPanel.Section.qr,
-                        tapHandler: { [weak self] in
-                            guard let self else {return}
-                            self.coordinator.showQRCodeScanner()
-                        }
-                    )
-                ]
+    fileprivate func responseInitialData(response _: AdminModels.InitialData.Response) async {
+        let functionalVM = await makeFunctionalSectionViewModel()
+        let viewModel = AdminModels.InitialData.ViewModel(
+            title: L10n.Main.title,
+            functionalSectionViewModel: functionalVM
+        )
+        await MainActor.run {
+            self.displayInitialDataOnMain(viewModel)
         }
-        return [contentSectionViewModels, functionalSectionViewModels]
+    }
+
+    fileprivate func getSectionsByRole() async -> [[SectionButtonViewModel]] {
+        do {
+            let userRole = try await getUserRole()
+            var contentSectionViewModels: [SectionButtonViewModel] = []
+            var functionalSectionViewModels: [SectionButtonViewModel] = []
+
+            switch userRole {
+                case .unknown, .user, .notRegistered:
+                    contentSectionViewModels = []
+                    functionalSectionViewModels = []
+
+                case .admin:
+                    contentSectionViewModels = makeContentSectionViewModelsForAdministrator()
+                    functionalSectionViewModels = makeFunctionalSectionViewModelsForAdministrator()
+
+                case .barista:
+                    functionalSectionViewModels = [
+                        SectionButtonViewModel(
+                            iconAsset: Assets.Icons29.Adminpanel.qr,
+                            text: L10n.AdminPanel.Section.qr,
+                            tapHandler: { [weak self] in
+                                guard let self else { return }
+                                Task { @MainActor in
+                                    self.coordinator.showQRCodeScanner()
+                                }
+                            }
+                        )
+                    ]
+            }
+            return [contentSectionViewModels, functionalSectionViewModels]
+        } catch {
+            return [[], []]
+        }
     }
 
     fileprivate func makeContentSectionViewModelsForAdministrator() -> [SectionButtonViewModel] {
@@ -150,14 +155,21 @@ extension AdminViewPresenter {
             SectionButtonViewModel(
                 iconAsset: Assets.Icons29.Adminpanel.qr,
                 text: L10n.AdminPanel.Section.qr,
-                tapHandler: nil
+                tapHandler: { [weak self] in
+                    guard let self else { return }
+                    Task { @MainActor in
+                        self.coordinator.showQRCodeScanner()
+                    }
+                }
             ),
             SectionButtonViewModel(
                 iconAsset: Assets.Icons29.Adminpanel.push,
                 text: L10n.AdminPanel.Section.push,
                 tapHandler: { [weak self] in
                     guard let self else { return }
-                    coordinator.showPush()
+                    Task { @MainActor in
+                        self.coordinator.showPush()
+                    }
                 }
             ),
             SectionButtonViewModel(
@@ -173,8 +185,8 @@ extension AdminViewPresenter {
         ]
     }
 
-    fileprivate func makeFunctionalSectionViewModel() -> FuncSectionViewModel? {
-        let sections = getSectionsByRole()
+    fileprivate func makeFunctionalSectionViewModel() async -> FuncSectionViewModel? {
+        let sections = await getSectionsByRole()
 
         return FuncSectionViewModel(
             fTitle: L10n.AdminPanel.Title.functions,

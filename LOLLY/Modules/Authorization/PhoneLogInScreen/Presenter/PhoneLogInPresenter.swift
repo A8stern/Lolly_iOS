@@ -32,6 +32,7 @@ final class PhoneLogInViewPresenter {
     private let coordinator: AuthCoordinator
     private let authorizationService: AuthorizationServiceInterface
     private let phoneNumberUtility = PhoneNumberUtility()
+    private let storage = UserDefaults.standard
 
     private var userRoleStatus: UserRoleStatus?
     private var phone: Phone?
@@ -41,6 +42,13 @@ final class PhoneLogInViewPresenter {
     private var isNameValid = false
     private var isLoading = false
     private var isCheckboxSelected = false
+
+    // MARK: - UserDefaults Keys
+
+    private enum StorageKeys {
+        static let isAdmin = "auth.isAdmin"
+        static let phone = "auth.phone"
+    }
 
     // MARK: - Initialization
 
@@ -52,6 +60,17 @@ final class PhoneLogInViewPresenter {
         self.view = view
         self.coordinator = coordinator
         self.authorizationService = authorizationService
+    }
+
+    private func persist(role status: UserRoleStatus?, phone: String) {
+        if let status {
+            let adminFlag = (status == .admin || status == .barista)
+            storage.set(adminFlag, forKey: StorageKeys.isAdmin)
+            storage.set(phone, forKey: StorageKeys.phone)
+        } else {
+            storage.set(false, forKey: StorageKeys.isAdmin)
+            storage.set("", forKey: StorageKeys.phone)
+        }
     }
 }
 
@@ -259,6 +278,7 @@ extension PhoneLogInViewPresenter {
                     isLoading = false
                     updateContinueButton()
                     userRoleStatus = status
+
                     switch status {
                         case .notRegistered:
                             let viewModel = PhoneLogInModels.Registration.ViewModel(
@@ -272,6 +292,8 @@ extension PhoneLogInViewPresenter {
                             view.displayRegistration(viewModel: viewModel)
 
                         case .user, .admin, .barista:
+                            persist(role: status, phone: phone.raw)
+                        print("LALALA: \(status), \(phone.raw)")
                             coordinator.openCode(phone: phone.raw)
 
                         case .unknown:

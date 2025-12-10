@@ -42,12 +42,18 @@ extension QRScanViewPresenter: QRScanPresenter {
         Task {
             do {
                 if try await stickersService.baristaScan(hash: code) {
-                    showLoadingScreen()
+                    await MainActor.run {
+                        showLoadingScreen()
+                    }
                 } else {
-                    showErrorAlert(text: L10n.Qr.Error.response)
+                    await MainActor.run {
+                        showErrorAlert(text: L10n.Qr.Error.response)
+                    }
                 }
             } catch {
-                showErrorAlert(text: L10n.Qr.Error.internal)
+                await MainActor.run {
+                    showErrorAlert(text: L10n.Qr.Error.internal)
+                }
             }
         }
     }

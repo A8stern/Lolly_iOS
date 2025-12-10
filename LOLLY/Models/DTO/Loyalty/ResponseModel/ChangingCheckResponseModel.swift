@@ -9,5 +9,5 @@ import Foundation
 
 struct ChangingCheckResponseModel: ResponseModel {
     let status: String
-    let count: String
+    let count: Int
 }

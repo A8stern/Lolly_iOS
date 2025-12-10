@@ -20,6 +20,7 @@ public final class AppCoordinator: BaseCoordinator<UIWindow> {
 
     private let serviceAssembly = ServiceAssembly.instance()
     private let useCaseAssembly = UseCaseAssembly.instance()
+    private let storage = UserDefaults.standard
 
     // MARK: - Lifecycle
 
@@ -55,7 +56,7 @@ public final class AppCoordinator: BaseCoordinator<UIWindow> {
 
         switch coordinator {
             case is AuthCoordinator:
-                goToGeneralFlow()
+                chooseFlowFromRegistration()
 
             case is GeneralCoordinator, is AdminCoordinator:
                 goToAuthFlow()
@@ -79,15 +80,33 @@ public final class AppCoordinator: BaseCoordinator<UIWindow> {
 
     public func setupFlow() {
         let isAuthorized = sessionUseCase.isAuthorized
-        let isAdministrator = true
+        let isAdministrator = storage.bool(forKey: "auth.isAdmin")
         if isAuthorized {
             if isAdministrator {
-                goToAdminFlow()
+                let phone = storage.string(forKey: "auth.phone") ?? ""
+                goToAdminFlow(phone: phone)
             } else {
                 goToGeneralFlow()
             }
         } else {
             goToAuthFlow()
+        }
+    }
+
+    public func chooseFlowFromRegistration() {
+        // Keys used by PhoneLogInViewPresenter
+        struct StorageKeys {
+            static let isAdmin = "auth.isAdmin"
+            static let lastPhone = "auth.phone" // optional: only if you persist it in presenter
+        }
+
+        let isAdmin = storage.bool(forKey: StorageKeys.isAdmin)
+
+        if isAdmin {
+            let phone = storage.string(forKey: StorageKeys.lastPhone) ?? ""
+            goToAdminFlow(phone: phone)
+        } else {
+            goToGeneralFlow()
         }
     }
 
@@ -108,11 +127,12 @@ public final class AppCoordinator: BaseCoordinator<UIWindow> {
         coordinator.start()
     }
 
-    public func goToAdminFlow() {
+    public func goToAdminFlow(phone: String) {
         let navigationController = UINavigationController()
         let coordinator = AdminCoordinator(
             navigationController: navigationController,
-            serviceAssembly: serviceAssembly
+            serviceAssembly: serviceAssembly,
+            phone: phone
         )
         add(child: coordinator)
         coordinator.start()

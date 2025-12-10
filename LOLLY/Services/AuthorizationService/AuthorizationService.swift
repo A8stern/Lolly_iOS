@@ -45,7 +45,7 @@ public final class AuthorizationService: AuthorizationServiceInterface {
             body: requestBody,
             headers: endpoint.headers
         )
-
+        print("LALALA status from request: \(answer.status)")
         return UserRoleStatus(from: answer.status)
     }
 
@@ -101,7 +101,6 @@ public final class AuthorizationService: AuthorizationServiceInterface {
         let endpoint = AuthEndpoint.verifyOTP
         let body = VerifyOTPRequestModel(phone: formattedPhone, otp: otp)
 
-        // Decode tokens. If needed, persist them here.
         let response: VerifyOTPResponseModel = try await networkService.request(
             endpoint: endpoint.endpoint,
             method: endpoint.method,

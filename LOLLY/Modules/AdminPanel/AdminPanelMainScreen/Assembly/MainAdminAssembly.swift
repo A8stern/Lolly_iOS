@@ -15,10 +15,11 @@ final class MainAdminAssembly: Assembly {
     // MARK: - Internal Methods
 
     func assembleModule(
-        coordinator: AdminCoordinator
+        coordinator: AdminCoordinator,
+        phone: String
     ) -> AdminViewController {
         return define(scope: .prototype, init: AdminViewController()) { view in
-            view.presenter = self.assemblePresenter(view: view, coordinator: coordinator)
+            view.presenter = self.assemblePresenter(view: view, coordinator: coordinator, phone: phone)
             return view
         }
     }
@@ -29,14 +30,16 @@ final class MainAdminAssembly: Assembly {
 extension MainAdminAssembly {
     fileprivate func assemblePresenter(
         view: AdminView,
-        coordinator: AdminCoordinator
+        coordinator: AdminCoordinator,
+        phone: String
     ) -> AdminPresenter {
         return define(
             scope: .prototype,
             init: AdminViewPresenter(
                 view: view,
                 coordinator: coordinator,
-                authorizationService: self.serviceAssembly.authorizationService
+                authorizationService: self.serviceAssembly.authorizationService,
+                phone: phone
             )
         )
     }

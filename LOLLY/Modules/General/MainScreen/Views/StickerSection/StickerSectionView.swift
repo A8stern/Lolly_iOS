@@ -5,6 +5,7 @@
 //  Created by Kirill Prokofyev on 2Constants.spacing / 2.10.2025.
 //
 
+import Kingfisher
 private import SnapKit
 import UIKit
 
@@ -179,7 +180,7 @@ extension StickerSectionView {
         if let stickersCount = viewModel.stickersCount {
             backCountLabel.text = "\(stickersCount)"
         }
-        newStickerImageView.image = viewModel.newStickerImage
+        newStickerImageView.kf.setImage(with: viewModel.newStickerImage)
         if let stickersCount = viewModel.stickersCount,
             let stickersTotal = viewModel.stickersTotal {
             cardView.viewModel = StickerCardViewModel(

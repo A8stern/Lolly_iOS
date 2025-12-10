@@ -10,12 +10,12 @@ import UIKit
 public struct StickerCardViewModel: Changeable {
     public var totalStickers: Int
     public var stickerCount: Int
-    public var stickersImages: [UIImage?]
+    public var stickersImages: [URL]
 
     public init(
         totalStickers: Int,
         stickerCount: Int,
-        stickersImages: [UIImage?]
+        stickersImages: [URL]
     ) {
         self.totalStickers = totalStickers
         self.stickerCount = stickerCount

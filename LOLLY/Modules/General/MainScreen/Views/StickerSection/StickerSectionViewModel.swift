@@ -13,8 +13,8 @@ public struct StickerSectionViewModel: Changeable {
     public let sign: Character?
     public let stickersCount: Int?
     public let stickersTotal: Int?
-    public let newStickerImage: UIImage?
-    public let cardStickerImages: [UIImage?]
+    public let newStickerImage: URL?
+    public let cardStickerImages: [URL]
     public let buttonViewModel: ButtonViewModel?
     public let onTap: (() -> Void)?
 
@@ -24,8 +24,8 @@ public struct StickerSectionViewModel: Changeable {
         sign: Character? = nil,
         stickersCount: Int? = nil,
         stickersTotal: Int? = nil,
-        newStickerImage: UIImage? = nil,
-        cardStickerImages: [UIImage?] = [],
+        newStickerImage: URL? = nil,
+        cardStickerImages: [URL] = [],
         buttonViewModel: ButtonViewModel? = nil,
         onTap: (() -> Void)? = nil
     ) {
